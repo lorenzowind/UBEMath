@@ -283,3 +283,66 @@ export const SecondContainerContent = styled.div`
     margin: 0;
   }
 `;
+
+export const ThirdContainer = styled.div`
+  height: 900px;
+  width: 100%;
+
+  display: flex;
+  align-items: stretch;
+
+  background: #55e2c1;
+`;
+
+export const ThirdContainerContent = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 55px;
+  }
+
+  div {
+    width: 1000px;
+    height: 500px;
+    opacity: 0.5;
+    border-radius: 13px;
+    background-color: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 55px;
+
+    strong {
+      font-size: 32px;
+      font-weight: 700;
+      color: #fff;
+    }
+  }
+
+  #signup {
+    border: 0;
+    width: 200px;
+    border-radius: 13px;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
+    border: solid 2px #fff;
+    background-color: #55e2c1;
+
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    padding: 8px;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background: ${shade(0.2, '#55e2c1')};
+    }
+  }
+`;

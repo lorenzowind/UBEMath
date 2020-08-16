@@ -8,6 +8,8 @@ import {
   FirstContainerContent,
   SecondContainer,
   SecondContainerContent,
+  ThirdContainer,
+  ThirdContainerContent,
 } from './styles';
 
 import logoImg from '../../assets/logo.svg';
@@ -81,6 +83,20 @@ const Home: React.FC = () => {
           </div>
         </SecondContainerContent>
       </SecondContainer>
+
+      <ThirdContainer>
+        <ThirdContainerContent>
+          <section>
+            <h1>Inovação</h1>
+            <div>
+              <strong>Vídeo introdutório do jogo</strong>
+            </div>
+            <button id="signup" type="button">
+              COMECE AGORA
+            </button>
+          </section>
+        </ThirdContainerContent>
+      </ThirdContainer>
     </Container>
   );
 };
