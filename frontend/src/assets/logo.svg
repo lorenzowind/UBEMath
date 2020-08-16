@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="736" height="736" viewBox="0 0 736 736">
+  <g id="Logo-2" transform="translate(0 10.38)">
+    <g id="Group_126" data-name="Group 126" transform="translate(148 153.232)">
+      <text id="MATH" transform="translate(26 375)" fill="#fff" font-size="132" font-family="SegoeUI-Bold, Segoe UI" font-weight="700"><tspan x="0" y="0">MATH</tspan></text>
+      <text id="UBE" transform="translate(0 250)" fill="#fff" font-size="232" font-family="SegoeUI-Bold, Segoe UI" font-weight="700"><tspan x="0" y="0">UBE</tspan></text>
+    </g>
+    <g id="Group_123" data-name="Group 123" transform="translate(0 -10.38)">
+      <g id="Group_124" data-name="Group 124" transform="matrix(0.985, 0.174, -0.174, 0.985, 140.533, 0)">
+        <rect id="Rectangle_281" data-name="Rectangle 281" width="552.582" height="32" transform="translate(48.083 31.909) rotate(90)" fill="#fff"/>
+        <ellipse id="Ellipse_107" data-name="Ellipse 107" cx="31" cy="31" rx="31" ry="31" fill="#fff"/>
+        <path id="Polygon_1" data-name="Polygon 1" d="M62,0l62,124H0Z" transform="translate(186 62) rotate(90)" fill="#fff"/>
+      </g>
+      <g id="Group_143" data-name="Group 143" transform="matrix(0.985, -0.174, 0.174, 0.985, 417.498, 32.299)">
+        <rect id="Rectangle_281-2" data-name="Rectangle 281" width="553.047" height="32" transform="translate(169.917 31.909) rotate(90)" fill="#fff"/>
+        <ellipse id="Ellipse_107-2" data-name="Ellipse 107" cx="31" cy="31" rx="31" ry="31" transform="translate(124 0)" fill="#fff"/>
+        <path id="Polygon_1-2" data-name="Polygon 1" d="M62,0l62,124H0Z" transform="translate(0 186) rotate(-90)" fill="#fff"/>
+      </g>
+      <g id="Group_127" data-name="Group 127" transform="translate(0 549.324)">
+        <rect id="Rectangle_280" data-name="Rectangle 280" width="162" height="32" transform="translate(128 77.338)" fill="#fff"/>
+        <rect id="Rectangle_285" data-name="Rectangle 285" width="159" height="32" transform="translate(445 77.338)" fill="#fff"/>
+        <g id="Group_140" data-name="Group 140" transform="translate(604 27.338)">
+          <g id="Group_138" data-name="Group 138">
+            <g id="Rectangle_284" data-name="Rectangle 284" fill="rgba(255,255,255,0)" stroke="#fff" stroke-width="10">
+              <rect width="132" height="132" rx="26" stroke="none"/>
+              <rect x="5" y="5" width="122" height="122" rx="21" fill="none"/>
+            </g>
+            <line id="Line_88" data-name="Line 88" y1="131" transform="translate(64.969 0.5)" fill="none" stroke="#fff" stroke-width="10"/>
+            <line id="Line_89" data-name="Line 89" y2="131" transform="translate(131 66) rotate(90)" fill="none" stroke="#fff" stroke-width="10"/>
+          </g>
+          <g id="Group_137" data-name="Group 137" transform="translate(17.5 19.316)">
+            <line id="Line_90" data-name="Line 90" y2="32" transform="translate(78 0)" fill="none" stroke="#fff" stroke-width="8"/>
+            <line id="Line_91" data-name="Line 91" x1="32" transform="translate(62 16)" fill="none" stroke="#fff" stroke-width="8"/>
+            <line id="Line_93" data-name="Line 93" x1="32" transform="translate(0 16)" fill="none" stroke="#fff" stroke-width="8"/>
+            <line id="Line_98" data-name="Line 98" y1="32" transform="translate(27.314 89.314) rotate(135)" fill="none" stroke="#fff" stroke-width="8"/>
+            <line id="Line_99" data-name="Line 99" x2="32" transform="translate(27.314 66.686) rotate(135)" fill="none" stroke="#fff" stroke-width="8"/>
+            <line id="Line_100" data-name="Line 100" x1="32" transform="translate(62 71)" fill="none" stroke="#fff" stroke-width="8"/>
+            <line id="Line_101" data-name="Line 101" x1="32" transform="translate(62 85)" fill="none" stroke="#fff" stroke-width="8"/>
+          </g>
+        </g>
+        <g id="Group_141" data-name="Group 141" transform="translate(461.338 93.338) rotate(135)">
+          <g id="Group_138-2" data-name="Group 138">
+            <g id="Rectangle_284-2" data-name="Rectangle 284" fill="rgba(255,255,255,0)" stroke="#fff" stroke-width="10">
+              <rect width="132" height="132" rx="26" stroke="none"/>
+              <rect x="5" y="5" width="122" height="122" rx="21" fill="none"/>
+            </g>
+            <line id="Line_88-2" data-name="Line 88" y1="131" transform="translate(67.031 0.5)" fill="none" stroke="#fff" stroke-width="10"/>
+            <line id="Line_89-2" data-name="Line 89" y1="131" transform="translate(132 66) rotate(90)" fill="none" stroke="#fff" stroke-width="10"/>
+          </g>
+          <g id="Group_137-2" data-name="Group 137" transform="translate(20.5 19.316)">
+            <line id="Line_90-2" data-name="Line 90" y2="32" transform="translate(16)" fill="none" stroke="#fff" stroke-width="8"/>
+            <line id="Line_91-2" data-name="Line 91" x2="32" transform="translate(0 16)" fill="none" stroke="#fff" stroke-width="8"/>
+            <line id="Line_93-2" data-name="Line 93" x2="32" transform="translate(62 16)" fill="none" stroke="#fff" stroke-width="8"/>
+            <line id="Line_98-2" data-name="Line 98" y2="32" transform="translate(89.314 66.686) rotate(45)" fill="none" stroke="#fff" stroke-width="8"/>
+            <line id="Line_99-2" data-name="Line 99" x2="32" transform="translate(66.686 66.686) rotate(45)" fill="none" stroke="#fff" stroke-width="8"/>
+            <line id="Line_100-2" data-name="Line 100" x2="32" transform="translate(0 71)" fill="none" stroke="#fff" stroke-width="8"/>
+            <line id="Line_101-2" data-name="Line 101" x2="32" transform="translate(0 85)" fill="none" stroke="#fff" stroke-width="8"/>
+          </g>
+        </g>
+        <g id="Group_142" data-name="Group 142" transform="translate(0 27.338)">
+          <g id="Group_138-3" data-name="Group 138">
+            <g id="Rectangle_284-3" data-name="Rectangle 284" fill="rgba(255,255,255,0)" stroke="#fff" stroke-width="10">
+              <rect width="132" height="132" rx="26" stroke="none"/>
+              <rect x="5" y="5" width="122" height="122" rx="21" fill="none"/>
+            </g>
+            <line id="Line_88-3" data-name="Line 88" y1="131" transform="translate(67.031 0.5)" fill="none" stroke="#fff" stroke-width="10"/>
+            <line id="Line_89-3" data-name="Line 89" y1="131" transform="translate(132 66) rotate(90)" fill="none" stroke="#fff" stroke-width="10"/>
+          </g>
+          <g id="Group_137-3" data-name="Group 137" transform="translate(20.5 19.316)">
+            <line id="Line_90-3" data-name="Line 90" y2="32" transform="translate(16 0)" fill="none" stroke="#fff" stroke-width="8"/>
+            <line id="Line_91-3" data-name="Line 91" x2="32" transform="translate(0 16)" fill="none" stroke="#fff" stroke-width="8"/>
+            <line id="Line_93-3" data-name="Line 93" x2="32" transform="translate(62 16)" fill="none" stroke="#fff" stroke-width="8"/>
+            <line id="Line_98-3" data-name="Line 98" y2="32" transform="translate(89.314 66.686) rotate(45)" fill="none" stroke="#fff" stroke-width="8"/>
+            <line id="Line_99-3" data-name="Line 99" x2="32" transform="translate(66.686 66.686) rotate(45)" fill="none" stroke="#fff" stroke-width="8"/>
+            <line id="Line_100-3" data-name="Line 100" x2="32" transform="translate(0 71)" fill="none" stroke="#fff" stroke-width="8"/>
+            <line id="Line_101-3" data-name="Line 101" x2="32" transform="translate(0 85)" fill="none" stroke="#fff" stroke-width="8"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
