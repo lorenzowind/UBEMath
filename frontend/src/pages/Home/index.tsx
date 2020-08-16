@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import {
   Container,
@@ -12,6 +11,7 @@ import {
   ThirdContainerContent,
   FourthContainer,
   FourthContainerContent,
+  Footer,
 } from './styles';
 
 import logoImg from '../../assets/logo.svg';
@@ -25,21 +25,47 @@ const Home: React.FC = () => {
           <h1>UBEMath</h1>
 
           <nav>
-            <Link to="secondContainer">
+            <button
+              type="button"
+              onClick={() => {
+                window.scrollTo({
+                  top: 750,
+                  behavior: 'smooth',
+                });
+              }}
+            >
               <strong>Objetivo</strong>
-            </Link>
-            <Link to="thirdContainer">
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                window.scrollTo({
+                  top: 1600,
+                  behavior: 'smooth',
+                });
+              }}
+            >
               <strong>Inovação</strong>
-            </Link>
-            <Link to="fourthContainer">
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                window.scrollTo({
+                  top: 2500,
+                  behavior: 'smooth',
+                });
+              }}
+            >
               <strong>Sobre nós</strong>
-            </Link>
+            </button>
           </nav>
 
           <section>
             <button id="signin" type="button">
               LOGIN
             </button>
+
             <button id="signup" type="button">
               CRIAR CONTA
             </button>
@@ -61,18 +87,20 @@ const Home: React.FC = () => {
         </FirstContainerContent>
       </FirstContainer>
 
-      <SecondContainer>
+      <SecondContainer id="secondContainer">
         <SecondContainerContent>
           <img src={illustrationImg} alt="Illustration" />
 
           <div>
             <h1>Objetivo</h1>
+
             <p>
               <b>
                 Domine a Matemática do 9º ano do ensino fundamental através de
                 um jogo RPG, materiais e exercícios.
               </b>
             </p>
+
             <h2>História da Matemática</h2>
             <h2>Equação de 1º e 2º grau</h2>
             <h2>Construção de figuras</h2>
@@ -90,9 +118,11 @@ const Home: React.FC = () => {
         <ThirdContainerContent>
           <section>
             <h1>Inovação</h1>
+
             <div>
               <strong>Vídeo introdutório do jogo</strong>
             </div>
+
             <button id="signup" type="button">
               COMECE AGORA
             </button>
@@ -105,10 +135,12 @@ const Home: React.FC = () => {
           <article>
             <h1>Sobre nós</h1>
           </article>
+
           <div>
             <div>
               <strong>Foto equipe</strong>
             </div>
+
             <section>
               <p>
                 <b>
@@ -117,6 +149,7 @@ const Home: React.FC = () => {
                   ensino médio da Fundação Matias Machline (FMM),
                 </b>
               </p>
+
               <article>
                 <h2>
                   <b>Lorenzo Windmoller Martins</b>
@@ -128,6 +161,7 @@ const Home: React.FC = () => {
                   <b>Vinícius Andrade Perrone</b>
                 </h2>
               </article>
+
               <p>
                 <b>
                   são alunos de Informática que decidiram desenvolver o <br />
@@ -138,6 +172,14 @@ const Home: React.FC = () => {
           </div>
         </FourthContainerContent>
       </FourthContainer>
+
+      <Footer>
+        <h1>
+          UBEMath © 2020
+          <br />
+          ubemath@gmail.com
+        </h1>
+      </Footer>
     </Container>
   );
 };
