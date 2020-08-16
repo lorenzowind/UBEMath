@@ -10,6 +10,8 @@ import {
   SecondContainerContent,
   ThirdContainer,
   ThirdContainerContent,
+  FourthContainer,
+  FourthContainerContent,
 } from './styles';
 
 import logoImg from '../../assets/logo.svg';
@@ -97,6 +99,45 @@ const Home: React.FC = () => {
           </section>
         </ThirdContainerContent>
       </ThirdContainer>
+
+      <FourthContainer>
+        <FourthContainerContent>
+          <article>
+            <h1>Sobre nós</h1>
+          </article>
+          <div>
+            <div>
+              <strong>Foto equipe</strong>
+            </div>
+            <section>
+              <p>
+                <b>
+                  Em um contexto de projeto de conclusão de curso no 3º ano do
+                  <br />
+                  ensino médio da Fundação Matias Machline (FMM),
+                </b>
+              </p>
+              <article>
+                <h2>
+                  <b>Lorenzo Windmoller Martins</b>
+                </h2>
+                <h2>
+                  <b>Samuel Albuquerque de Paiva</b>
+                </h2>
+                <h2>
+                  <b>Vinícius Andrade Perrone</b>
+                </h2>
+              </article>
+              <p>
+                <b>
+                  são alunos de Informática que decidiram desenvolver o <br />
+                  "Under the Banner of Eternal Math" (UBEMath).
+                </b>
+              </p>
+            </section>
+          </div>
+        </FourthContainerContent>
+      </FourthContainer>
     </Container>
   );
 };

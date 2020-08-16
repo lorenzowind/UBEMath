@@ -16,6 +16,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  overflow-x: hidden;
 
   animation: ${appearFromTop} 1s;
 `;
@@ -343,6 +344,103 @@ export const ThirdContainerContent = styled.div`
 
     &:hover {
       background: ${shade(0.2, '#55e2c1')};
+    }
+  }
+`;
+
+export const FourthContainer = styled.div`
+  height: 720px;
+  width: 100%;
+
+  display: flex;
+  align-items: stretch;
+`;
+
+export const FourthContainerContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
+  width: 100%;
+
+  > article {
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      color: #2b1c81;
+      white-space: nowrap;
+      margin-bottom: 49px;
+    }
+  }
+
+  > div {
+    display: flex;
+    flex-direction: row;
+
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 30px;
+
+      width: 540px;
+      height: 320px;
+      opacity: 0.5;
+      border-radius: 13px;
+      background-color: #000000;
+
+      strong {
+        font-size: 28px;
+        font-weight: 700;
+        color: #fff;
+      }
+    }
+
+    section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      width: max-content;
+      text-align: center;
+
+      p {
+        font-size: 24px;
+        font-weight: 400;
+        color: #2b1c81;
+        word-break: normal;
+        line-height: 30px;
+      }
+
+      article {
+        h2 {
+          font-size: 24px;
+          font-weight: 400;
+          color: #2b1c81;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 1368px) {
+    > div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+
+      div {
+        margin-right: 0;
+        margin-bottom: 30px;
+      }
+
+      section {
+        article {
+          margin: 10px 0;
+        }
+      }
     }
   }
 `;
