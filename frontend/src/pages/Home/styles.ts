@@ -14,6 +14,7 @@ export const Container = styled.div`
   height: 100%;
 
   display: flex;
+  flex-direction: column;
   align-items: stretch;
 
   animation: ${appearFromTop} 1s;
@@ -199,5 +200,86 @@ export const FirstContainerContent = styled.div`
   img {
     width: 500px;
     height: 500px;
+  }
+`;
+
+export const SecondContainer = styled.div`
+  height: 720px;
+  width: 100%;
+
+  display: flex;
+  align-items: stretch;
+`;
+
+export const SecondContainerContent = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  margin: 0 110px;
+
+  height: 100%;
+  width: 100%;
+
+  img {
+    width: 500px;
+    height: 500px;
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    text-align: center;
+
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      color: #2b1c81;
+      white-space: nowrap;
+      margin-bottom: 49px;
+    }
+
+    p {
+      width: 350px;
+      font-size: 24px;
+      font-weight: 400;
+      color: #2b1c81;
+      word-break: normal;
+      margin-bottom: 17px;
+      line-height: 30px;
+    }
+
+    h2 {
+      font-size: 24px;
+      font-weight: 400;
+      color: #2b1c81;
+    }
+
+    #signup {
+      margin-top: 63px;
+      border: 0;
+      width: 200px;
+      border-radius: 13px;
+      box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
+      border: solid 2px #2b1c81;
+      background-color: #fff;
+
+      font-size: 20px;
+      font-weight: 700;
+      color: #2b1c81;
+      padding: 8px;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background: ${shade(0.2, '#fff')};
+      }
+    }
+  }
+
+  @media (max-width: 1290px) {
+    margin: 0;
   }
 `;
