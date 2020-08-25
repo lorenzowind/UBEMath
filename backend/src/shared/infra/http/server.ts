@@ -7,7 +7,7 @@ import cors from 'cors';
 import 'express-async-errors';
 
 import '../typeorm/database';
-// import '@shared/container/index';
+import '@shared/container/index';
 
 import routes from './routes';
 import rateLimiter from './middlewares/rateLimiter';
