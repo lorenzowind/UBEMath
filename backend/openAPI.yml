@@ -227,7 +227,6 @@ paths:
         - users
       security:
         - bearerAuth: []
-        - positionHeader: []
       requestBody:
         required: true
         content:
@@ -297,7 +296,6 @@ paths:
         - users
       security:
         - bearerAuth: []
-        - positionHeader: []
       responses:
         '200':
           description: Returns a successfully deleted user confirmation.

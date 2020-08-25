@@ -23,8 +23,10 @@ export default function ensureAuthenticated(
     throw new AppError('JWT token is missing', 401);
   }
 
-  if (positionHeader !== 'admin') {
-    throw new AppError('Only administrators can make module operations', 400);
+  if (positionHeader) {
+    if (positionHeader !== 'admin') {
+      throw new AppError('Only administrators can make module operations', 400);
+    }
   }
 
   const [, token] = authHeader.split(' ');
