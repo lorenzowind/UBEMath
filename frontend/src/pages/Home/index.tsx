@@ -15,6 +15,8 @@ import {
   Footer,
 } from './styles';
 
+import Button from '../../components/Button';
+
 import logoImg from '../../assets/logo.svg';
 import illustrationImg from '../../assets/illustration.svg';
 
@@ -65,21 +67,22 @@ const Home: React.FC = () => {
           </nav>
 
           <section>
-            <button
-              id="signin"
-              type="button"
+            <Button
+              textColor="#fff"
+              backgroundColor="#2b1c81"
               onClick={() => history.push('/signin')}
             >
               LOGIN
-            </button>
+            </Button>
 
-            <button
-              id="signup"
-              type="button"
+            <Button
+              textColor="#2b1c81"
+              borderColor="#2b1c81"
+              backgroundColor="#93edc7"
               onClick={() => history.push('/signup')}
             >
               CRIAR CONTA
-            </button>
+            </Button>
           </section>
         </Header>
         <FirstContainerContent>
@@ -89,13 +92,15 @@ const Home: React.FC = () => {
               Crie sua conta agora mesmo e aprenda Matemática de uma forma
               <b> única </b>e<b> organizada</b>.
             </p>
-            <button
-              id="signup"
-              type="button"
+
+            <Button
+              textColor="#fff"
+              borderColor="#fff"
+              backgroundColor="#1cd8d2"
               onClick={() => history.push('/signup')}
             >
               COMECE AGORA
-            </button>
+            </Button>
           </div>
 
           <img src={logoImg} alt="Logo" />
@@ -122,13 +127,14 @@ const Home: React.FC = () => {
             <h2>Geometria plana</h2>
             <h2>Trigonometria</h2>
 
-            <button
-              id="signup"
-              type="button"
+            <Button
+              textColor="#2b1c81"
+              borderColor="#2b1c81"
+              backgroundColor="#fff"
               onClick={() => history.push('/signup')}
             >
               COMECE AGORA
-            </button>
+            </Button>
           </div>
         </SecondContainerContent>
       </SecondContainer>
@@ -142,13 +148,14 @@ const Home: React.FC = () => {
               <strong>Vídeo introdutório do jogo</strong>
             </div>
 
-            <button
-              id="signup"
-              type="button"
+            <Button
+              textColor="#fff"
+              borderColor="#fff"
+              backgroundColor="#55e2c1"
               onClick={() => history.push('/signup')}
             >
               COMECE AGORA
-            </button>
+            </Button>
           </section>
         </ThirdContainerContent>
       </ThirdContainer>

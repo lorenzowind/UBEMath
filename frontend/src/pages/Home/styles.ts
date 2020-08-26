@@ -79,43 +79,6 @@ export const Header = styled.header`
     display: flex;
     justify-content: space-between;
 
-    #signin {
-      border: 0;
-      width: 180px;
-      border-radius: 13px;
-      box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
-      background-color: #2b1c81;
-
-      font-size: 20px;
-      font-weight: 700;
-      color: #fff;
-      padding: 8px;
-      transition: background-color 0.2s;
-
-      &:hover {
-        background: ${shade(0.2, '#2b1c81')};
-      }
-    }
-
-    #signup {
-      border: 0;
-      width: 180px;
-      border-radius: 13px;
-      box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
-      border: solid 2px #2b1c81;
-      background-color: #93edc7;
-
-      font-size: 20px;
-      font-weight: 700;
-      color: #2b1c81;
-      padding: 8px;
-      transition: background-color 0.2s;
-
-      &:hover {
-        background: ${shade(0.2, '#93edc7')};
-      }
-    }
-
     button {
       & + button {
         margin-left: 30px;
@@ -177,25 +140,6 @@ export const FirstContainerContent = styled.div`
       word-break: normal;
       margin-bottom: 27px;
       line-height: 30px;
-    }
-
-    #signup {
-      border: 0;
-      width: 200px;
-      border-radius: 13px;
-      box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
-      border: solid 2px #fff;
-      background-color: #1cd8d2;
-
-      font-size: 20px;
-      font-weight: 700;
-      color: #fff;
-      padding: 8px;
-      transition: background-color 0.2s;
-
-      &:hover {
-        background: ${shade(0.2, '#1cd8d2')};
-      }
     }
   }
 
@@ -260,24 +204,8 @@ export const SecondContainerContent = styled.div`
       color: #2b1c81;
     }
 
-    #signup {
+    button {
       margin-top: 63px;
-      border: 0;
-      width: 200px;
-      border-radius: 13px;
-      box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
-      border: solid 2px #2b1c81;
-      background-color: #fff;
-
-      font-size: 20px;
-      font-weight: 700;
-      color: #2b1c81;
-      padding: 8px;
-      transition: background-color 0.2s;
-
-      &:hover {
-        background: ${shade(0.2, '#fff')};
-      }
     }
   }
 
@@ -326,25 +254,6 @@ export const ThirdContainerContent = styled.div`
       font-size: 32px;
       font-weight: 700;
       color: #fff;
-    }
-  }
-
-  #signup {
-    border: 0;
-    width: 200px;
-    border-radius: 13px;
-    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
-    border: solid 2px #fff;
-    background-color: #55e2c1;
-
-    font-size: 20px;
-    font-weight: 700;
-    color: #fff;
-    padding: 8px;
-    transition: background-color 0.2s;
-
-    &:hover {
-      background: ${shade(0.2, '#55e2c1')};
     }
   }
 `;
