@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import {
   Container,
@@ -18,6 +19,8 @@ import logoImg from '../../assets/logo.svg';
 import illustrationImg from '../../assets/illustration.svg';
 
 const Home: React.FC = () => {
+  const history = useHistory();
+
   return (
     <Container>
       <FirstContainer>
@@ -62,11 +65,19 @@ const Home: React.FC = () => {
           </nav>
 
           <section>
-            <button id="signin" type="button">
+            <button
+              id="signin"
+              type="button"
+              onClick={() => history.push('/signin')}
+            >
               LOGIN
             </button>
 
-            <button id="signup" type="button">
+            <button
+              id="signup"
+              type="button"
+              onClick={() => history.push('/signup')}
+            >
               CRIAR CONTA
             </button>
           </section>
@@ -78,7 +89,11 @@ const Home: React.FC = () => {
               Crie sua conta agora mesmo e aprenda Matemática de uma forma
               <b> única </b>e<b> organizada</b>.
             </p>
-            <button id="signup" type="button">
+            <button
+              id="signup"
+              type="button"
+              onClick={() => history.push('/signup')}
+            >
               COMECE AGORA
             </button>
           </div>
@@ -107,7 +122,11 @@ const Home: React.FC = () => {
             <h2>Geometria plana</h2>
             <h2>Trigonometria</h2>
 
-            <button id="signup" type="button">
+            <button
+              id="signup"
+              type="button"
+              onClick={() => history.push('/signup')}
+            >
               COMECE AGORA
             </button>
           </div>
@@ -123,7 +142,11 @@ const Home: React.FC = () => {
               <strong>Vídeo introdutório do jogo</strong>
             </div>
 
-            <button id="signup" type="button">
+            <button
+              id="signup"
+              type="button"
+              onClick={() => history.push('/signup')}
+            >
               COMECE AGORA
             </button>
           </section>
