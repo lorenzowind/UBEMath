@@ -19,6 +19,7 @@
     ],
     "rules": {
       "prettier/prettier": "error",
+      "camelcase": "off",
       "class-methods-use-this": "off",
       "no-useless-constructor": "off",
       "import/no-unresolved": "off",

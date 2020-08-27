@@ -23,7 +23,7 @@ export default class UsersController {
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
-    const { id } = request.params;
+    const { id } = request.user;
     const { name, email, position, password } = request.body;
 
     const updateUser = container.resolve(UpdateUserService);
@@ -40,7 +40,7 @@ export default class UsersController {
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {
-    const { id } = request.params;
+    const { id } = request.user;
 
     const deleteUser = container.resolve(DeleteUserService);
 

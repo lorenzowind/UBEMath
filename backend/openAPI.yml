@@ -43,6 +43,9 @@ components:
           type: string
         password:
           type: string
+        avatar:
+          type: string
+          format: binary
         created_at:
           type: string
           format: dateformat
@@ -102,6 +105,9 @@ paths:
                         type: string
                         format: dateformat
                         example: "2020-07-02T21:57:00.421Z"
+                      avatar_url:
+                        type: string
+                        example: null
                   token:
                     type: string
                     example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTcxMTQ0MDgsImV4cCI6MTU5NzIwMDgwOCwic3ViIjoiMWEwMWY3ZmYtYzZlMy00M2NiLThiNzQtY2YxOWVhZDYyMDdhIn0.P_NlcLb0Ob6j9pC6DxDJiF2q7Xrx6qqWkgOcUgqCpro"
@@ -211,18 +217,11 @@ paths:
                     type: string
                     format: dateformat
                     example: "2020-07-02T21:57:00.421Z"
-  /users/{id}:
+                  avatar_url:
+                    type: string
+                    example: null
     put:
-      summary: Updates an user.
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: string
-            format: uuid
-            example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
-          required: true
-          description: User id to update it.
+      summary: Updates the user.
       tags:
         - users
       security:
@@ -282,16 +281,7 @@ paths:
         '401':
           $ref: '#/components/responses/UnauthorizedError'
     delete:
-      summary: Deletes an user.
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: string
-            format: uuid
-            example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
-          required: true
-          description: User id to delete it.
+      summary: Deletes the user.
       tags:
         - users
       security:
@@ -299,6 +289,65 @@ paths:
       responses:
         '200':
           description: Returns a successfully deleted user confirmation.
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /users/avatar:
+    patch:
+      summary: Updates the user avatar.
+      tags:
+        - users
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                avatar:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Returns a JSON containing the updated user with avatar data.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  name:
+                    type: string
+                    example: "User Name"
+                  email:
+                    type: string
+                    format: email
+                    example: "user@email.com"
+                  position:
+                    type: string
+                    example: "admin"
+                  avatar:
+                    type: string
+                    format: binary
+                    example: "2196cf1aec2f18533aaf-file_name.png"
+                  created_at:
+                    type: string
+                    format: dateformat
+                    example: "2020-07-02T21:57:00.421Z"
+                  updated_at:
+                    type: string
+                    format: dateformat
+                    example: "2020-07-02T21:57:00.421Z"
+                  avatar_url:
+                    type: string
+                    example: "https://image_upload_provider/2196cf1aec2f18533aaf-file_name.png"
         '400':
           $ref:  '#/components/responses/IncorrectToken'
         '401':
