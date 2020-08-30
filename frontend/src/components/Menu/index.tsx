@@ -3,8 +3,6 @@ import { FiMenu } from 'react-icons/fi';
 
 import { Container, Content } from './styles';
 
-import iconMenu from '../../assets/icon_menu.svg';
-
 const Menu: React.FC = () => {
   return (
     <Container>
