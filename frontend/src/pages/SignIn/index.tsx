@@ -3,6 +3,7 @@ import { FiMail, FiLock } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 
+import { Link } from 'react-router-dom';
 import {
   Container,
   Background,
@@ -39,9 +40,9 @@ const SignIn: React.FC = () => {
                     <Input name="password" icon={FiLock} type="password" />
 
                     <article>
-                      <a href="/forgot">
+                      <Link to="/forgot">
                         <b>Esqueci minha senha</b>
-                      </a>
+                      </Link>
                     </article>
                   </fieldset>
                 </InputsContainer>
@@ -59,7 +60,7 @@ const SignIn: React.FC = () => {
                   <strong>
                     {'Não possui conta? '}
                     <b>
-                      <a href="/signup">Crie agora!</a>
+                      <Link to="/signup">Crie agora!</Link>
                     </b>
                   </strong>
                 </nav>

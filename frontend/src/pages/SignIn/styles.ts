@@ -1,6 +1,15 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 import backgroundImg from '../../assets/background.png';
+
+const appearFromLeft = keyframes`
+  from {
+    transform: translateX(-100px);
+  }
+  to {
+    transform: translateX(0);
+  }
+`;
 
 export const Container = styled.div`
   height: 100vh;
@@ -28,6 +37,8 @@ export const MainContainer = styled.div`
   box-shadow: 0 60px 80px 0 rgba(0, 0, 0, 0.18);
   background: linear-gradient(to right, #1cd8d2, #93edc7);
   padding: 80px 5%;
+
+  animation: ${appearFromLeft} 1s;
 `;
 
 export const LeftContent = styled.div`
