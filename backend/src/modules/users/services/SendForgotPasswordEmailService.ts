@@ -45,7 +45,7 @@ class SendForgotPasswordEmailService {
         name: user.name,
         email: user.email,
       },
-      subject: '[SecexLog] Recuperação de senha',
+      subject: '[UBEMath] Recuperação de senha',
       templateData: {
         file: forgotPasswordTemplate,
         variables: {
