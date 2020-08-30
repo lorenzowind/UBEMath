@@ -6,6 +6,7 @@ interface User {
   id: string;
   name: string;
   email: string;
+  position: 'usuario' | 'admin';
   avatar_url: string;
 }
 
