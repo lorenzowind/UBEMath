@@ -25,9 +25,11 @@ components:
       name: user_position
   responses:
     UnauthorizedError:
-      description: JWT token is missing
+      description: JWT token | User position is missing
     IncorrectToken:
-      description: Invalid JWT token | Exclusive for administrators
+      description: Invalid JWT token
+    ExclusiveAccess:
+      description: Exclusive for specific user position
   schemas:
     User:
       properties:
