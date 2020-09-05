@@ -242,7 +242,7 @@ paths:
                     example: "newuser@email.com"
                   position:
                     type: string
-                    example: "usuario"
+                    example: "user"
                   password:
                     type: string
                     example: "new user password"
@@ -267,7 +267,10 @@ paths:
                     example: "newuser@email.com"
                   position:
                     type: string
-                    example: "usuario"
+                    example: "user"
+                  avatar_url:
+                    type: string
+                    example: null
                   created_at:
                     type: string
                     format: dateformat
