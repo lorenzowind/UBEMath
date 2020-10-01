@@ -23,6 +23,7 @@ const appearFromRight = keyframes`
 
 export const ContainerClosed = styled.div`
   position: absolute;
+  z-index: 1;
   left: 0;
   width: 100px;
   height: 95%;
@@ -57,6 +58,7 @@ export const ContainerOpened = styled.div`
   align-items: center;
 
   position: absolute;
+  z-index: 1;
   left: 0;
   width: 500px;
   height: 95%;

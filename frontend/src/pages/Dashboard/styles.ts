@@ -45,8 +45,8 @@ export const MainContainer = styled.div`
   border-radius: 13px;
   box-shadow: 0 60px 80px 0 rgba(0, 0, 0, 0.18);
   background: #fff;
-  width: 95%;
-  height: 900px;
+  width: 95vw;
+  height: 95%;
   position: relative;
   animation: ${appearFromTop} 1s;
 `;
@@ -59,13 +59,13 @@ export const Content = styled.div`
   margin-left: 25px;
 
   > strong {
-    font-size: 58px;
+    font-size: 52px;
     font-weight: 700;
     color: #2b1c81;
   }
 
   h1 {
-    font-size: 72px;
+    font-size: 64px;
     font-weight: 700;
     color: #2b1c81;
   }

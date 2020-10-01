@@ -1,31 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-import {
-  ConteinerTopButtons,
-  AllButton,
-  BlockedButton,
-  CompleteButton,
-} from './styles';
+import { ConteinerTopButtons } from './styles';
 
 const TopsButtons: React.FC = () => {
   return (
     <ConteinerTopButtons>
-      <AllButton>
-        <Link to="/">
-          <button type="submit">Todas</button>
-        </Link>
-      </AllButton>
-      <BlockedButton>
-        <Link to="/">
-          <button type="submit">Bloqueadas</button>
-        </Link>
-      </BlockedButton>
-      <CompleteButton>
-        <Link to="/">
-          <button type="submit">Completadas</button>
-        </Link>
-      </CompleteButton>
+      <button type="button">
+        <strong>Todas</strong>
+      </button>
+      <button type="button">
+        <strong>Bloqueadas</strong>
+      </button>
+      <button type="button">
+        <strong>Completadas</strong>
+      </button>
     </ConteinerTopButtons>
   );
 };
