@@ -15,6 +15,7 @@ tags:
   - name: modules
   - name: sub-modules
   - name: questions
+  - name: alternatives
   - name: conquests
   - name: user-answers
   - name: user-conquests
@@ -89,6 +90,8 @@ components:
         description:
           type: string
           format: email
+        is_exercise:
+          type: boolean
         image:
           type: string
           format: binary
@@ -108,13 +111,8 @@ components:
           format: uuid
         name:
           type: string
-        description:
-          type: string
-          format: email
         content_url:
           type: string
-        is_exercise:
-          type: boolean
         created_at:
           type: string
           format: dateformat
@@ -131,9 +129,27 @@ components:
           format: uuid
         statement:
           type: string
-        description:
+        right_letter:
           type: string
         alternatives:
+          type: string
+        created_at:
+          type: string
+          format: dateformat
+        updated_at:
+          type: string
+          format: dateformat
+    Alternative:
+      properties:
+        id:
+          type: string
+          format: uuid
+        question_id:
+          type: string
+          format: uuid
+        letter:
+          type: string
+        content_url:
           type: string
         created_at:
           type: string
@@ -148,6 +164,11 @@ components:
           format: uuid
         name:
           type: string
+        description:
+          type: string
+        image:
+          type: string
+          format: binary
         created_at:
           type: string
           format: dateformat
@@ -165,7 +186,7 @@ components:
         question_id:
           type: string
           format: uuid
-        answer:
+        answer_letter:
           type: string
     UserConquest:
       properties:
@@ -525,6 +546,9 @@ paths:
                   description:
                     type: string
                     example: "Module description"
+                  is_exercise:
+                    type: boolean
+                    example: false
       responses:
         '200':
           description: Returns a JSON containing the created module.
@@ -543,6 +567,9 @@ paths:
                   description:
                     type: string
                     example: "Module description"
+                  is_exercise:
+                    type: boolean
+                    example: false
                   image_url:
                     type: string
                     example: null
@@ -590,6 +617,9 @@ paths:
                   description:
                     type: string
                     example: "Module description"
+                  is_exercise:
+                    type: boolean
+                    example: false
       responses:
         '200':
           description: Returns a JSON containing the updated module.
@@ -608,6 +638,9 @@ paths:
                   description:
                     type: string
                     example: "Module description"
+                  is_exercise:
+                    type: boolean
+                    example: false
                   image_url:
                     type: string
                     example: null
@@ -627,6 +660,15 @@ paths:
           $ref: '#/components/responses/ExclusiveAccess'
     delete:
       summary: Deletes a module.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+            example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+          required: true
+          description: Module id to update id.
       tags:
         - modules
       security:
@@ -644,6 +686,15 @@ paths:
   /modules/{id}/image:
     patch:
       summary: Updates the module image.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+            example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+          required: true
+          description: Module id to update id.
       tags:
         - modules
       security:
@@ -677,6 +728,9 @@ paths:
                   description:
                     type: string
                     example: "Module description"
+                  is_exercise:
+                    type: boolean
+                    example: false
                   image:
                     type: string
                     format: binary
@@ -725,6 +779,9 @@ paths:
                     description:
                       type: string
                       example: "Module description"
+                    is_exercise:
+                      type: boolean
+                      example: false
                     image:
                       type: string
                       format: binary
