@@ -23,7 +23,8 @@ export const AllButton = styled.div`
 
   button {
     color: #ffffff;
-    font-size: 24px;
+    font-size: 28px;
+    font-family: 'Ubuntu', sans-serif;
     font-weight: bold;
     font-stretch: normal;
     font-style: normal;
@@ -55,7 +56,8 @@ export const BlockedButton = styled.div`
 
   button {
     color: #ffffff;
-    font-size: 24px;
+    font-size: 28px;
+    font-family: 'Ubuntu', sans-serif;
     font-weight: bold;
     font-stretch: normal;
     font-style: normal;
@@ -87,7 +89,8 @@ export const CompleteButton = styled.div`
 
   button {
     color: #ffffff;
-    font-size: 24px;
+    font-size: 28px;
+    font-family: 'Ubuntu', sans-serif;
     font-weight: bold;
     font-stretch: normal;
     font-style: normal;

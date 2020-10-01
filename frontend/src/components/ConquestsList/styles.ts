@@ -28,7 +28,7 @@ export const ListConteiner = styled.div`
   flex-direction: row;
 
   &:hover {
-    animation: ${animationBottom} 0.5s;
+    animation: ${animationBottom} 1s;
   }
 `;
 
