@@ -92,15 +92,9 @@ export const Card = styled.div`
   height: 400px;
   padding: 30px;
 
-  transition: transform 0.2s;
-
   > strong {
     font-size: 36px;
     font-weight: 700;
     color: #2b1c81;
-  }
-
-  &:hover {
-    transform: translateY(-10px);
   }
 `;

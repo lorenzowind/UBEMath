@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { FiMenu } from 'react-icons/fi';
+import { useHistory } from 'react-router-dom';
 
 import {
   ContainerClosed,
@@ -11,6 +12,8 @@ import {
 } from './styles';
 
 const Menu: React.FC = () => {
+  const history = useHistory();
+
   const [menuIsOpened, setMenuIsOpened] = useState(false);
 
   const handleClickMenu = useCallback(() => {
@@ -38,10 +41,10 @@ const Menu: React.FC = () => {
             <button type="button">
               <strong>TREINO</strong>
             </button>
-            <button type="button">
+            <button type="button" onClick={() => history.push('modules')}>
               <strong>MÓDULOS</strong>
             </button>
-            <button type="button">
+            <button type="button" onClick={() => history.push('conquests')}>
               <strong>CONQUISTAS</strong>
             </button>
             <button type="button">

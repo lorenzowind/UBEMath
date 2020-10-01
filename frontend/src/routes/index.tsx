@@ -10,6 +10,7 @@ import ForgotPassword from '../pages/ForgotPassword';
 import ResetPassword from '../pages/ResetPassword';
 
 import Dashboard from '../pages/Dashboard';
+import Modules from '../pages/Modules';
 import Profile from '../pages/Profile';
 import Conquests from '../pages/Conquests';
 
@@ -21,9 +22,10 @@ const Routes: React.FC = () => (
     <Route path="/forgot-password" component={ForgotPassword} />
     <Route path="/reset-password" component={ResetPassword} />
 
-    <Route path="/dashboard" component={Dashboard} />
-    <Route path="/profile" component={Profile} />
-    <Route path="/conquests" component={Conquests} />
+    <Route path="/dashboard" component={Dashboard} isPrivate />
+    <Route path="/modules" component={Modules} isPrivate />
+    <Route path="/profile" component={Profile} isPrivate />
+    <Route path="/conquests" component={Conquests} isPrivate />
   </Switch>
 );
 

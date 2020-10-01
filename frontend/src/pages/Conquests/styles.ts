@@ -2,12 +2,12 @@ import styled, { keyframes } from 'styled-components';
 
 import backgroundImg from '../../assets/background.png';
 
-const appearFromTop = keyframes`
+const appearWithFade = keyframes`
   from {
-    transform: translateY(-100px);
+    opacity: 0;
   }
   to {
-    transform: translateY(0);
+    opacity: 1;
   }
 `;
 
@@ -39,7 +39,8 @@ export const MainContainer = styled.div`
   width: 95%;
   height: 900px;
   position: relative;
-  animation: ${appearFromTop} 1s;
 `;
 
-export const Content = styled.div``;
+export const Content = styled.div`
+  animation: ${appearWithFade} 0.5s;
+`;
