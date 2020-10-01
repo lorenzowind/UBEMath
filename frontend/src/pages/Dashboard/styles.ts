@@ -11,6 +11,15 @@ const appearFromTop = keyframes`
   }
 `;
 
+const appearWithFade = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
 export const Container = styled.div`
   height: 100vh;
 
@@ -42,4 +51,56 @@ export const MainContainer = styled.div`
   animation: ${appearFromTop} 1s;
 `;
 
-export const Content = styled.div``;
+export const Content = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  animation: ${appearWithFade} 0.5s;
+  margin-left: 25px;
+
+  > strong {
+    font-size: 58px;
+    font-weight: 700;
+    color: #2b1c81;
+  }
+
+  h1 {
+    font-size: 72px;
+    font-weight: 700;
+    color: #2b1c81;
+  }
+
+  section {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+  }
+`;
+
+export const Card = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+
+  border-radius: 13px;
+  box-shadow: 0 6px 13px 0 rgba(0, 0, 0, 0.16);
+  border: solid 6px #2b1c81;
+  width: 30%;
+  height: 400px;
+  padding: 30px;
+
+  transition: transform 0.2s;
+
+  > strong {
+    font-size: 36px;
+    font-weight: 700;
+    color: #2b1c81;
+  }
+
+  &:hover {
+    transform: translateY(-10px);
+  }
+`;

@@ -1,3 +1,4 @@
+import { shade } from 'polished';
 import styled, { keyframes } from 'styled-components';
 
 import logoImg from '../../assets/logo_menu.svg';
@@ -135,6 +136,12 @@ export const OptionsContainer = styled.div`
       color: #fff;
       font-size: 36px;
       font-weight: 700;
+
+      transition: color 0.2s;
+
+      &:hover {
+        color: ${shade(0.2, '#fff')};
+      }
     }
 
     & + button {
