@@ -1,3 +1,4 @@
+import { shade } from 'polished';
 import styled, { keyframes } from 'styled-components';
 
 export const ConteinerTopButtons = styled.div`
@@ -36,14 +37,8 @@ export const AllButton = styled.div`
     border: none;
     border-radius: 6px;
 
-    &:before {
-      width: 100%;
-      height: 0;
-      background: rgba(255, 255, 255, 0.3);
-      transition: all 2s ease;
-    }
-    &:hover:before {
-      height: 100%;
+    &:hover {
+      color: ${shade(0.5, '#fff')};
     }
   }
 `;
@@ -73,6 +68,10 @@ export const BlockedButton = styled.div`
 
     border: none;
     border-radius: 6px;
+
+    &:hover {
+      color: ${shade(0.5, '#fff')};
+    }
   }
 `;
 
@@ -101,5 +100,9 @@ export const CompleteButton = styled.div`
 
     border: none;
     border-radius: 6px;
+
+    &:hover {
+      color: ${shade(0.5, '#fff')};
+    }
   }
 `;

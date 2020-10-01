@@ -1,4 +1,20 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const animationBottom = keyframes`
+  0%, 20%, 60%, 100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+
+  40%{
+    -webkit-transform: translateX(20px);
+    transform: translateX(20px);
+  }
+  80%{
+    -webkit-transform: translateX(10px);
+    transform: translateX(10px);
+  }
+`;
 
 export const ListConteiner = styled.div`
   width: 60vw;
@@ -10,6 +26,10 @@ export const ListConteiner = styled.div`
 
   display: flex;
   flex-direction: row;
+
+  &:hover {
+    animation: ${animationBottom} 0.5s;
+  }
 `;
 
 export const ConteinerImage = styled.div`
