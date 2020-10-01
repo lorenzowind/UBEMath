@@ -14,7 +14,7 @@ import {
 import Menu from '../../components/Menu';
 import Header from '../../components/Header';
 
-import moduleImg from '../../assets/module.png';
+import pyramidImg from '../../assets/pyramid.png';
 
 const Modules: React.FC = () => {
   return (
@@ -48,7 +48,7 @@ const Modules: React.FC = () => {
             <nav>
               <ModuleSection>
                 <strong>
-                  <CircleSection />
+                  <CircleSection isMain />
                   Módulo 1
                 </strong>
 
@@ -56,7 +56,7 @@ const Modules: React.FC = () => {
                   <CircleSection />
                   <strong>CONTEÚDO</strong>
                   <section>
-                    <img src={moduleImg} alt="Module" />
+                    <img src={pyramidImg} alt="Pyramid" />
                     <div>
                       <strong>What is Lorem Ipsum?</strong>
                       <h1>
@@ -76,7 +76,7 @@ const Modules: React.FC = () => {
                   <CircleSection />
                   <strong>EXERCÍCIOS</strong>
                   <section>
-                    <img src={moduleImg} alt="Module" />
+                    <img src={pyramidImg} alt="Pyramid" />
                     <div>
                       <strong>What is Lorem Ipsum?</strong>
                       <h1>
@@ -94,7 +94,7 @@ const Modules: React.FC = () => {
               </ModuleSection>
               <ModuleSection>
                 <strong>
-                  <CircleSection />
+                  <CircleSection isMain />
                   Módulo 2
                 </strong>
 
@@ -102,7 +102,7 @@ const Modules: React.FC = () => {
                   <CircleSection />
                   <strong>CONTEÚDO</strong>
                   <section>
-                    <img src={moduleImg} alt="Module" />
+                    <img src={pyramidImg} alt="Pyramid" />
                     <div>
                       <strong>What is Lorem Ipsum?</strong>
                       <h1>
@@ -122,7 +122,7 @@ const Modules: React.FC = () => {
                   <CircleSection />
                   <strong>EXERCÍCIOS</strong>
                   <section>
-                    <img src={moduleImg} alt="Module" />
+                    <img src={pyramidImg} alt="Pyramid" />
                     <div>
                       <strong>What is Lorem Ipsum?</strong>
                       <h1>

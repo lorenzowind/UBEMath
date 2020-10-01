@@ -7,6 +7,10 @@ interface ModuleCardProps {
   color: string;
 }
 
+interface CircleSectionProps {
+  isMain?: boolean;
+}
+
 const appearWithFade = keyframes`
   from {
     opacity: 0;
@@ -86,6 +90,12 @@ export const Content = styled.div`
       background: #55e2c1;
     }
   }
+
+  @media only screen and (max-width: 1100px) {
+    & {
+      display: none;
+    }
+  }
 `;
 
 export const ModulesBar = styled.div`
@@ -158,9 +168,9 @@ export const ModuleCard = styled.div<ModuleCardProps>`
   background-color: ${props => props.color};
 `;
 
-export const CircleSection = styled.div`
+export const CircleSection = styled.div<CircleSectionProps>`
   position: absolute;
-  margin-left: -80px;
+  margin-left: ${props => (props.isMain ? '-80px' : '-60px')};
   margin-top: auto;
   margin-bottom: auto;
   top: 0;
@@ -168,6 +178,6 @@ export const CircleSection = styled.div`
 
   width: 28px;
   height: 28px;
-  border: 2px solid #2b1c81;
+  border: ${props => (props.isMain ? '6px' : '3px')} solid #2b1c81;
   border-radius: 50%;
 `;
