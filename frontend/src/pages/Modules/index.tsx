@@ -8,7 +8,6 @@ import {
   ModulesBar,
   ModuleSection,
   ModuleCard,
-  CircleSection,
 } from './styles';
 
 import Menu from '../../components/Menu';
@@ -47,13 +46,9 @@ const Modules: React.FC = () => {
 
             <nav>
               <ModuleSection>
-                <strong>
-                  <CircleSection isMain />
-                  Módulo 1
-                </strong>
+                <strong>Módulo 1</strong>
 
                 <ModuleCard color="#55e2c1">
-                  <CircleSection />
                   <strong>CONTEÚDO</strong>
                   <section>
                     <img src={pyramidImg} alt="Pyramid" />
@@ -73,7 +68,6 @@ const Modules: React.FC = () => {
                 </ModuleCard>
 
                 <ModuleCard color="#1cd8d2">
-                  <CircleSection />
                   <strong>EXERCÍCIOS</strong>
                   <section>
                     <img src={pyramidImg} alt="Pyramid" />
@@ -93,13 +87,9 @@ const Modules: React.FC = () => {
                 </ModuleCard>
               </ModuleSection>
               <ModuleSection>
-                <strong>
-                  <CircleSection isMain />
-                  Módulo 2
-                </strong>
+                <strong>Módulo 2</strong>
 
                 <ModuleCard color="#55e2c1">
-                  <CircleSection />
                   <strong>CONTEÚDO</strong>
                   <section>
                     <img src={pyramidImg} alt="Pyramid" />
@@ -119,7 +109,6 @@ const Modules: React.FC = () => {
                 </ModuleCard>
 
                 <ModuleCard color="#1cd8d2">
-                  <CircleSection />
                   <strong>EXERCÍCIOS</strong>
                   <section>
                     <img src={pyramidImg} alt="Pyramid" />

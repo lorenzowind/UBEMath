@@ -7,10 +7,6 @@ interface ModuleCardProps {
   color: string;
 }
 
-interface CircleSectionProps {
-  isMain?: boolean;
-}
-
 const appearWithFade = keyframes`
   from {
     opacity: 0;
@@ -151,7 +147,7 @@ export const ModulesBar = styled.div`
 `;
 
 export const ModuleSection = styled.div`
-  margin: 30px 40px 0 80px;
+  margin: 30px 40px 0 40px;
 
   > strong {
     position: relative;
@@ -166,18 +162,4 @@ export const ModuleCard = styled.div<ModuleCardProps>`
   margin-top: 20px;
   border-radius: 13px;
   background-color: ${props => props.color};
-`;
-
-export const CircleSection = styled.div<CircleSectionProps>`
-  position: absolute;
-  margin-left: ${props => (props.isMain ? '-80px' : '-60px')};
-  margin-top: auto;
-  margin-bottom: auto;
-  top: 0;
-  bottom: 0;
-
-  width: 28px;
-  height: 28px;
-  border: ${props => (props.isMain ? '6px' : '3px')} solid #2b1c81;
-  border-radius: 50%;
 `;
