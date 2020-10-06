@@ -19,7 +19,6 @@ const Conquests: React.FC = () => {
     <Container>
       <Background>
         <MainContainer>
-          <Header />
           <Menu />
           <Content>
             <ContainerTopButtons>

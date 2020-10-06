@@ -3,6 +3,8 @@ import React from 'react';
 import { Container, Background, MainContainer, Content } from './styles';
 
 import Menu from '../../components/Menu';
+import Header from '../../components/Header';
+import ProfileImage from '../../components/ProfileImage';
 
 const Profile: React.FC = () => {
   return (
@@ -10,7 +12,10 @@ const Profile: React.FC = () => {
       <Background>
         <MainContainer>
           <Menu />
-          <Content>Início</Content>
+          <Content>
+            <Header />
+            <ProfileImage />
+          </Content>
         </MainContainer>
       </Background>
     </Container>
