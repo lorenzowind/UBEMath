@@ -1,11 +1,18 @@
 import React from 'react';
 
-import { Container, Background, MainContainer, Content } from './styles';
+import {
+  Container,
+  Background,
+  MainContainer,
+  Content,
+  ContainerTopButtons,
+  ConquestContainer,
+} from './styles';
 
 import Menu from '../../components/Menu';
 import Header from '../../components/Header';
-import TopButtons from '../../components/TopsButtons';
-import ConquestList from '../../components/ConquestsList';
+
+import pyramidImg from '../../assets/pyramid.png';
 
 const Conquests: React.FC = () => {
   return (
@@ -14,10 +21,25 @@ const Conquests: React.FC = () => {
         <MainContainer>
           <Menu />
           <Content>
-            <Header />
-            <TopButtons />
-            <ConquestList />
-            <ConquestList />
+            <ContainerTopButtons>
+              <button type="button">
+                <strong>Todas</strong>
+              </button>
+              <button type="button">
+                <strong>Bloqueadas</strong>
+              </button>
+              <button type="button">
+                <strong>Completadas</strong>
+              </button>
+            </ContainerTopButtons>
+
+            <ConquestContainer>
+              <img src={pyramidImg} alt="Pyramid" />
+            </ConquestContainer>
+
+            <ConquestContainer>
+              <img src={pyramidImg} alt="Pyramid" />
+            </ConquestContainer>
           </Content>
         </MainContainer>
       </Background>

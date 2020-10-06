@@ -13,7 +13,7 @@ import {
 import Menu from '../../components/Menu';
 import Header from '../../components/Header';
 
-import moduleImg from '../../assets/module.png';
+import pyramidImg from '../../assets/pyramid.png';
 
 const Modules: React.FC = () => {
   return (
@@ -42,18 +42,6 @@ const Modules: React.FC = () => {
               <button type="button">
                 <strong>Módulo 3</strong>
               </button>
-              <button type="button">
-                <strong>Módulo 3</strong>
-              </button>
-              <button type="button">
-                <strong>Módulo 3</strong>
-              </button>
-              <button type="button">
-                <strong>Módulo 3</strong>
-              </button>
-              <button type="button">
-                <strong>Módulo 3</strong>
-              </button>
             </ModulesBar>
 
             <nav>
@@ -63,7 +51,7 @@ const Modules: React.FC = () => {
                 <ModuleCard color="#55e2c1">
                   <strong>CONTEÚDO</strong>
                   <section>
-                    <img src={moduleImg} alt="Module" />
+                    <img src={pyramidImg} alt="Pyramid" />
                     <div>
                       <strong>What is Lorem Ipsum?</strong>
                       <h1>
@@ -82,7 +70,7 @@ const Modules: React.FC = () => {
                 <ModuleCard color="#1cd8d2">
                   <strong>EXERCÍCIOS</strong>
                   <section>
-                    <img src={moduleImg} alt="Module" />
+                    <img src={pyramidImg} alt="Pyramid" />
                     <div>
                       <strong>What is Lorem Ipsum?</strong>
                       <h1>
@@ -104,7 +92,7 @@ const Modules: React.FC = () => {
                 <ModuleCard color="#55e2c1">
                   <strong>CONTEÚDO</strong>
                   <section>
-                    <img src={moduleImg} alt="Module" />
+                    <img src={pyramidImg} alt="Pyramid" />
                     <div>
                       <strong>What is Lorem Ipsum?</strong>
                       <h1>
@@ -123,7 +111,7 @@ const Modules: React.FC = () => {
                 <ModuleCard color="#1cd8d2">
                   <strong>EXERCÍCIOS</strong>
                   <section>
-                    <img src={moduleImg} alt="Module" />
+                    <img src={pyramidImg} alt="Pyramid" />
                     <div>
                       <strong>What is Lorem Ipsum?</strong>
                       <h1>
