@@ -28,17 +28,11 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-    positionHeader:
-      type: apiKey
-      in: header
-      name: user_position
   responses:
     UnauthorizedError:
-      description: JWT token | User position is missing
+      description: JWT token is missing
     IncorrectToken:
       description: Invalid JWT token
-    ExclusiveAccess:
-      description: Exclusive for specific user position
   schemas:
     User:
       properties:
@@ -50,8 +44,6 @@ components:
         email:
           type: string
           format: email
-        position:
-          type: string
         password:
           type: string
         avatar:
@@ -266,9 +258,6 @@ paths:
                         type: string
                         format: email
                         example: "user@email.com"
-                      position:
-                        type: string
-                        example: "admin"
                       created_at:
                         type: string
                         format: dateformat
@@ -353,9 +342,6 @@ paths:
                     type: string
                     format: email
                     example: "user@email.com"
-                  position:
-                    type: string
-                    example: "admin"
                   password:
                     type: string
                     example: "user password"
@@ -378,9 +364,6 @@ paths:
                     type: string
                     format: email
                     example: "user@email.com"
-                  position:
-                    type: string
-                    example: "admin"
                   created_at:
                     type: string
                     format: dateformat
@@ -412,9 +395,6 @@ paths:
                     type: string
                     format: email
                     example: "newuser@email.com"
-                  position:
-                    type: string
-                    example: "user"
                   password:
                     type: string
                     example: "new user password"
@@ -437,9 +417,6 @@ paths:
                     type: string
                     format: email
                     example: "newuser@email.com"
-                  position:
-                    type: string
-                    example: "user"
                   avatar_url:
                     type: string
                     example: null
@@ -504,9 +481,6 @@ paths:
                     type: string
                     format: email
                     example: "user@email.com"
-                  position:
-                    type: string
-                    example: "admin"
                   avatar:
                     type: string
                     format: binary
@@ -534,7 +508,6 @@ paths:
         - modules
       security:
         - bearerAuth: []
-        - positionHeader: []
       requestBody:
         required: true
         content:
@@ -593,8 +566,6 @@ paths:
           $ref:  '#/components/responses/IncorrectToken'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
-          $ref: '#/components/responses/ExclusiveAccess'
   /modules/{id}:
     put:
       summary: Updates a module.
@@ -611,7 +582,6 @@ paths:
         - modules
       security:
         - bearerAuth: []
-        - positionHeader: []
       requestBody:
         required: true
         content:
@@ -670,8 +640,6 @@ paths:
           $ref:  '#/components/responses/IncorrectToken'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
-          $ref: '#/components/responses/ExclusiveAccess'
     delete:
       summary: Deletes a module.
       parameters:
@@ -687,7 +655,6 @@ paths:
         - modules
       security:
         - bearerAuth: []
-        - positionHeader: []
       responses:
         '200':
           description: Returns a successfully deleted module confirmation.
@@ -695,8 +662,6 @@ paths:
           $ref:  '#/components/responses/IncorrectToken'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
-          $ref: '#/components/responses/ExclusiveAccess'
   /modules/{id}/image:
     patch:
       summary: Updates the module image.
@@ -713,7 +678,6 @@ paths:
         - modules
       security:
         - bearerAuth: []
-        - positionHeader: []
       requestBody:
         required: true
         content:
@@ -767,8 +731,6 @@ paths:
           $ref:  '#/components/responses/IncorrectToken'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
-        '403':
-          $ref: '#/components/responses/ExclusiveAccess'
   /modules/all:
     get:
       summary: Gets all modules.

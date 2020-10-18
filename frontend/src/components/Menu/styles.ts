@@ -136,7 +136,7 @@ export const OptionsContainer = styled.div`
 
     strong {
       color: #fff;
-      font-size: 36px;
+      font-size: 28px;
       font-weight: 700;
 
       transition: color 0.2s;

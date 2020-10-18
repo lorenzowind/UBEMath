@@ -26,7 +26,6 @@ describe('AuthenticateUser', () => {
     const user = await draftUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
-      position: 'admin',
       password: '123456',
     });
 
@@ -52,7 +51,6 @@ describe('AuthenticateUser', () => {
     await draftUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
-      position: 'admin',
       password: '123456',
     });
 

@@ -42,6 +42,10 @@ export const MainContainer = styled.div`
   width: 95vw;
   height: 95%;
   position: relative;
+
+  @media only screen and (max-width: 1100px) {
+    display: none;
+  }
 `;
 
 export const Content = styled.div`
@@ -103,13 +107,21 @@ export const ConquestContainer = styled.div`
 
   display: flex;
   flex-direction: row;
+  align-items: center;
+`;
+
+export const ImageContainer = styled.div`
+  width: 120px;
+  height: 10vh;
+  border-radius: 6px;
+  border: solid 3px #2b1c81;
+  background-color: #ffffff;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   img {
-    border-radius: 6px;
-    border: solid 3px #2b1c81;
-    background-color: #ffffff;
-    margin: 10px;
-    padding: 10px;
-    width: 15%;
+    object-fit: cover;
   }
 `;

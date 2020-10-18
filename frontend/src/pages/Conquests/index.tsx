@@ -7,6 +7,7 @@ import {
   Content,
   ContainerTopButtons,
   ConquestContainer,
+  ImageContainer,
 } from './styles';
 
 import Menu from '../../components/Menu';
@@ -19,6 +20,7 @@ const Conquests: React.FC = () => {
     <Container>
       <Background>
         <MainContainer>
+          <Header />
           <Menu />
           <Content>
             <ContainerTopButtons>
@@ -34,11 +36,15 @@ const Conquests: React.FC = () => {
             </ContainerTopButtons>
 
             <ConquestContainer>
-              <img src={pyramidImg} alt="Pyramid" />
+              <ImageContainer>
+                <img src={pyramidImg} alt="Pyramid" />
+              </ImageContainer>
             </ConquestContainer>
 
             <ConquestContainer>
-              <img src={pyramidImg} alt="Pyramid" />
+              <ImageContainer>
+                <img src={pyramidImg} alt="Pyramid" />
+              </ImageContainer>
             </ConquestContainer>
           </Content>
         </MainContainer>

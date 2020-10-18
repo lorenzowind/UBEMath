@@ -25,14 +25,12 @@ describe('DeleteUser', () => {
     await draftUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
-      position: 'admin',
       password: '123456',
     });
 
     const user = await draftUsersRepository.create({
       name: 'John Doe II',
       email: 'johndoeII@example.com',
-      position: 'admin',
       password: '123456',
     });
 
