@@ -28,7 +28,6 @@ import logoImg from '../../assets/logo.svg';
 interface SignUpFormData {
   name: string;
   email: string;
-  position: 'usuario';
   password: string;
 }
 
@@ -55,9 +54,7 @@ const SignUp: React.FC = () => {
           abortEarly: false,
         });
 
-        Object.assign(data, { position: 'usuario' });
-
-        await api.post('/users', data);
+        await api.post('users', data);
 
         history.push('/signin');
 
