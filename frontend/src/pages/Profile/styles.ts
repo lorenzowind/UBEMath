@@ -40,7 +40,12 @@ export const MainContainer = styled.div`
   width: 95%;
   height: 900px;
   position: relative;
+
   animation: ${appearFromTop} 1s;
+
+  @media only screen and (max-width: 1100px) {
+    display: none;
+  }
 `;
 
 export const Content = styled.div``;

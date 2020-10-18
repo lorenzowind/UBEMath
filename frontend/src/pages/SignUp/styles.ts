@@ -36,9 +36,13 @@ export const MainContainer = styled.div`
   border-radius: 13px;
   box-shadow: 0 60px 80px 0 rgba(0, 0, 0, 0.18);
   background: linear-gradient(to left, #1cd8d2, #93edc7);
-  padding: 80px 5%;
+  padding: 50px 5%;
 
   animation: ${appearFromRight} 1s;
+
+  @media only screen and (max-width: 1100px) {
+    display: none;
+  }
 `;
 
 export const LeftContent = styled.div`
@@ -101,6 +105,7 @@ export const InputsContainer = styled.div`
     border: 0;
 
     legend {
+      align-self: flex-start;
       font-weight: 700;
       color: #fff;
       font-size: 18px;
