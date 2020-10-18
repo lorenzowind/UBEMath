@@ -25,7 +25,6 @@ describe('CreateUser', () => {
     const user = await createUser.execute({
       name: 'John Doe',
       email: 'johndoe@example.com',
-      position: 'admin',
       password: '123456',
     });
 
@@ -36,7 +35,6 @@ describe('CreateUser', () => {
     await createUser.execute({
       name: 'John Doe',
       email: 'johndoe@example.com',
-      position: 'admin',
       password: '123456',
     });
 
@@ -44,7 +42,7 @@ describe('CreateUser', () => {
       createUser.execute({
         name: 'John Doe',
         email: 'johndoe@example.com',
-        position: 'admin',
+
         password: '123456',
       }),
     ).rejects.toBeInstanceOf(AppError);

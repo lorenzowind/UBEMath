@@ -22,9 +22,6 @@ class User {
   email: string;
 
   @Column()
-  position: 'user' | 'admin';
-
-  @Column()
   @Exclude()
   password: string;
 

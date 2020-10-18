@@ -25,7 +25,6 @@ describe('UpdateUser', () => {
     const user = await draftUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
-      position: 'admin',
       password: '123456',
     });
 
@@ -33,7 +32,6 @@ describe('UpdateUser', () => {
       id: user.id,
       name: 'John Doe II',
       email: 'johndoeII@example.com',
-      position: 'admin',
       password: '123456',
     });
 
@@ -47,7 +45,7 @@ describe('UpdateUser', () => {
         id: 'non existing user',
         name: 'John Doe',
         email: 'johndoe@example.com',
-        position: 'admin',
+
         password: '123456',
       }),
     ).rejects.toBeInstanceOf(AppError);
@@ -57,14 +55,12 @@ describe('UpdateUser', () => {
     await draftUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
-      position: 'admin',
       password: '123456',
     });
 
     const user = await draftUsersRepository.create({
       name: 'John Doe II',
       email: 'johndoeII@example.com',
-      position: 'admin',
       password: '123456',
     });
 
@@ -73,7 +69,7 @@ describe('UpdateUser', () => {
         id: user.id,
         name: user.name,
         email: 'johndoe@example.com',
-        position: user.position,
+
         password: '123456',
       }),
     ).rejects.toBeInstanceOf(AppError);
@@ -83,7 +79,6 @@ describe('UpdateUser', () => {
     const user = await draftUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
-      position: 'admin',
       password: '123456',
     });
 
@@ -91,7 +86,6 @@ describe('UpdateUser', () => {
       id: user.id,
       name: user.name,
       email: user.email,
-      position: user.position,
       password: '123123',
     });
 

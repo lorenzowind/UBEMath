@@ -22,7 +22,6 @@ usersRouter.post(
     [Segments.BODY]: {
       name: Joi.string().required(),
       email: Joi.string().email().required(),
-      position: Joi.string().required(),
       password: Joi.string().required(),
     },
   }),
@@ -36,7 +35,6 @@ usersRouter.put(
     [Segments.BODY]: {
       name: Joi.string().required(),
       email: Joi.string().email().required(),
-      position: Joi.string().required(),
       password: Joi.string().min(6),
     },
   }),
