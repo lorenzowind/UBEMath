@@ -12,6 +12,7 @@ info:
 tags:
   - name: authentication
   - name: users
+  - name: levels
   - name: modules
   - name: sub-modules
   - name: questions
@@ -72,9 +73,25 @@ components:
         updated_at:
           type: string
           format: dateformat
+    Level:
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        created_at:
+          type: string
+          format: dateformat
+        updated_at:
+          type: string
+          format: dateformat
     Module:
       properties:
         id:
+          type: string
+          format: uuid
+        level_id:
           type: string
           format: uuid
         name:
@@ -84,8 +101,6 @@ components:
           format: email
         is_exercise:
           type: boolean
-        category:
-          type: integer
         image:
           type: string
           format: binary
@@ -103,6 +118,8 @@ components:
         module_id:
           type: string
           format: uuid
+        order:
+          type: integer
         name:
           type: string
         content_url:
@@ -125,8 +142,6 @@ components:
           type: string
         right_letter:
           type: string
-        alternatives:
-          type: string
         created_at:
           type: string
           format: dateformat
@@ -143,8 +158,11 @@ components:
           format: uuid
         letter:
           type: string
-        content_url:
+        description:
           type: string
+        image:
+          type: string
+          format: binary
         created_at:
           type: string
           format: dateformat
@@ -201,11 +219,9 @@ components:
         user_id:
           type: string
           format: uuid
-        submodule_id:
+        sub_module_id:
           type: string
           format: uuid
-        is_check:
-          type: boolean
     GameSave:
       properties:
         id:
@@ -215,7 +231,7 @@ components:
           type: string
           format: uuid
         current_phase:
-          type: number
+          type: integer
 
 paths:
   /sessions:
@@ -501,6 +517,162 @@ paths:
         '401':
           $ref: '#/components/responses/UnauthorizedError'
 
+  /levels:
+    post:
+      summary: Creates a level.
+      tags:
+        - levels
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: "Level 01"
+      responses:
+        '200':
+          description: Returns a JSON containing the created level.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  name:
+                    type: string
+                    example: "Level 01"
+                  created_at:
+                    type: string
+                    format: dateformat
+                    example: "2020-07-02T21:57:00.421Z"
+                  updated_at:
+                    type: string
+                    format: dateformat
+                    example: "2020-07-02T21:57:00.421Z"
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /levels/{id}:
+    put:
+      summary: Updates a level.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+            example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+          required: true
+          description: Level id to update it.
+      tags:
+        - levels
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: "Level 01"
+      responses:
+        '200':
+          description: Returns a JSON containing the updated level.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  name:
+                    type: string
+                    example: "Level 01"
+                  created_at:
+                    type: string
+                    format: dateformat
+                    example: "2020-07-02T21:57:00.421Z"
+                  updated_at:
+                    type: string
+                    format: dateformat
+                    example: "2020-07-02T21:57:00.421Z"
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    delete:
+      summary: Deletes a level.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+            example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+          required: true
+          description: Level id to delete it.
+      tags:
+        - levels
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Returns a successfully deleted level confirmation.
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /levels/all:
+    get:
+      summary: Gets all levels.
+      tags:
+        - levels
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Returns a JSON array containing all levels.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                    name:
+                      type: string
+                      example: "Level 01"
+                    created_at:
+                      type: string
+                      format: dateformat
+                      example: "2020-07-02T21:57:00.421Z"
+                    updated_at:
+                      type: string
+                      format: dateformat
+                      example: "2020-07-02T21:57:00.421Z"
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
   /modules:
     post:
       summary: Creates a module.
@@ -515,27 +687,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  name:
-                    type: string
-                    example: "Module Name"
-                  description:
-                    type: string
-                    example: "Module description"
-                  is_exercise:
-                    type: boolean
-                    example: false
-                  category:
-                    type: integer
-                    example: 1
-      responses:
-        '200':
-          description: Returns a JSON containing the created module.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
+                  level_id:
                     type: string
                     format: uuid
                     example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
@@ -548,9 +700,31 @@ paths:
                   is_exercise:
                     type: boolean
                     example: false
-                  category:
-                    type: integer
-                    example: 1
+      responses:
+        '200':
+          description: Returns a JSON containing the created module.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  level_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  name:
+                    type: string
+                    example: "Module Name"
+                  description:
+                    type: string
+                    example: "Module description"
+                  is_exercise:
+                    type: boolean
+                    example: false
                   image_url:
                     type: string
                     example: null
@@ -577,7 +751,7 @@ paths:
             format: uuid
             example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
           required: true
-          description: Module id to update id.
+          description: Module id to update it.
       tags:
         - modules
       security:
@@ -589,27 +763,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  name:
-                    type: string
-                    example: "Module Name"
-                  description:
-                    type: string
-                    example: "Module description"
-                  is_exercise:
-                    type: boolean
-                    example: false
-                  category:
-                    type: integer
-                    example: 1
-      responses:
-        '200':
-          description: Returns a JSON containing the updated module.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
+                  level_id:
                     type: string
                     format: uuid
                     example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
@@ -622,9 +776,31 @@ paths:
                   is_exercise:
                     type: boolean
                     example: false
-                  category:
-                    type: integer
-                    example: 1
+      responses:
+        '200':
+          description: Returns a JSON containing the updated module.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  level_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  name:
+                    type: string
+                    example: "Module Name"
+                  description:
+                    type: string
+                    example: "Module description"
+                  is_exercise:
+                    type: boolean
+                    example: false
                   image_url:
                     type: string
                     example: null
@@ -650,7 +826,7 @@ paths:
             format: uuid
             example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
           required: true
-          description: Module id to update id.
+          description: Module id to delete it.
       tags:
         - modules
       security:
@@ -700,6 +876,10 @@ paths:
                     type: string
                     format: uuid
                     example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  level_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
                   name:
                     type: string
                     example: "Module Name"
@@ -709,9 +889,6 @@ paths:
                   is_exercise:
                     type: boolean
                     example: false
-                  category:
-                    type: integer
-                    example: 1
                   image:
                     type: string
                     format: binary
@@ -752,6 +929,10 @@ paths:
                       type: string
                       format: uuid
                       example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                    level_id:
+                      type: string
+                      format: uuid
+                      example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
                     name:
                       type: string
                       example: "Module Name"
@@ -761,9 +942,6 @@ paths:
                     is_exercise:
                       type: boolean
                       example: false
-                    category:
-                      type: integer
-                      example: 1
                     image:
                       type: string
                       format: binary
@@ -779,6 +957,1404 @@ paths:
                     image_url:
                       type: string
                       example: "https://image_upload_provider/2196cf1aec2f18533aaf-file_name.png"
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /sub-modules:
+    post:
+      summary: Creates a sub-module.
+      tags:
+        - sub-modules
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                type: object
+                properties:
+                  module_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  name:
+                    type: string
+                    example: "Sub-module Name"
+                  order:
+                    type: integer
+                    example: 1
+                  content_url:
+                    type: string
+                    example: "Pdf file URL"
+      responses:
+        '200':
+          description: Returns a JSON containing the created sub-module.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  module_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  name:
+                    type: string
+                    example: "Sub-module Name"
+                  order:
+                    type: integer
+                    example: 1
+                  content_url:
+                    type: string
+                    example: "Pdf file URL"
+                  created_at:
+                    type: string
+                    format: dateformat
+                    example: "2020-07-02T21:57:00.421Z"
+                  updated_at:
+                    type: string
+                    format: dateformat
+                    example: "2020-07-02T21:57:00.421Z"
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /sub-modules/{id}:
+    put:
+      summary: Updates a sub-module.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+            example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+          required: true
+          description: Sub-module id to update it.
+      tags:
+        - sub-modules
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                type: object
+                properties:
+                  module_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  name:
+                    type: string
+                    example: "Sub-module Name"
+                  order:
+                    type: integer
+                    example: 1
+                  content_url:
+                    type: string
+                    example: "Pdf file URL"
+      responses:
+        '200':
+          description: Returns a JSON containing the updated sub-module.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  module_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  name:
+                    type: string
+                    example: "Sub-module Name"
+                  order:
+                    type: integer
+                    example: 1
+                  content_url:
+                    type: string
+                    example: "Pdf file URL"
+                  created_at:
+                    type: string
+                    format: dateformat
+                    example: "2020-07-02T21:57:00.421Z"
+                  updated_at:
+                    type: string
+                    format: dateformat
+                    example: "2020-07-02T21:57:00.421Z"
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    delete:
+      summary: Deletes a sub-module.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+            example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+          required: true
+          description: Sub-module id to delete it.
+      tags:
+        - sub-modules
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Returns a successfully deleted sub-module confirmation.
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /sub-modules/{question_id}:
+    get:
+      summary: Gets all sub-modules by question id.
+      parameters:
+        - in: path
+          name: question_id
+          schema:
+            type: string
+            format: uuid
+            example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+          required: true
+          description: Question id to reference the related sub-modules.
+      tags:
+        - sub-modules
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Returns a JSON array containing all sub-modules.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                    module_id:
+                      type: string
+                      format: uuid
+                      example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                    name:
+                      type: string
+                      example: "Sub-module Name"
+                    order:
+                      type: integer
+                      example: 1
+                    content_url:
+                      type: string
+                      example: "Pdf file URL"
+                    created_at:
+                      type: string
+                      format: dateformat
+                      example: "2020-07-02T21:57:00.421Z"
+                    updated_at:
+                      type: string
+                      format: dateformat
+                      example: "2020-07-02T21:57:00.421Z"
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /questions:
+    post:
+      summary: Creates a question.
+      tags:
+        - questions
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                type: object
+                properties:
+                  sub_module_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  statement:
+                    type: string
+                    example: "Question statement"
+                  right_letter:
+                    type: string
+                    example: "A"
+      responses:
+        '200':
+          description: Returns a JSON containing the created question.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  sub_module_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  statement:
+                    type: string
+                    example: "Question statement"
+                  right_letter:
+                    type: string
+                    example: "A"
+                  created_at:
+                    type: string
+                    format: dateformat
+                    example: "2020-07-02T21:57:00.421Z"
+                  updated_at:
+                    type: string
+                    format: dateformat
+                    example: "2020-07-02T21:57:00.421Z"
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /questions/{id}:
+    put:
+      summary: Updates a question.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+            example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+          required: true
+          description: Question id to update it.
+      tags:
+        - questions
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                type: object
+                properties:
+                  sub_module_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  statement:
+                    type: string
+                    example: "Question statement"
+                  right_letter:
+                    type: string
+                    example: "A"
+      responses:
+        '200':
+          description: Returns a JSON containing the updated question
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  sub_module_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  statement:
+                    type: string
+                    example: "Question statement"
+                  right_letter:
+                    type: string
+                    example: "A"
+                  created_at:
+                    type: string
+                    format: dateformat
+                    example: "2020-07-02T21:57:00.421Z"
+                  updated_at:
+                    type: string
+                    format: dateformat
+                    example: "2020-07-02T21:57:00.421Z"
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    delete:
+      summary: Deletes a question.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+            example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+          required: true
+          description: Question id to delete it.
+      tags:
+        - questions
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Returns a successfully deleted question confirmation.
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /questions/{sub_module_id}:
+    get:
+      summary: Gets all questions by sub-module id.
+      parameters:
+        - in: path
+          name: sub_module_id
+          schema:
+            type: string
+            format: uuid
+            example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+          required: true
+          description: Sub-module id to reference the related questions.
+      tags:
+        - questions
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Returns a JSON array containing all questions.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                    sub_module_id:
+                      type: string
+                      format: uuid
+                      example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                    statement:
+                      type: string
+                      example: "Question statement"
+                    right_letter:
+                      type: string
+                      example: "A"
+                    created_at:
+                      type: string
+                      format: dateformat
+                      example: "2020-07-02T21:57:00.421Z"
+                    updated_at:
+                      type: string
+                      format: dateformat
+                      example: "2020-07-02T21:57:00.421Z"
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /alternatives:
+    post:
+      summary: Creates an alternative.
+      tags:
+        - alternatives
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                type: object
+                properties:
+                  question_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  letter:
+                    type: string
+                    example: "A"
+                  description:
+                    type: string
+                    example: "Alternative description"
+      responses:
+        '200':
+          description: Returns a JSON containing the created alternative.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  question_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  letter:
+                    type: string
+                    example: "A"
+                  description:
+                    type: string
+                    example: "Alternative description"
+                  image_url:
+                    type: string
+                    example: null
+                  created_at:
+                    type: string
+                    format: dateformat
+                    example: "2020-07-02T21:57:00.421Z"
+                  updated_at:
+                    type: string
+                    format: dateformat
+                    example: "2020-07-02T21:57:00.421Z"
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /alternatives/{id}:
+    put:
+      summary: Updates an alternative.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+            example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+          required: true
+          description: Alternative id to update it.
+      tags:
+        - alternatives
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                type: object
+                properties:
+                  question_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  letter:
+                    type: string
+                    example: "A"
+                  description:
+                    type: string
+                    example: "Alternative description"
+      responses:
+        '200':
+          description: Returns a JSON containing the updated alternative
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  question_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  letter:
+                    type: string
+                    example: "A"
+                  description:
+                    type: string
+                    example: "Alternative description"
+                  image_url:
+                    type: string
+                    example: null
+                  created_at:
+                    type: string
+                    format: dateformat
+                    example: "2020-07-02T21:57:00.421Z"
+                  updated_at:
+                    type: string
+                    format: dateformat
+                    example: "2020-07-02T21:57:00.421Z"
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    delete:
+      summary: Deletes an alternative.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+            example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+          required: true
+          description: Alternative id to delete it.
+      tags:
+        - alternatives
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Returns a successfully deleted alternative confirmation.
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /alternatives/{id}/image:
+    patch:
+      summary: Updates the alternative image.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+            example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+          required: true
+          description: Alternative id to update id.
+      tags:
+        - alternatives
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Returns a JSON containing the updated alternative with image data.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  question_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  letter:
+                    type: string
+                    example: "A"
+                  description:
+                    type: string
+                    example: "Alternative description"
+                  image:
+                    type: string
+                    format: binary
+                    example: "2196cf1aec2f18533aaf-file_name.png"
+                  created_at:
+                    type: string
+                    format: dateformat
+                    example: "2020-07-02T21:57:00.421Z"
+                  updated_at:
+                    type: string
+                    format: dateformat
+                    example: "2020-07-02T21:57:00.421Z"
+                  image_url:
+                    type: string
+                    example: "https://image_upload_provider/2196cf1aec2f18533aaf-file_name.png"
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /alternatives/{question_id}:
+    get:
+      summary: Gets all alternatives by question id.
+      parameters:
+        - in: path
+          name: question_id
+          schema:
+            type: string
+            format: uuid
+            example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+          required: true
+          description: Question id to reference the related alternatives.
+      tags:
+        - alternatives
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Returns a JSON array containing all alternatives.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                    question_id:
+                      type: string
+                      format: uuid
+                      example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                    letter:
+                      type: string
+                      example: "A"
+                    description:
+                      type: string
+                      example: "Alternative description"
+                    image:
+                      type: string
+                      format: binary
+                      example: "2196cf1aec2f18533aaf-file_name.png"
+                    created_at:
+                      type: string
+                      format: dateformat
+                      example: "2020-07-02T21:57:00.421Z"
+                    updated_at:
+                      type: string
+                      format: dateformat
+                      example: "2020-07-02T21:57:00.421Z"
+                    image_url:
+                      type: string
+                      example: "https://image_upload_provider/2196cf1aec2f18533aaf-file_name.png"
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /conquests:
+    post:
+      summary: Creates a conquest.
+      tags:
+        - conquests
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: "Conquest Name"
+                  description:
+                    type: string
+                    example: "Conquest description"
+      responses:
+        '200':
+          description: Returns a JSON containing the created conquest.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  name:
+                    type: string
+                    example: "Conquest Name"
+                  description:
+                    type: string
+                    example: "Conquest description"
+                  image_url:
+                    type: string
+                    example: null
+                  created_at:
+                    type: string
+                    format: dateformat
+                    example: "2020-07-02T21:57:00.421Z"
+                  updated_at:
+                    type: string
+                    format: dateformat
+                    example: "2020-07-02T21:57:00.421Z"
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /conquests/{id}:
+    put:
+      summary: Updates a conquest.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+            example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+          required: true
+          description: Conquest id to update it.
+      tags:
+        - conquests
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: "Conquest Name"
+                  description:
+                    type: string
+                    example: "Conquest description"
+      responses:
+        '200':
+          description: Returns a JSON containing the updated conquest.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  name:
+                    type: string
+                    example: "Conquest Name"
+                  description:
+                    type: string
+                    example: "Conquest description"
+                  image_url:
+                    type: string
+                    example: null
+                  created_at:
+                    type: string
+                    format: dateformat
+                    example: "2020-07-02T21:57:00.421Z"
+                  updated_at:
+                    type: string
+                    format: dateformat
+                    example: "2020-07-02T21:57:00.421Z"
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    delete:
+      summary: Deletes a conquest.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+            example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+          required: true
+          description: Conquest id to delete it.
+      tags:
+        - conquests
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Returns a successfully deleted conquest confirmation.
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /conquests/{id}/image:
+    patch:
+      summary: Updates the conquest image.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+            example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+          required: true
+          description: Conquest id to update id.
+      tags:
+        - conquests
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Returns a JSON containing the updated conquest with image data.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  name:
+                    type: string
+                    example: "Conquest Name"
+                  description:
+                    type: string
+                    example: "Conquest description"
+                  image:
+                    type: string
+                    format: binary
+                    example: "2196cf1aec2f18533aaf-file_name.png"
+                  created_at:
+                    type: string
+                    format: dateformat
+                    example: "2020-07-02T21:57:00.421Z"
+                  updated_at:
+                    type: string
+                    format: dateformat
+                    example: "2020-07-02T21:57:00.421Z"
+                  image_url:
+                    type: string
+                    example: "https://image_upload_provider/2196cf1aec2f18533aaf-file_name.png"
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /conquests/all:
+    get:
+      summary: Gets all conquests.
+      tags:
+        - conquests
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Returns a JSON array containing all conquests.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                    name:
+                      type: string
+                      example: "Conquest Name"
+                    description:
+                      type: string
+                      example: "Conquest description"
+                    image:
+                      type: string
+                      format: binary
+                      example: "2196cf1aec2f18533aaf-file_name.png"
+                    created_at:
+                      type: string
+                      format: dateformat
+                      example: "2020-07-02T21:57:00.421Z"
+                    updated_at:
+                      type: string
+                      format: dateformat
+                      example: "2020-07-02T21:57:00.421Z"
+                    image_url:
+                      type: string
+                      example: "https://image_upload_provider/2196cf1aec2f18533aaf-file_name.png"
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /user-answers:
+    post:
+      summary: Creates an user answer.
+      tags:
+        - user-answers
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                type: object
+                properties:
+                  question_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  answer_letter:
+                    type: string
+                    example: "A"
+      responses:
+        '200':
+          description: Returns a JSON containing the created user answer.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  user_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  question_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  answer_letter:
+                    type: string
+                    example: "A"
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /user-answers/{id}:
+    put:
+      summary: Updates an user answer.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+            example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+          required: true
+          description: User answer id to update it.
+      tags:
+        - user-answers
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                type: object
+                properties:
+                  answer_letter:
+                    type: string
+                    example: "A"
+      responses:
+        '200':
+          description: Returns a JSON containing the updated user-answer.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  user_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  question_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  answer_letter:
+                    type: string
+                    example: "A"
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    delete:
+      summary: Deletes an user answer.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+            example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+          required: true
+          description: User answer id to delete it.
+      tags:
+        - user-answers
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Returns a successfully deleted user answer confirmation.
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /user-answers/{question_id}:
+    get:
+      summary: Gets the user answer by question id.
+      parameters:
+        - in: path
+          name: question_id
+          schema:
+            type: string
+            format: uuid
+            example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+          required: true
+          description: Question id to reference the user answer.
+      tags:
+        - user-answers
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Returns a JSON containing the user-answer.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  user_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  question_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  answer_letter:
+                    type: string
+                    example: "A"
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /user-conquests:
+    post:
+      summary: Creates an user conquest.
+      tags:
+        - user-conquests
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                type: object
+                properties:
+                  conquest_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+      responses:
+        '200':
+          description: Returns a JSON containing the created user conquest.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  user_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  conquest_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    get:
+      summary: Gets the user conquests by user id.
+      tags:
+        - user-conquests
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Returns a JSON array containing all user conquests.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                    user_id:
+                      type: string
+                      format: uuid
+                      example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                    conquest_id:
+                      type: string
+                      format: uuid
+                      example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /user-conquests/{id}:
+    delete:
+      summary: Deletes an user conquest.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+            example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+          required: true
+          description: User conquest id to delete it.
+      tags:
+        - user-conquests
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Returns a successfully deleted user conquest confirmation.
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /user-progress:
+    post:
+      summary: Creates an user progress.
+      tags:
+        - user-progress
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                type: object
+                properties:
+                  sub_module_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+      responses:
+        '200':
+          description: Returns a JSON containing the created user progress.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  user_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  sub_module_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    get:
+      summary: Gets the user progress by user id.
+      tags:
+        - user-progress
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Returns a JSON array containing all user progress.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                    user_id:
+                      type: string
+                      format: uuid
+                      example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                    sub_module_id:
+                      type: string
+                      format: uuid
+                      example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /user-progress/{id}:
+    delete:
+      summary: Deletes an user progress.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+            example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+          required: true
+          description: User progress id to delete it.
+      tags:
+        - user-progress
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Returns a successfully deleted user progress confirmation.
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /game-saves:
+    post:
+      summary: Creates an game save.
+      tags:
+        - game-saves
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                type: object
+                properties:
+                  current_phase:
+                    type: integer
+                    example: 1
+      responses:
+        '200':
+          description: Returns a JSON containing the created game save.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  user_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  current_phase:
+                    type: integer
+                    example: 1
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    get:
+      summary: Gets the game save by user id.
+      tags:
+        - game-saves
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Returns a JSON containing the game save.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  user_id:
+                    type: string
+                    format: uuid
+                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  current_phase:
+                    type: integer
+                    example: 1
+        '400':
+          $ref:  '#/components/responses/IncorrectToken'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /game-saves/{id}:
+    delete:
+      summary: Deletes a game save.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+            example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+          required: true
+          description: Game save id to delete it.
+      tags:
+        - game-saves
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Returns a successfully deleted game save confirmation.
         '400':
           $ref:  '#/components/responses/IncorrectToken'
         '401':
