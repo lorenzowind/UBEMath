@@ -15,6 +15,7 @@ export default class CreateLevels1603082367799 implements MigrationInterface {
           {
             name: 'name',
             type: 'varchar(255)',
+            isUnique: true,
           },
           {
             name: 'created_at',
