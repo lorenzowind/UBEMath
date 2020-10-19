@@ -3,6 +3,8 @@ openapi: 3.0.0
 servers:
   - description: Development server URL
     url: http://127.0.0.1:3333/
+  - description: Production test server URL
+    url: https://ubemath.api-sact-test.com/
 
 info:
   description: HTTP Requests guide to utilize the UBEMath API.
