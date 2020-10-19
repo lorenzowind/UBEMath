@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Container, Background, MainContainer, Content, Card } from './styles';
 
+import { useAuth } from '../../hooks/auth';
+
 import Menu from '../../components/Menu';
 import Header from '../../components/Header';
 
@@ -10,6 +12,8 @@ import modulesImg from '../../assets/modules.svg';
 import generalImg from '../../assets/general.svg';
 
 const Dashboard: React.FC = () => {
+  const { user } = useAuth();
+
   return (
     <Container>
       <Background>
@@ -18,7 +22,7 @@ const Dashboard: React.FC = () => {
           <Menu />
           <Content>
             <strong>Olá, bem vindo</strong>
-            <h1>Lorenzo Windmoller Martins</h1>
+            <h1>{user.name}</h1>
 
             <section>
               <Card>

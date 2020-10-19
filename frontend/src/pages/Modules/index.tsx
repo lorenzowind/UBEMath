@@ -8,6 +8,7 @@ import {
   ModulesBar,
   ModuleSection,
   ModuleCard,
+  ImageContainer,
 } from './styles';
 
 import Menu from '../../components/Menu';
@@ -51,7 +52,9 @@ const Modules: React.FC = () => {
                 <ModuleCard color="#55e2c1">
                   <strong>CONTEÚDO</strong>
                   <section>
-                    <img src={pyramidImg} alt="Pyramid" />
+                    <ImageContainer>
+                      <img src={pyramidImg} alt="Pyramid" />
+                    </ImageContainer>
                     <div>
                       <strong>What is Lorem Ipsum?</strong>
                       <h1>
@@ -70,7 +73,9 @@ const Modules: React.FC = () => {
                 <ModuleCard color="#1cd8d2">
                   <strong>EXERCÍCIOS</strong>
                   <section>
-                    <img src={pyramidImg} alt="Pyramid" />
+                    <ImageContainer>
+                      <img src={pyramidImg} alt="Pyramid" />
+                    </ImageContainer>
                     <div>
                       <strong>What is Lorem Ipsum?</strong>
                       <h1>
@@ -92,7 +97,9 @@ const Modules: React.FC = () => {
                 <ModuleCard color="#55e2c1">
                   <strong>CONTEÚDO</strong>
                   <section>
-                    <img src={pyramidImg} alt="Pyramid" />
+                    <ImageContainer>
+                      <img src={pyramidImg} alt="Pyramid" />
+                    </ImageContainer>
                     <div>
                       <strong>What is Lorem Ipsum?</strong>
                       <h1>
@@ -111,7 +118,9 @@ const Modules: React.FC = () => {
                 <ModuleCard color="#1cd8d2">
                   <strong>EXERCÍCIOS</strong>
                   <section>
-                    <img src={pyramidImg} alt="Pyramid" />
+                    <ImageContainer>
+                      <img src={pyramidImg} alt="Pyramid" />
+                    </ImageContainer>
                     <div>
                       <strong>What is Lorem Ipsum?</strong>
                       <h1>

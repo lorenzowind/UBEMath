@@ -1,5 +1,5 @@
 import { shade } from 'polished';
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 
 import backgroundImg from '../../assets/background.png';
 
@@ -162,8 +162,66 @@ export const ModuleSection = styled.div`
 `;
 
 export const ModuleCard = styled.div<ModuleCardProps>`
+  cursor: pointer;
   position: relative;
   margin-top: 20px;
   border-radius: 13px;
   background-color: ${props => props.color};
+  padding: 50px 60px 50px 180px;
+  transition: background-color 0.2s;
+
+  > strong {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 10px;
+    color: #2b1c81;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > div {
+      strong {
+        color: #fff;
+        font-size: 24px;
+        font-weight: 700;
+      }
+
+      h1 {
+        margin-top: 15px;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 500;
+      }
+    }
+  }
+
+  &:hover {
+    ${props => css`
+      background-color: ${shade(0.2, props.color)};
+    `}
+  }
+`;
+
+export const ImageContainer = styled.div`
+  width: 120px;
+  height: 10vh;
+  border-radius: 6px;
+  border: solid 3px #2b1c81;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 0;
+  margin: 0 30px;
+
+  img {
+    object-fit: cover;
+  }
 `;

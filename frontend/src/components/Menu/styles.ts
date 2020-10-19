@@ -49,6 +49,11 @@ export const ContentClosed = styled.div`
       width: 40px;
       height: 40px;
       color: #fff;
+      transition: color 0.2s;
+
+      &:hover {
+        color: ${shade(0.2, '#fff')};
+      }
     }
   }
 `;
@@ -116,6 +121,11 @@ export const ContentOpened = styled.div`
       width: 40px;
       height: 40px;
       color: #fff;
+      transition: color 0.2s;
+
+      &:hover {
+        color: ${shade(0.2, '#fff')};
+      }
     }
   }
 `;
