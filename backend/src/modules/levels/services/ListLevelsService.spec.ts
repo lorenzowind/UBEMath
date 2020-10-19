@@ -42,8 +42,8 @@ describe('ListLevelsService', () => {
 
     await listLevels.execute(user.id);
 
-    const appointments = await listLevels.execute(user.id);
+    const levels = await listLevels.execute(user.id);
 
-    expect(appointments).toEqual([firstLevel, secondLevel]);
+    expect(levels).toEqual([firstLevel, secondLevel]);
   });
 });

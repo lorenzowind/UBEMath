@@ -15,17 +15,17 @@ import LevelsRepository from '@modules/levels/infra/typeorm/repositories/LevelsR
 import IModulesRepository from '@modules/modules/repositories/IModulesRepository';
 import ModulesRepository from '@modules/modules/infra/typeorm/repositories/ModulesRepository';
 
-import ISubModulesRepository from '@modules/sub-modules/repositories/ISubModulesRepository';
-import SubModulesRepository from '@modules/sub-modules/infra/typeorm/repositories/SubModulesRepository';
+// import ISubModulesRepository from '@modules/sub-modules/repositories/ISubModulesRepository';
+// import SubModulesRepository from '@modules/sub-modules/infra/typeorm/repositories/SubModulesRepository';
 
-import IQuestionsRepository from '@modules/questions/repositories/IQuestionsRepository';
-import QuestionsRepository from '@modules/questions/infra/typeorm/repositories/QuestionsRepository';
+// import IQuestionsRepository from '@modules/questions/repositories/IQuestionsRepository';
+// import QuestionsRepository from '@modules/questions/infra/typeorm/repositories/QuestionsRepository';
 
-import IAlternativesRepository from '@modules/alternatives/repositories/IAlternativesRepository';
-import AlternativesRepository from '@modules/alternatives/infra/typeorm/repositories/AlternativesRepository';
+// import IAlternativesRepository from '@modules/alternatives/repositories/IAlternativesRepository';
+// import AlternativesRepository from '@modules/alternatives/infra/typeorm/repositories/AlternativesRepository';
 
-import IConquestsRepository from '@modules/conquests/repositories/IConquestsRepository';
-import ConquestsRepository from '@modules/conquests/infra/typeorm/repositories/ConquestsRepository';
+// import IConquestsRepository from '@modules/conquests/repositories/IConquestsRepository';
+// import ConquestsRepository from '@modules/conquests/infra/typeorm/repositories/ConquestsRepository';
 
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
@@ -47,22 +47,22 @@ container.registerSingleton<IModulesRepository>(
   ModulesRepository,
 );
 
-container.registerSingleton<ISubModulesRepository>(
-  'SubModulesRepository',
-  SubModulesRepository,
-);
+// container.registerSingleton<ISubModulesRepository>(
+//   'SubModulesRepository',
+//   SubModulesRepository,
+// );
 
-container.registerSingleton<IQuestionsRepository>(
-  'QuestionsRepository',
-  QuestionsRepository,
-);
+// container.registerSingleton<IQuestionsRepository>(
+//   'QuestionsRepository',
+//   QuestionsRepository,
+// );
 
-container.registerSingleton<IAlternativesRepository>(
-  'AlternativesRepository',
-  AlternativesRepository,
-);
+// container.registerSingleton<IAlternativesRepository>(
+//   'AlternativesRepository',
+//   AlternativesRepository,
+// );
 
-container.registerSingleton<IConquestsRepository>(
-  'ConquestsRepository',
-  ConquestsRepository,
-);
+// container.registerSingleton<IConquestsRepository>(
+//   'ConquestsRepository',
+//   ConquestsRepository,
+// );

@@ -20,7 +20,7 @@ export default class LevelsController {
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
-    const { id } = request.user;
+    const { id } = request.params;
     const { name } = request.body;
 
     const updateLevel = container.resolve(UpdateLevelService);
@@ -34,7 +34,7 @@ export default class LevelsController {
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {
-    const { id } = request.user;
+    const { id } = request.params;
 
     const deleteLevel = container.resolve(DeleteLevelService);
 
