@@ -29,6 +29,16 @@ services:
     ports:
       - 6379:6379
 
+  ubemath_mongodb:
+    image: mongo
+    container_name: ubemath_mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: ubemath
+    ports:
+      - 27017:27017
+
 networks:
   mysql-compose-network:
     driver: bridge
