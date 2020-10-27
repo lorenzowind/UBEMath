@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   Container,
@@ -15,8 +15,25 @@ import Menu from '../../components/Menu';
 import Header from '../../components/Header';
 
 import pyramidImg from '../../assets/pyramid.png';
+import api from '../../services/api';
+
+interface Level {
+  name: string;
+}
 
 const Modules: React.FC = () => {
+  const [levels, setLevels] = useState<Level[]>([]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      await api.get<Level[]>('levels/all').then(response => {
+        setLevels(response.data);
+      });
+    };
+
+    loadData();
+  }, []);
+
   return (
     <Container>
       <Background>
@@ -25,24 +42,11 @@ const Modules: React.FC = () => {
           <Menu />
           <Content>
             <ModulesBar>
-              <button type="button">
-                <strong>Módulo 1</strong>
-              </button>
-              <button type="button">
-                <strong>Módulo 2</strong>
-              </button>
-              <button type="button">
-                <strong>Módulo 3</strong>
-              </button>
-              <button type="button">
-                <strong>Módulo 3</strong>
-              </button>
-              <button type="button">
-                <strong>Módulo 3</strong>
-              </button>
-              <button type="button">
-                <strong>Módulo 3</strong>
-              </button>
+              {levels.map(level => (
+                <button type="button">
+                  <strong>{level.name}</strong>
+                </button>
+              ))}
             </ModulesBar>
 
             <nav>
