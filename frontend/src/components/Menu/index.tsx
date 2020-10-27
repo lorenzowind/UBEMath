@@ -11,17 +11,31 @@ import {
   Background,
 } from './styles';
 
+import InfoModal from '../Modal/InfoModal';
+
 const Menu: React.FC = () => {
   const history = useHistory();
 
   const [menuIsOpened, setMenuIsOpened] = useState(false);
 
+  const [infoOpen, setInfoOpen] = useState(false);
+
   const handleClickMenu = useCallback(() => {
     setMenuIsOpened(!menuIsOpened);
   }, [menuIsOpened]);
 
+  const toggleModalInfo = useCallback(() => {
+    setInfoOpen(!infoOpen);
+  }, [infoOpen]);
+
   return (
     <>
+      <InfoModal
+        text="Funcionalidade ainda não disponível na plataforma UBEMath."
+        isOpen={infoOpen}
+        setIsOpen={toggleModalInfo}
+      />
+
       {menuIsOpened ? (
         <ContainerOpened>
           <Background />
@@ -35,10 +49,10 @@ const Menu: React.FC = () => {
           </ContentOpened>
 
           <OptionsContainer>
-            <button type="button">
+            <button type="button" onClick={toggleModalInfo}>
               <strong>CAMPANHA</strong>
             </button>
-            <button type="button">
+            <button type="button" onClick={toggleModalInfo}>
               <strong>TREINO</strong>
             </button>
             <button type="button" onClick={() => history.push('modules')}>
@@ -47,7 +61,7 @@ const Menu: React.FC = () => {
             <button type="button" onClick={() => history.push('conquests')}>
               <strong>CONQUISTAS</strong>
             </button>
-            <button type="button">
+            <button type="button" onClick={toggleModalInfo}>
               <strong>CONFIGURAÇÕES</strong>
             </button>
           </OptionsContainer>
