@@ -18,8 +18,8 @@ import ModulesRepository from '@modules/modules/infra/typeorm/repositories/Modul
 import ISubModulesRepository from '@modules/sub-modules/repositories/ISubModulesRepository';
 import SubModulesRepository from '@modules/sub-modules/infra/typeorm/repositories/SubModulesRepository';
 
-// import IQuestionsRepository from '@modules/questions/repositories/IQuestionsRepository';
-// import QuestionsRepository from '@modules/questions/infra/typeorm/repositories/QuestionsRepository';
+import IQuestionsRepository from '@modules/questions/repositories/IQuestionsRepository';
+import QuestionsRepository from '@modules/questions/infra/typeorm/repositories/QuestionsRepository';
 
 // import IAlternativesRepository from '@modules/alternatives/repositories/IAlternativesRepository';
 // import AlternativesRepository from '@modules/alternatives/infra/typeorm/repositories/AlternativesRepository';
@@ -52,10 +52,10 @@ container.registerSingleton<ISubModulesRepository>(
   SubModulesRepository,
 );
 
-// container.registerSingleton<IQuestionsRepository>(
-//   'QuestionsRepository',
-//   QuestionsRepository,
-// );
+container.registerSingleton<IQuestionsRepository>(
+  'QuestionsRepository',
+  QuestionsRepository,
+);
 
 // container.registerSingleton<IAlternativesRepository>(
 //   'AlternativesRepository',
