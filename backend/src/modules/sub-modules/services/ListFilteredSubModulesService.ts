@@ -1,14 +1,20 @@
 import { injectable, inject } from 'tsyringe';
 
+import AppError from '@shared/errors/AppError';
+
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 
-import SubModule from '../infra/typeorm/entities/SubModule';
-
+import IModulesRepository from '@modules/modules/repositories/IModulesRepository';
 import ISubModulesRepository from '../repositories/ISubModulesRepository';
+
+import SubModule from '../infra/typeorm/entities/SubModule';
 
 @injectable()
 class ListFilteredSubModulesService {
   constructor(
+    @inject('ModulesRepository')
+    private modulesRepository: IModulesRepository,
+
     @inject('SubModulesRepository')
     private subModulesRepository: ISubModulesRepository,
 
@@ -20,6 +26,12 @@ class ListFilteredSubModulesService {
     user_id: string,
     module_id: string,
   ): Promise<SubModule[]> {
+    const checkModuleExists = await this.modulesRepository.findById(module_id);
+
+    if (!checkModuleExists) {
+      throw new AppError('Module not found.');
+    }
+
     let subModules = await this.cacheProvider.recover<SubModule[]>(
       `sub-modules-list:${module_id}:${user_id}`,
     );

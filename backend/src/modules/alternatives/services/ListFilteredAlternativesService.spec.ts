@@ -1,3 +1,5 @@
+import AppError from '@shared/errors/AppError';
+
 import DraftCacheProvider from '@shared/container/providers/CacheProvider/drafts/DraftCacheProvider';
 
 import DraftUsersRepository from '@modules/users/repositories/drafts/DraftUsersRepository';
@@ -32,6 +34,7 @@ describe('ListFilteredAlternatives', () => {
     draftCacheProvider = new DraftCacheProvider();
 
     listFilteredAlternatives = new ListFilteredAlternativesService(
+      draftQuestionsRepository,
       draftAlternativesRepository,
       draftCacheProvider,
     );
@@ -88,5 +91,17 @@ describe('ListFilteredAlternatives', () => {
     );
 
     expect(filteredAlternatives).toEqual([firstAlternative, secondAlternative]);
+  });
+
+  it('should not be able to list the filtered alternatives from a non existing question', async () => {
+    const user = await draftUsersRepository.create({
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      password: '123456',
+    });
+
+    await expect(
+      listFilteredAlternatives.execute(user.id, 'non existing question id'),
+    ).rejects.toBeInstanceOf(AppError);
   });
 });

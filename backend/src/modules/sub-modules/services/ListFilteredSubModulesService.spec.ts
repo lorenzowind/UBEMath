@@ -1,3 +1,5 @@
+import AppError from '@shared/errors/AppError';
+
 import DraftCacheProvider from '@shared/container/providers/CacheProvider/drafts/DraftCacheProvider';
 
 import DraftUsersRepository from '@modules/users/repositories/drafts/DraftUsersRepository';
@@ -26,6 +28,7 @@ describe('ListFilteredSubModules', () => {
     draftCacheProvider = new DraftCacheProvider();
 
     listFilteredSubModules = new ListFilteredSubModulesService(
+      draftModulesRepository,
       draftSubModulesRepository,
       draftCacheProvider,
     );
@@ -68,5 +71,17 @@ describe('ListFilteredSubModules', () => {
     const subModules = await listFilteredSubModules.execute(user.id, module.id);
 
     expect(subModules).toEqual([firstSubModule, secondSubModule]);
+  });
+
+  it('should not be able to list the filtered sub-modules from a non existing module', async () => {
+    const user = await draftUsersRepository.create({
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      password: '123456',
+    });
+
+    await expect(
+      listFilteredSubModules.execute(user.id, 'non existing module id'),
+    ).rejects.toBeInstanceOf(AppError);
   });
 });
