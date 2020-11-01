@@ -8,7 +8,7 @@ import levelsRouter from '@modules/levels/infra/http/routes/levels.routes';
 import modulesRouter from '@modules/modules/infra/http/routes/modules.routes';
 import subModulesRouter from '@modules/sub-modules/infra/http/routes/sub-modules.routes';
 import questionsRouter from '@modules/questions/infra/http/routes/questions.routes';
-// import alternativesRouter from '@modules/alternatives/infra/http/routes/alternatives.routes';
+import alternativesRouter from '@modules/alternatives/infra/http/routes/alternatives.routes';
 
 // import conquestsRouter from '@modules/conquests/infra/http/routes/conquests.routes';
 
@@ -22,7 +22,7 @@ routes.use('/levels', levelsRouter);
 routes.use('/modules', modulesRouter);
 routes.use('/sub-modules', subModulesRouter);
 routes.use('/questions', questionsRouter);
-// routes.use('/alternatives', alternativesRouter);
+routes.use('/alternatives', alternativesRouter);
 
 // routes.use('/conquests', conquestsRouter);
 

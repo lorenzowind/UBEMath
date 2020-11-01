@@ -41,22 +41,22 @@ describe('UpdateModuleImage', () => {
 
     await updateModuleImage.execute({
       module_id: module.id,
-      imageFilename: 'avatar.jpg',
+      imageFilename: 'image.jpg',
     });
 
     await updateModuleImage.execute({
       module_id: module.id,
-      imageFilename: 'avatar2.jpg',
+      imageFilename: 'image2.jpg',
     });
 
-    expect(module.image).toBe('avatar2.jpg');
+    expect(module.image).toBe('image2.jpg');
   });
 
   it('should not be able to update the image from non existing module', async () => {
     await expect(
       updateModuleImage.execute({
         module_id: 'non existing module id',
-        imageFilename: 'avatar.jpg',
+        imageFilename: 'image.jpg',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

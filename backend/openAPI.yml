@@ -1381,7 +1381,7 @@ paths:
 
   /alternatives:
     post:
-      summary: Creates an alternative.
+      summary: Creates a set of alternatives.
       tags:
         - alternatives
       security:
@@ -1390,52 +1390,59 @@ paths:
         required: true
         content:
           application/json:
-              schema:
-                type: object
-                properties:
-                  question_id:
-                    type: string
-                    format: uuid
-                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
-                  letter:
-                    type: string
-                    example: "A"
-                  description:
-                    type: string
-                    example: "Alternative description"
+            schema:
+              type: object
+              properties:
+                question_id:
+                  type: string
+                  format: uuid
+                  example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                alternatives:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      letter:
+                        type: string
+                        example: "A"
+                      description:
+                        type: string
+                        example: "Alternative description"
       responses:
         '200':
-          description: Returns a JSON containing the created alternative.
+          description: Returns a JSON containing the created alternatives set.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
-                  question_id:
-                    type: string
-                    format: uuid
-                    example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
-                  letter:
-                    type: string
-                    example: "A"
-                  description:
-                    type: string
-                    example: "Alternative description"
-                  image_url:
-                    type: string
-                    example: null
-                  created_at:
-                    type: string
-                    format: dateformat
-                    example: "2020-07-02T21:57:00.421Z"
-                  updated_at:
-                    type: string
-                    format: dateformat
-                    example: "2020-07-02T21:57:00.421Z"
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                    question_id:
+                      type: string
+                      format: uuid
+                      example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                    letter:
+                      type: string
+                      example: "A"
+                    description:
+                      type: string
+                      example: "Alternative description"
+                    image_url:
+                      type: string
+                      example: null
+                    created_at:
+                      type: string
+                      format: dateformat
+                      example: "2020-07-02T21:57:00.421Z"
+                    updated_at:
+                      type: string
+                      format: dateformat
+                      example: "2020-07-02T21:57:00.421Z"
         '400':
           $ref:  '#/components/responses/IncorrectToken'
         '401':

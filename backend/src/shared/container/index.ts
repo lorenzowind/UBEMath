@@ -21,8 +21,8 @@ import SubModulesRepository from '@modules/sub-modules/infra/typeorm/repositorie
 import IQuestionsRepository from '@modules/questions/repositories/IQuestionsRepository';
 import QuestionsRepository from '@modules/questions/infra/typeorm/repositories/QuestionsRepository';
 
-// import IAlternativesRepository from '@modules/alternatives/repositories/IAlternativesRepository';
-// import AlternativesRepository from '@modules/alternatives/infra/typeorm/repositories/AlternativesRepository';
+import IAlternativesRepository from '@modules/alternatives/repositories/IAlternativesRepository';
+import AlternativesRepository from '@modules/alternatives/infra/typeorm/repositories/AlternativesRepository';
 
 // import IConquestsRepository from '@modules/conquests/repositories/IConquestsRepository';
 // import ConquestsRepository from '@modules/conquests/infra/typeorm/repositories/ConquestsRepository';
@@ -57,10 +57,10 @@ container.registerSingleton<IQuestionsRepository>(
   QuestionsRepository,
 );
 
-// container.registerSingleton<IAlternativesRepository>(
-//   'AlternativesRepository',
-//   AlternativesRepository,
-// );
+container.registerSingleton<IAlternativesRepository>(
+  'AlternativesRepository',
+  AlternativesRepository,
+);
 
 // container.registerSingleton<IConquestsRepository>(
 //   'ConquestsRepository',

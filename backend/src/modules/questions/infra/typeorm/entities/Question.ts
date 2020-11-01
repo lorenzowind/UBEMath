@@ -10,7 +10,7 @@ import {
 
 import SubModule from '@modules/sub-modules/infra/typeorm/entities/SubModule';
 
-@Entity('sub-modules')
+@Entity('questions')
 class Question {
   @PrimaryColumn()
   id: string;
