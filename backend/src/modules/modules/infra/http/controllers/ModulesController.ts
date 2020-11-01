@@ -50,11 +50,11 @@ export default class ModulesController {
   }
 
   public async show(request: Request, response: Response): Promise<Response> {
-    const { id } = request.user;
+    const user_id = request.user.id;
 
     const listModules = container.resolve(ListModulesService);
 
-    const modules = await listModules.execute(id);
+    const modules = await listModules.execute(user_id);
 
     return response.json(modules);
   }

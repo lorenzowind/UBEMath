@@ -1123,18 +1123,18 @@ paths:
           $ref:  '#/components/responses/IncorrectToken'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
-  /sub-modules/{question_id}:
+  /sub-modules/{module_id}:
     get:
-      summary: Gets all sub-modules by question id.
+      summary: Gets all sub-modules by module id.
       parameters:
         - in: path
-          name: question_id
+          name: module_id
           schema:
             type: string
             format: uuid
             example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
           required: true
-          description: Question id to reference the related sub-modules.
+          description: Module id to reference the related sub-modules.
       tags:
         - sub-modules
       security:

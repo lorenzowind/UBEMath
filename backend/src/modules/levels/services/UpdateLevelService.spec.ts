@@ -37,9 +37,9 @@ describe('UpdateLevel', () => {
   });
 
   it('should not be able to update from a non existing level', async () => {
-    expect(
+    await expect(
       updateLevel.execute({
-        id: 'non existing level',
+        id: 'non existing level id',
         name: 'Level 01',
       }),
     ).rejects.toBeInstanceOf(AppError);

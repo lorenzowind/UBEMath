@@ -17,11 +17,8 @@ const modulesController = new ModulesController();
 const moduleImageController = new ModuleImageController();
 
 modulesRouter.post(
-  '/:id',
+  '/',
   celebrate({
-    [Segments.PARAMS]: {
-      id: Joi.string().uuid().required(),
-    },
     [Segments.BODY]: {
       level_id: Joi.string().uuid().required(),
       name: Joi.string().required(),

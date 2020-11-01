@@ -57,9 +57,9 @@ describe('UpdateModule', () => {
       name: 'Level 01',
     });
 
-    expect(
+    await expect(
       updateModule.execute({
-        id: 'non existing module',
+        id: 'non existing module id',
         name: 'Module 01',
         description: 'Module description',
         is_exercise: false,
@@ -80,13 +80,13 @@ describe('UpdateModule', () => {
       level_id: level.id,
     });
 
-    expect(
+    await expect(
       updateModule.execute({
         id: module.id,
         name: 'New module 01',
         description: 'New module description',
         is_exercise: false,
-        level_id: 'non existing level',
+        level_id: 'non existing level id',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

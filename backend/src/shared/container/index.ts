@@ -15,8 +15,8 @@ import LevelsRepository from '@modules/levels/infra/typeorm/repositories/LevelsR
 import IModulesRepository from '@modules/modules/repositories/IModulesRepository';
 import ModulesRepository from '@modules/modules/infra/typeorm/repositories/ModulesRepository';
 
-// import ISubModulesRepository from '@modules/sub-modules/repositories/ISubModulesRepository';
-// import SubModulesRepository from '@modules/sub-modules/infra/typeorm/repositories/SubModulesRepository';
+import ISubModulesRepository from '@modules/sub-modules/repositories/ISubModulesRepository';
+import SubModulesRepository from '@modules/sub-modules/infra/typeorm/repositories/SubModulesRepository';
 
 // import IQuestionsRepository from '@modules/questions/repositories/IQuestionsRepository';
 // import QuestionsRepository from '@modules/questions/infra/typeorm/repositories/QuestionsRepository';
@@ -47,10 +47,10 @@ container.registerSingleton<IModulesRepository>(
   ModulesRepository,
 );
 
-// container.registerSingleton<ISubModulesRepository>(
-//   'SubModulesRepository',
-//   SubModulesRepository,
-// );
+container.registerSingleton<ISubModulesRepository>(
+  'SubModulesRepository',
+  SubModulesRepository,
+);
 
 // container.registerSingleton<IQuestionsRepository>(
 //   'QuestionsRepository',

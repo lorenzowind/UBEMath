@@ -14,7 +14,7 @@ let draftModulesRepository: DraftModulesRepository;
 
 let listModules: ListModulesService;
 
-describe('ListModulesService', () => {
+describe('ListModules', () => {
   beforeEach(() => {
     draftUsersRepository = new DraftUsersRepository();
     draftLevelsRepository = new DraftLevelsRepository();

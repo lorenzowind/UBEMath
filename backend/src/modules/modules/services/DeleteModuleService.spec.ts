@@ -29,7 +29,7 @@ describe('DeleteModule', () => {
 
   it('should not be able to delete a non existing module', async () => {
     await expect(
-      deleteModule.execute('Non existing level id'),
+      deleteModule.execute('Non existing module id'),
     ).rejects.toBeInstanceOf(AppError);
   });
 
