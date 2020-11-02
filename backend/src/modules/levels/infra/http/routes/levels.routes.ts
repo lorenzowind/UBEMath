@@ -20,7 +20,7 @@ levelsRouter.post(
 );
 
 levelsRouter.put(
-  '/',
+  '/:id',
   ensureAuthenticated,
   celebrate({
     [Segments.BODY]: {
@@ -30,7 +30,7 @@ levelsRouter.put(
   levelsController.update,
 );
 
-levelsRouter.delete('/', ensureAuthenticated, levelsController.delete);
+levelsRouter.delete('/:id', ensureAuthenticated, levelsController.delete);
 
 levelsRouter.get('/all', ensureAuthenticated, levelsController.show);
 

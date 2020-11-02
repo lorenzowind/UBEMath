@@ -10,14 +10,17 @@ export default class DraftUserAnswersRepository
   implements IUserAnswersRepository {
   private userAnswers: UserAnswer[] = [];
 
-  public async findAllFilteredUserAnswers(
+  public async findByUserAndQuestionId(
+    user_id: string,
     question_id: string,
-  ): Promise<UserAnswer[]> {
-    const findUserAnswers = this.userAnswers.filter(
-      findUserAnswer => findUserAnswer.question_id === question_id,
+  ): Promise<UserAnswer | undefined> {
+    const userAnswer = this.userAnswers.find(
+      findUserAnswer =>
+        findUserAnswer.user_id === user_id &&
+        findUserAnswer.question_id === question_id,
     );
 
-    return findUserAnswers;
+    return userAnswer;
   }
 
   public async findById(id: string): Promise<UserAnswer | undefined> {
@@ -29,6 +32,7 @@ export default class DraftUserAnswersRepository
   }
 
   public async create({
+    user_id,
     answer_letter,
     question_id,
   }: ICreateUserAnswerDTO): Promise<UserAnswer> {
@@ -36,6 +40,7 @@ export default class DraftUserAnswersRepository
 
     Object.assign(userAnswer, {
       id: new ObjectID(),
+      user_id,
       answer_letter,
       question_id,
     });
@@ -61,5 +66,19 @@ export default class DraftUserAnswersRepository
     );
 
     this.userAnswers.splice(findIndex, 1);
+  }
+
+  public async removeAllByQuestionId(question_id: string): Promise<void> {
+    const userAnswers = this.userAnswers.filter(
+      findUserAnswer => findUserAnswer.question_id === question_id,
+    );
+
+    for (let i = 0; i < userAnswers.length; i += 1) {
+      const findIndex = this.userAnswers.findIndex(
+        findUserAnswer => findUserAnswer.id === userAnswers[i].id,
+      );
+
+      this.userAnswers.splice(findIndex, 1);
+    }
   }
 }

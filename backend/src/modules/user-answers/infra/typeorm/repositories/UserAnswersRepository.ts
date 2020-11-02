@@ -13,14 +13,15 @@ class UserAnswersRepository implements IUserAnswersRepository {
     this.ormRepository = getMongoRepository(UserAnswer, 'mongo');
   }
 
-  public async findAllFilteredUserAnswers(
+  public async findByUserAndQuestionId(
+    user_id: string,
     question_id: string,
-  ): Promise<UserAnswer[]> {
-    const findUserAnswers = await this.ormRepository.find({
-      where: { question_id },
+  ): Promise<UserAnswer | undefined> {
+    const findUserAnswer = await this.ormRepository.findOne({
+      where: { user_id, question_id },
     });
 
-    return findUserAnswers;
+    return findUserAnswer;
   }
 
   public async findById(id: string): Promise<UserAnswer | undefined> {
@@ -30,10 +31,12 @@ class UserAnswersRepository implements IUserAnswersRepository {
   }
 
   public async create({
+    user_id,
     question_id,
     answer_letter,
   }: ICreateUserAnswerDTO): Promise<UserAnswer> {
     const userAnswer = this.ormRepository.create({
+      user_id,
       question_id,
       answer_letter,
     });
@@ -51,6 +54,14 @@ class UserAnswersRepository implements IUserAnswersRepository {
 
   public async remove(userAnswer: UserAnswer): Promise<void> {
     await this.ormRepository.remove(userAnswer);
+  }
+
+  public async removeAllByQuestionId(question_id: string): Promise<void> {
+    const findUserAnswers = await this.ormRepository.find({
+      where: { question_id },
+    });
+
+    await this.ormRepository.remove(findUserAnswers);
   }
 }
 

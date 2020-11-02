@@ -1,52 +1,34 @@
-import AppError from '@shared/errors/AppError';
-
-import DraftCacheProvider from '@shared/container/providers/CacheProvider/drafts/DraftCacheProvider';
-
 import DraftUsersRepository from '@modules/users/repositories/drafts/DraftUsersRepository';
 import DraftLevelsRepository from '@modules/levels/repositories/drafts/DraftLevelsRepository';
 import DraftModulesRepository from '@modules/modules/repositories/drafts/DraftModulesRepository';
 import DraftSubModulesRepository from '@modules/sub-modules/repositories/drafts/DraftSubModulesRepository';
-import DraftUserAnswersRepository from '@modules/user-answers/repositories/drafts/DraftUserAnswersRepository';
-import DraftQuestionsRepository from '../repositories/drafts/DraftQuestionsRepository';
+import DraftQuestionsRepository from '@modules/questions/repositories/drafts/DraftQuestionsRepository';
+import DraftUserAnswersRepository from '../repositories/drafts/DraftUserAnswersRepository';
 
-import DeleteQuestionService from './DeleteQuestionService';
-
-let draftCacheProvider: DraftCacheProvider;
+import GetUserAnswerService from './GetUserAnswerService';
 
 let draftUsersRepository: DraftUsersRepository;
 let draftLevelsRepository: DraftLevelsRepository;
 let draftModulesRepository: DraftModulesRepository;
 let draftSubModulesRepository: DraftSubModulesRepository;
-let draftUserAnswersRepository: DraftUserAnswersRepository;
 let draftQuestionsRepository: DraftQuestionsRepository;
+let draftUserAnswersRepository: DraftUserAnswersRepository;
 
-let deleteQuestion: DeleteQuestionService;
+let getUserAnswer: GetUserAnswerService;
 
-describe('DeleteQuestion', () => {
+describe('GetUserAnswer', () => {
   beforeEach(() => {
     draftUsersRepository = new DraftUsersRepository();
     draftLevelsRepository = new DraftLevelsRepository();
     draftModulesRepository = new DraftModulesRepository();
     draftSubModulesRepository = new DraftSubModulesRepository();
-    draftUserAnswersRepository = new DraftUserAnswersRepository();
     draftQuestionsRepository = new DraftQuestionsRepository();
+    draftUserAnswersRepository = new DraftUserAnswersRepository();
 
-    draftCacheProvider = new DraftCacheProvider();
-
-    deleteQuestion = new DeleteQuestionService(
-      draftUserAnswersRepository,
-      draftQuestionsRepository,
-      draftCacheProvider,
-    );
+    getUserAnswer = new GetUserAnswerService(draftUserAnswersRepository);
   });
 
-  it('should not be able to delete a non existing question', async () => {
-    await expect(
-      deleteQuestion.execute('Non existing question id'),
-    ).rejects.toBeInstanceOf(AppError);
-  });
-
-  it('should be able to delete a question', async () => {
+  it('should be able to get the user answer by question', async () => {
     const user = await draftUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
@@ -83,17 +65,8 @@ describe('DeleteQuestion', () => {
       answer_letter: 'A',
     });
 
-    await deleteQuestion.execute(question.id);
+    const userAnswer = await getUserAnswer.execute(user.id, question.id);
 
-    expect(await draftQuestionsRepository.findById(question.id)).toBe(
-      undefined,
-    );
-
-    expect(
-      await draftUserAnswersRepository.findByUserAndQuestionId(
-        user.id,
-        question.id,
-      ),
-    ).toBe(undefined);
+    expect(userAnswer).toHaveProperty('id');
   });
 });
