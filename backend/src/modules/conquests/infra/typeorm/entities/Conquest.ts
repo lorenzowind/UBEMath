@@ -19,6 +19,9 @@ class Conquest {
   name: string;
 
   @Column()
+  order: number;
+
+  @Column()
   description: string;
 
   @Column()

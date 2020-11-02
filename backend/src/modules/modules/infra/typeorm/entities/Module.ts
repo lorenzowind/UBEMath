@@ -21,6 +21,9 @@ class Module {
   @Column()
   level_id: string;
 
+  @Column()
+  order: number;
+
   @ManyToOne(() => Level)
   @JoinColumn({ name: 'level_id' })
   level: Level;

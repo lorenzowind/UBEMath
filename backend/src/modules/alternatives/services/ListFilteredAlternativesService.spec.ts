@@ -49,6 +49,7 @@ describe('ListFilteredAlternatives', () => {
 
     const level = await draftLevelsRepository.create({
       name: 'Level 01',
+      order: 1,
     });
 
     const module = await draftModulesRepository.create({
@@ -56,6 +57,7 @@ describe('ListFilteredAlternatives', () => {
       description: 'Module description',
       is_exercise: false,
       level_id: level.id,
+      order: 1,
     });
 
     const subModule = await draftSubModulesRepository.create({

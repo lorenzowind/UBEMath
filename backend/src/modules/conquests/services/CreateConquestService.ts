@@ -21,6 +21,7 @@ class CreateConquestService {
 
   public async execute({
     name,
+    order,
     description,
   }: ICreateConquestDTO): Promise<Conquest> {
     const checkConquestNameExists = await this.conquestsRepository.findByName(
@@ -31,8 +32,19 @@ class CreateConquestService {
       throw new AppError('Conquest name already in use.');
     }
 
+    const conquests = await this.conquestsRepository.findAllConquests();
+
+    const checkConquestOrder = conquests.find(
+      conquest => conquest.order === order,
+    );
+
+    if (checkConquestOrder) {
+      throw new AppError('Another conquest has the same order number.');
+    }
+
     const conquest = await this.conquestsRepository.create({
       name,
+      order,
       description,
     });
 

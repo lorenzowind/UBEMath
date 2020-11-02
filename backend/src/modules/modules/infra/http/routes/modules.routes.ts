@@ -21,6 +21,7 @@ modulesRouter.post(
   celebrate({
     [Segments.BODY]: {
       level_id: Joi.string().uuid().required(),
+      order: Joi.number().required(),
       name: Joi.string().required(),
       description: Joi.string().required(),
       is_exercise: Joi.boolean().required(),
@@ -38,6 +39,7 @@ modulesRouter.put(
     },
     [Segments.BODY]: {
       level_id: Joi.string().uuid().required(),
+      order: Joi.number().required(),
       name: Joi.string().required(),
       description: Joi.string().required(),
       is_exercise: Joi.boolean().required(),

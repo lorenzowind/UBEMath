@@ -21,6 +21,7 @@ conquestsRouter.post(
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
+      order: Joi.number().required(),
       description: Joi.string().required(),
     },
   }),
@@ -36,6 +37,7 @@ conquestsRouter.put(
     },
     [Segments.BODY]: {
       name: Joi.string().required(),
+      order: Joi.number().required(),
       description: Joi.string().required(),
     },
   }),

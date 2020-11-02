@@ -28,6 +28,7 @@ class CreateModuleService {
     description,
     is_exercise,
     level_id,
+    order,
   }: ICreateModuleDTO): Promise<Module> {
     const checkLevelExists = await this.levelsRepository.findById(level_id);
 
@@ -40,6 +41,7 @@ class CreateModuleService {
       description,
       is_exercise,
       level_id,
+      order,
     });
 
     this.cacheProvider.invalidatePrefix('modules-list');

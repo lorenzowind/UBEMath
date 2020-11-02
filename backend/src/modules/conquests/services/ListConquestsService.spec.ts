@@ -35,16 +35,19 @@ describe('ListConquests', () => {
     const firstConquest = await draftConquestsRepository.create({
       name: 'Conquest name',
       description: 'Conquest description',
+      order: 1,
     });
 
     const secondConquest = await draftConquestsRepository.create({
       name: 'Conquest name II',
       description: 'Conquest description',
+      order: 2,
     });
 
     const thirdConquest = await draftConquestsRepository.create({
       name: 'Conquest name III',
       description: 'Conquest description',
+      order: 3,
     });
 
     await listConquests.execute(user.id);

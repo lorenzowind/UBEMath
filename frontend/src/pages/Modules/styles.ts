@@ -71,6 +71,7 @@ export const Content = styled.div`
 
     overflow-y: auto;
     height: 100%;
+    width: 100%;
 
     ::-webkit-scrollbar {
       width: 18px;
@@ -151,10 +152,10 @@ export const ModulesBar = styled.div`
 `;
 
 export const ModuleSection = styled.div`
-  margin: 30px 40px 0 40px;
+  width: 100%;
+  padding: 30px 40px 0 40px;
 
   > strong {
-    position: relative;
     color: #2b1c81;
     font-size: 32px;
     font-weight: 700;
@@ -183,7 +184,6 @@ export const ModuleCard = styled.div<ModuleCardProps>`
   section {
     display: flex;
     align-items: center;
-    justify-content: center;
 
     > div {
       strong {

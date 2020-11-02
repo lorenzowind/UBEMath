@@ -14,6 +14,9 @@ class Level {
   @Column()
   name: string;
 
+  @Column()
+  order: number;
+
   @CreateDateColumn()
   created_at: Date;
 

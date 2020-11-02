@@ -1,4 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+
+import { useToast } from '../../hooks/toast';
+
+import sortArrayByOrder, { Level, Module } from '../../utils/sortArrayByOrder';
 
 import {
   Container,
@@ -13,138 +17,136 @@ import {
 
 import Menu from '../../components/Menu';
 import Header from '../../components/Header';
+import Loading from '../../components/Loading';
 
 import pyramidImg from '../../assets/pyramid.png';
 import api from '../../services/api';
 
-interface Level {
-  name: string;
-}
-
 const Modules: React.FC = () => {
   const [levels, setLevels] = useState<Level[]>([]);
+  const [modules, setModules] = useState<Module[]>([]);
+
+  const [loading, setLoading] = useState(false);
+
+  const { addToast } = useToast();
 
   useEffect(() => {
     const loadData = async () => {
-      await api.get<Level[]>('levels/all').then(response => {
-        setLevels(response.data);
-      });
+      try {
+        setLoading(true);
+
+        await api.get<Level[]>('levels/all').then(response => {
+          setLevels(response.data);
+        });
+
+        await api.get<Module[]>('modules/all').then(response => {
+          setModules(response.data);
+        });
+      } catch (err) {
+        addToast({
+          type: 'error',
+          title: 'Erro ao buscar os níveis',
+        });
+      } finally {
+        setLoading(false);
+      }
     };
 
     loadData();
+  }, [addToast]);
+
+  const handleSortModules = useCallback((array: Module[]): Module[] => {
+    function isModuleType(paramArray: any): paramArray is Module[] {
+      return 'level_id' in paramArray[0];
+    }
+
+    if (array.length > 1) {
+      const auxArray = sortArrayByOrder(array);
+
+      if (isModuleType(auxArray)) {
+        return auxArray;
+      }
+    }
+
+    return [];
   }, []);
 
+  const handleSortLevels = useCallback((array: Level[]): Level[] => {
+    function isLevelType(paramArray: any): paramArray is Level[] {
+      return !('level_id' in paramArray[0]);
+    }
+
+    if (array.length > 1) {
+      const auxArray = sortArrayByOrder(array);
+
+      if (isLevelType(auxArray)) {
+        return auxArray;
+      }
+    }
+
+    return [];
+  }, []);
+
+  const sortedLevels = useMemo(() => {
+    return handleSortLevels(levels);
+  }, [handleSortLevels, levels]);
+
   return (
-    <Container>
-      <Background>
-        <MainContainer>
-          <Header />
-          <Menu />
-          <Content>
-            <ModulesBar>
-              {levels.map(level => (
-                <button type="button">
-                  <strong>{level.name}</strong>
-                </button>
-              ))}
-            </ModulesBar>
+    <>
+      {loading && <Loading zIndex={1} />}
 
-            <nav>
-              <ModuleSection>
-                <strong>Módulo 1</strong>
+      <Container>
+        <Background>
+          <MainContainer>
+            <Header />
+            <Menu />
+            <Content>
+              <ModulesBar>
+                {sortedLevels.map(level => (
+                  <button type="button" key={level.id}>
+                    <strong>{level.name}</strong>
+                  </button>
+                ))}
+              </ModulesBar>
 
-                <ModuleCard color="#55e2c1">
-                  <strong>CONTEÚDO</strong>
-                  <section>
-                    <ImageContainer>
-                      <img src={pyramidImg} alt="Pyramid" />
-                    </ImageContainer>
-                    <div>
-                      <strong>What is Lorem Ipsum?</strong>
-                      <h1>
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. Lorem Ipsum has been the
-                        industry's standard dummy text ever since the 1500s,
-                        when an unknown printer took a galley of type and
-                        scrambled it to make a type specimen book. It has
-                        survived not only five centuries, but also the leap into
-                        electronic typesetting, remaining essentially unchanged.
-                      </h1>
-                    </div>
-                  </section>
-                </ModuleCard>
+              <nav>
+                {sortedLevels.map(level => (
+                  <ModuleSection key={level.id}>
+                    <strong>{level.name}</strong>
 
-                <ModuleCard color="#1cd8d2">
-                  <strong>EXERCÍCIOS</strong>
-                  <section>
-                    <ImageContainer>
-                      <img src={pyramidImg} alt="Pyramid" />
-                    </ImageContainer>
-                    <div>
-                      <strong>What is Lorem Ipsum?</strong>
-                      <h1>
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. Lorem Ipsum has been the
-                        industry's standard dummy text ever since the 1500s,
-                        when an unknown printer took a galley of type and
-                        scrambled it to make a type specimen book. It has
-                        survived not only five centuries, but also the leap into
-                        electronic typesetting, remaining essentially unchanged.
-                      </h1>
-                    </div>
-                  </section>
-                </ModuleCard>
-              </ModuleSection>
-              <ModuleSection>
-                <strong>Módulo 2</strong>
-
-                <ModuleCard color="#55e2c1">
-                  <strong>CONTEÚDO</strong>
-                  <section>
-                    <ImageContainer>
-                      <img src={pyramidImg} alt="Pyramid" />
-                    </ImageContainer>
-                    <div>
-                      <strong>What is Lorem Ipsum?</strong>
-                      <h1>
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. Lorem Ipsum has been the
-                        industry's standard dummy text ever since the 1500s,
-                        when an unknown printer took a galley of type and
-                        scrambled it to make a type specimen book. It has
-                        survived not only five centuries, but also the leap into
-                        electronic typesetting, remaining essentially unchanged.
-                      </h1>
-                    </div>
-                  </section>
-                </ModuleCard>
-
-                <ModuleCard color="#1cd8d2">
-                  <strong>EXERCÍCIOS</strong>
-                  <section>
-                    <ImageContainer>
-                      <img src={pyramidImg} alt="Pyramid" />
-                    </ImageContainer>
-                    <div>
-                      <strong>What is Lorem Ipsum?</strong>
-                      <h1>
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. Lorem Ipsum has been the
-                        industry's standard dummy text ever since the 1500s,
-                        when an unknown printer took a galley of type and
-                        scrambled it to make a type specimen book. It has
-                        survived not only five centuries, but also the leap into
-                        electronic typesetting, remaining essentially unchanged.
-                      </h1>
-                    </div>
-                  </section>
-                </ModuleCard>
-              </ModuleSection>
-            </nav>
-          </Content>
-        </MainContainer>
-      </Background>
-    </Container>
+                    {handleSortModules(
+                      modules.filter(module => module.level_id === level.id),
+                    ).map((filteredModule: Module) => (
+                      <ModuleCard
+                        key={filteredModule.id}
+                        color={
+                          filteredModule.is_exercise ? '#1cd8d2' : '#55e2c1'
+                        }
+                      >
+                        <strong>
+                          {filteredModule.is_exercise
+                            ? 'EXERCÍCIOS'
+                            : 'CONTEÚDO'}
+                        </strong>
+                        <section>
+                          <ImageContainer>
+                            <img src={pyramidImg} alt="Pyramid" />
+                          </ImageContainer>
+                          <div>
+                            <strong>{filteredModule.name}</strong>
+                            <h1>{filteredModule.description}</h1>
+                          </div>
+                        </section>
+                      </ModuleCard>
+                    ))}
+                  </ModuleSection>
+                ))}
+              </nav>
+            </Content>
+          </MainContainer>
+        </Background>
+      </Container>
+    </>
   );
 };
 

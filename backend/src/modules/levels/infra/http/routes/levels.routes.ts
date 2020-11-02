@@ -14,6 +14,7 @@ levelsRouter.post(
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
+      order: Joi.number().required(),
     },
   }),
   levelsController.create,
@@ -25,6 +26,7 @@ levelsRouter.put(
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
+      order: Joi.number().required(),
     },
   }),
   levelsController.update,

@@ -37,6 +37,7 @@ describe('UpdateQuestion', () => {
   it('should be able to update the question', async () => {
     const level = await draftLevelsRepository.create({
       name: 'Level 01',
+      order: 1,
     });
 
     const module = await draftModulesRepository.create({
@@ -44,6 +45,7 @@ describe('UpdateQuestion', () => {
       description: 'Module description',
       is_exercise: false,
       level_id: level.id,
+      order: 1,
     });
 
     const subModule = await draftSubModulesRepository.create({
@@ -73,6 +75,7 @@ describe('UpdateQuestion', () => {
   it('should not be able to update from a non existing question', async () => {
     const level = await draftLevelsRepository.create({
       name: 'Level 01',
+      order: 1,
     });
 
     const module = await draftModulesRepository.create({
@@ -80,6 +83,7 @@ describe('UpdateQuestion', () => {
       description: 'Module description',
       is_exercise: false,
       level_id: level.id,
+      order: 1,
     });
 
     const subModule = await draftSubModulesRepository.create({
@@ -102,6 +106,7 @@ describe('UpdateQuestion', () => {
   it('should not be able to update the question from a non existing sub-module', async () => {
     const level = await draftLevelsRepository.create({
       name: 'Level 01',
+      order: 1,
     });
 
     const module = await draftModulesRepository.create({
@@ -109,6 +114,7 @@ describe('UpdateQuestion', () => {
       description: 'Module description',
       is_exercise: false,
       level_id: level.id,
+      order: 1,
     });
 
     const subModule = await draftSubModulesRepository.create({

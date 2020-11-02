@@ -28,6 +28,7 @@ describe('CreateConquest', () => {
     const conquest = await createConquest.execute({
       name: 'Conquest name',
       description: 'Conquest description',
+      order: 1,
     });
 
     expect(conquest).toHaveProperty('id');
@@ -37,12 +38,30 @@ describe('CreateConquest', () => {
     await createConquest.execute({
       name: 'Conquest name',
       description: 'Conquest description',
+      order: 1,
     });
 
     await expect(
       createConquest.execute({
         name: 'Conquest name',
         description: 'Conquest description',
+        order: 2,
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('should not be able to create a new conquest with same order number of another', async () => {
+    await createConquest.execute({
+      name: 'Conquest name',
+      description: 'Conquest description',
+      order: 1,
+    });
+
+    await expect(
+      createConquest.execute({
+        name: 'Conquest name II',
+        description: 'Conquest description',
+        order: 1,
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

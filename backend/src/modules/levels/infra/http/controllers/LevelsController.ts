@@ -8,12 +8,13 @@ import ListLevelsService from '@modules/levels/services/ListLevelsService';
 
 export default class LevelsController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name } = request.body;
+    const { name, order } = request.body;
 
     const createLevel = container.resolve(CreateLevelService);
 
     const level = await createLevel.execute({
       name,
+      order,
     });
 
     return response.json(level);
@@ -21,13 +22,14 @@ export default class LevelsController {
 
   public async update(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
-    const { name } = request.body;
+    const { name, order } = request.body;
 
     const updateLevel = container.resolve(UpdateLevelService);
 
     const level = await updateLevel.execute({
       id,
       name,
+      order,
     });
 
     return response.json(level);

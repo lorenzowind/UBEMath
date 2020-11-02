@@ -8,12 +8,13 @@ import ListModulesService from '@modules/modules/services/ListModulesService';
 
 export default class ModulesController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { level_id, name, description, is_exercise } = request.body;
+    const { level_id, order, name, description, is_exercise } = request.body;
 
     const createModule = container.resolve(CreateModuleService);
 
     const module = await createModule.execute({
       level_id,
+      order,
       name,
       description,
       is_exercise,
@@ -24,13 +25,14 @@ export default class ModulesController {
 
   public async update(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
-    const { level_id, name, description, is_exercise } = request.body;
+    const { level_id, name, order, description, is_exercise } = request.body;
 
     const updateModule = container.resolve(UpdateModuleService);
 
     const module = await updateModule.execute({
       id,
       level_id,
+      order,
       name,
       description,
       is_exercise,

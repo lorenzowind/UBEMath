@@ -33,6 +33,7 @@ class UpdateModuleService {
     description,
     is_exercise,
     level_id,
+    order,
   }: IRequest): Promise<Module> {
     const module = await this.modulesRepository.findById(id);
 
@@ -50,6 +51,7 @@ class UpdateModuleService {
     module.description = description;
     module.is_exercise = is_exercise;
     module.level_id = level_id;
+    module.order = order;
 
     this.cacheProvider.invalidatePrefix('modules-list');
 

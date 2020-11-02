@@ -32,10 +32,12 @@ describe('DeleteLevel', () => {
   it('should be able to delete a level', async () => {
     await draftLevelsRepository.create({
       name: 'Level 01',
+      order: 1,
     });
 
     const level = await draftLevelsRepository.create({
       name: 'Level 02',
+      order: 2,
     });
 
     await deleteLevel.execute(level.id);

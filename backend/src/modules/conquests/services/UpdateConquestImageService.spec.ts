@@ -28,6 +28,7 @@ describe('UpdateConquestImage', () => {
     const conquest = await draftConquestsRepository.create({
       name: 'Conquest name',
       description: 'Conquest description',
+      order: 1,
     });
 
     await updateConquestImage.execute({

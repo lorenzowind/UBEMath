@@ -26,6 +26,7 @@ describe('CreateLevel', () => {
   it('should be able to create a new level', async () => {
     const level = await createLevel.execute({
       name: 'Level 01',
+      order: 1,
     });
 
     expect(level).toHaveProperty('id');
@@ -34,11 +35,27 @@ describe('CreateLevel', () => {
   it('should not be able to create a new level with the same name from another', async () => {
     await createLevel.execute({
       name: 'Level 01',
+      order: 1,
     });
 
     await expect(
       createLevel.execute({
         name: 'Level 01',
+        order: 2,
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('should not be able to create a new level with same order number of another', async () => {
+    await createLevel.execute({
+      name: 'Level 01',
+      order: 1,
+    });
+
+    await expect(
+      createLevel.execute({
+        name: 'Level 02',
+        order: 1,
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

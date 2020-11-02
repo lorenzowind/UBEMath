@@ -20,6 +20,7 @@ interface AuthState {
 }
 
 interface AuthContextData {
+  token: string;
   user: User;
   signIn(credentials: SignInCredentials): Promise<void>;
   signOut(): void;
@@ -79,7 +80,13 @@ const AuthProvider: React.FC = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user: data.user, signIn, signOut, updateUser }}
+      value={{
+        token: data.token,
+        user: data.user,
+        signIn,
+        signOut,
+        updateUser,
+      }}
     >
       {children}
     </AuthContext.Provider>

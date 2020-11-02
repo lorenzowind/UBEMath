@@ -14,6 +14,10 @@ export default class CreateConquests1603082424516
             isUnique: true,
           },
           {
+            name: 'order',
+            type: 'smallint',
+          },
+          {
             name: 'name',
             type: 'varchar(255)',
           },

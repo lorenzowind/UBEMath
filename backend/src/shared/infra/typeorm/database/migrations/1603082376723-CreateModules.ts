@@ -23,6 +23,10 @@ export default class CreateModules1603082376723 implements MigrationInterface {
             isNullable: true,
           },
           {
+            name: 'order',
+            type: 'smallint',
+          },
+          {
             name: 'name',
             type: 'varchar(255)',
           },

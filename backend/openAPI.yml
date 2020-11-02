@@ -79,6 +79,8 @@ components:
         id:
           type: string
           format: uuid
+        order:
+          type: integer
         name:
           type: string
         created_at:
@@ -95,6 +97,8 @@ components:
         level_id:
           type: string
           format: uuid
+        order:
+          type: integer
         name:
           type: string
         description:
@@ -175,6 +179,8 @@ components:
         id:
           type: string
           format: uuid
+        order:
+          type: integer
         name:
           type: string
         description:
@@ -525,6 +531,9 @@ paths:
                   name:
                     type: string
                     example: "Level 01"
+                  order:
+                    type: integer
+                    example: 1
       responses:
         '200':
           description: Returns a JSON containing the created level.
@@ -537,6 +546,9 @@ paths:
                     type: string
                     format: uuid
                     example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  order:
+                    type: integer
+                    example: 1
                   name:
                     type: string
                     example: "Level 01"
@@ -578,6 +590,9 @@ paths:
                   name:
                     type: string
                     example: "Level 01"
+                  order:
+                    type: integer
+                    example: 1
       responses:
         '200':
           description: Returns a JSON containing the updated level.
@@ -590,6 +605,9 @@ paths:
                     type: string
                     format: uuid
                     example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  order:
+                    type: integer
+                    example: 1
                   name:
                     type: string
                     example: "Level 01"
@@ -648,6 +666,9 @@ paths:
                       type: string
                       format: uuid
                       example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                    order:
+                      type: integer
+                      example: 1
                     name:
                       type: string
                       example: "Level 01"
@@ -682,6 +703,9 @@ paths:
                     type: string
                     format: uuid
                     example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  order:
+                    type: integer
+                    example: 1
                   name:
                     type: string
                     example: "Module Name"
@@ -707,6 +731,9 @@ paths:
                     type: string
                     format: uuid
                     example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  order:
+                    type: integer
+                    example: 1
                   name:
                     type: string
                     example: "Module Name"
@@ -758,6 +785,9 @@ paths:
                     type: string
                     format: uuid
                     example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  order:
+                    type: integer
+                    example: 1
                   name:
                     type: string
                     example: "Module Name"
@@ -783,6 +813,9 @@ paths:
                     type: string
                     format: uuid
                     example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  order:
+                    type: integer
+                    example: 1
                   name:
                     type: string
                     example: "Module Name"
@@ -871,6 +904,9 @@ paths:
                     type: string
                     format: uuid
                     example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                  order:
+                    type: integer
+                    example: 1
                   name:
                     type: string
                     example: "Module Name"
@@ -924,6 +960,9 @@ paths:
                       type: string
                       format: uuid
                       example: "3c68c90a-009b-4c59-9c7f-dab2774e9a57"
+                    order:
+                      type: integer
+                      example: 1
                     name:
                       type: string
                       example: "Module Name"
@@ -1672,6 +1711,9 @@ paths:
                   name:
                     type: string
                     example: "Conquest Name"
+                  order:
+                    type: integer
+                    example: 1
                   description:
                     type: string
                     example: "Conquest description"
@@ -1690,6 +1732,9 @@ paths:
                   name:
                     type: string
                     example: "Conquest Name"
+                  order:
+                    type: integer
+                    example: 1
                   description:
                     type: string
                     example: "Conquest description"
@@ -1734,6 +1779,9 @@ paths:
                   name:
                     type: string
                     example: "Conquest Name"
+                  order:
+                    type: integer
+                    example: 1
                   description:
                     type: string
                     example: "Conquest description"
@@ -1752,6 +1800,9 @@ paths:
                   name:
                     type: string
                     example: "Conquest Name"
+                  order:
+                    type: integer
+                    example: 1
                   description:
                     type: string
                     example: "Conquest description"
@@ -1833,6 +1884,9 @@ paths:
                   name:
                     type: string
                     example: "Conquest Name"
+                  order:
+                    type: integer
+                    example: 1
                   description:
                     type: string
                     example: "Conquest description"
@@ -1879,6 +1933,9 @@ paths:
                     name:
                       type: string
                       example: "Conquest Name"
+                    order:
+                      type: integer
+                      example: 1
                     description:
                       type: string
                       example: "Conquest description"

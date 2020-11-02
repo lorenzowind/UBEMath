@@ -34,6 +34,7 @@ describe('CreateSubModule', () => {
   it('should be able to create and validate a new sub-module', async () => {
     const level = await draftLevelsRepository.create({
       name: 'Level 01',
+      order: 1,
     });
 
     const module = await draftModulesRepository.create({
@@ -41,6 +42,7 @@ describe('CreateSubModule', () => {
       description: 'Module description',
       is_exercise: false,
       level_id: level.id,
+      order: 1,
     });
 
     const firstSubModule = await createSubModule.execute({
@@ -64,6 +66,7 @@ describe('CreateSubModule', () => {
   it('should not be able to create a new sub-module with same order number of another', async () => {
     const level = await draftLevelsRepository.create({
       name: 'Level 01',
+      order: 1,
     });
 
     const module = await draftModulesRepository.create({
@@ -71,6 +74,7 @@ describe('CreateSubModule', () => {
       description: 'Module description',
       is_exercise: false,
       level_id: level.id,
+      order: 1,
     });
 
     await createSubModule.execute({

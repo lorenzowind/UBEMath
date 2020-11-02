@@ -34,6 +34,7 @@ describe('UpdateSubModule', () => {
   it('should be able to update and validate the sub-module', async () => {
     const level = await draftLevelsRepository.create({
       name: 'Level 01',
+      order: 1,
     });
 
     const module = await draftModulesRepository.create({
@@ -41,6 +42,7 @@ describe('UpdateSubModule', () => {
       description: 'Module description',
       is_exercise: false,
       level_id: level.id,
+      order: 1,
     });
 
     const firstSubModule = await draftSubModulesRepository.create({
@@ -72,6 +74,7 @@ describe('UpdateSubModule', () => {
   it('should not be able to update the sub-module with the same order number of another', async () => {
     const level = await draftLevelsRepository.create({
       name: 'Level 01',
+      order: 1,
     });
 
     const module = await draftModulesRepository.create({
@@ -79,6 +82,7 @@ describe('UpdateSubModule', () => {
       description: 'Module description',
       is_exercise: false,
       level_id: level.id,
+      order: 1,
     });
 
     const firstSubModule = await draftSubModulesRepository.create({
@@ -109,6 +113,7 @@ describe('UpdateSubModule', () => {
   it('should not be able to update from a non existing sub-module', async () => {
     const level = await draftLevelsRepository.create({
       name: 'Level 01',
+      order: 1,
     });
 
     const module = await draftModulesRepository.create({
@@ -116,6 +121,7 @@ describe('UpdateSubModule', () => {
       description: 'Module description',
       is_exercise: false,
       level_id: level.id,
+      order: 1,
     });
 
     await expect(
@@ -132,6 +138,7 @@ describe('UpdateSubModule', () => {
   it('should not be able to update the sub-module from a non existing module', async () => {
     const level = await draftLevelsRepository.create({
       name: 'Level 01',
+      order: 1,
     });
 
     const module = await draftModulesRepository.create({
@@ -139,6 +146,7 @@ describe('UpdateSubModule', () => {
       description: 'Module description',
       is_exercise: false,
       level_id: level.id,
+      order: 1,
     });
 
     const subModule = await draftSubModulesRepository.create({

@@ -37,6 +37,7 @@ describe('ListModules', () => {
 
     const level = await draftLevelsRepository.create({
       name: 'Level 01',
+      order: 1,
     });
 
     const firstModule = await draftModulesRepository.create({
@@ -44,6 +45,7 @@ describe('ListModules', () => {
       description: 'Module description',
       is_exercise: false,
       level_id: level.id,
+      order: 1,
     });
 
     const secondModule = await draftModulesRepository.create({
@@ -51,6 +53,7 @@ describe('ListModules', () => {
       description: 'Module description',
       is_exercise: false,
       level_id: level.id,
+      order: 2,
     });
 
     await listModules.execute(user.id);

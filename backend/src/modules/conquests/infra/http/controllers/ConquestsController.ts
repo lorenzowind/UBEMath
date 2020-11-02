@@ -8,24 +8,25 @@ import ListConquestsService from '@modules/conquests/services/ListConquestsServi
 
 export default class ConquestsController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, description } = request.body;
+    const { name, order, description } = request.body;
 
     const createConquest = container.resolve(CreateConquestService);
 
-    const conquest = await createConquest.execute({ name, description });
+    const conquest = await createConquest.execute({ name, order, description });
 
     return response.json(conquest);
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
-    const { name, description } = request.body;
+    const { name, order, description } = request.body;
 
     const updateConquest = container.resolve(UpdateConquestService);
 
     const conquest = await updateConquest.execute({
       id,
       name,
+      order,
       description,
     });
 

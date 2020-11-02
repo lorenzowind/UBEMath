@@ -34,10 +34,12 @@ describe('ListLevelsService', () => {
 
     const firstLevel = await draftLevelsRepository.create({
       name: 'Level 01',
+      order: 1,
     });
 
     const secondLevel = await draftLevelsRepository.create({
       name: 'Level 02',
+      order: 2,
     });
 
     await listLevels.execute(user.id);

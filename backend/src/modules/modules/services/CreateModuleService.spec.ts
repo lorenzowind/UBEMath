@@ -31,6 +31,7 @@ describe('CreateModule', () => {
   it('should be able to create a new module', async () => {
     const level = await draftLevelsRepository.create({
       name: 'Level 01',
+      order: 1,
     });
 
     const module = await createModule.execute({
@@ -38,6 +39,7 @@ describe('CreateModule', () => {
       description: 'Module description',
       is_exercise: false,
       level_id: level.id,
+      order: 1,
     });
 
     expect(module).toHaveProperty('id');
@@ -50,6 +52,7 @@ describe('CreateModule', () => {
         description: 'Module description',
         is_exercise: false,
         level_id: 'non existing level id',
+        order: 1,
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

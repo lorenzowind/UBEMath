@@ -23,7 +23,7 @@ class UpdateLevelService {
     private cacheProvider: ICacheProvider,
   ) {}
 
-  public async execute({ id, name }: IRequest): Promise<Level> {
+  public async execute({ id, name, order }: IRequest): Promise<Level> {
     const level = await this.levelsRepository.findById(id);
 
     if (!level) {
@@ -36,7 +36,18 @@ class UpdateLevelService {
       throw new AppError('Level name already used.');
     }
 
+    const levels = await this.levelsRepository.findAllLevels();
+
+    const checkLevelOrder = levels.find(
+      findLevel => findLevel.order === order && findLevel.id !== level.id,
+    );
+
+    if (checkLevelOrder) {
+      throw new AppError('Another level has the same order number.');
+    }
+
     level.name = name;
+    level.order = order;
 
     this.cacheProvider.invalidatePrefix('levels-list');
 

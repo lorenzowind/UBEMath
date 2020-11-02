@@ -31,6 +31,7 @@ describe('UpdateModule', () => {
   it('should be able to update the module', async () => {
     const level = await draftLevelsRepository.create({
       name: 'Level 01',
+      order: 1,
     });
 
     const module = await draftModulesRepository.create({
@@ -38,6 +39,7 @@ describe('UpdateModule', () => {
       description: 'Module description',
       is_exercise: false,
       level_id: level.id,
+      order: 1,
     });
 
     const updatedModule = await updateModule.execute({
@@ -46,6 +48,7 @@ describe('UpdateModule', () => {
       description: 'New module description',
       is_exercise: false,
       level_id: level.id,
+      order: 1,
     });
 
     expect(updatedModule.name).toBe('New module 01');
@@ -55,6 +58,7 @@ describe('UpdateModule', () => {
   it('should not be able to update from a non existing module', async () => {
     const level = await draftLevelsRepository.create({
       name: 'Level 01',
+      order: 1,
     });
 
     await expect(
@@ -64,6 +68,7 @@ describe('UpdateModule', () => {
         description: 'Module description',
         is_exercise: false,
         level_id: level.id,
+        order: 1,
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -71,6 +76,7 @@ describe('UpdateModule', () => {
   it('should not be able to update the module from a non existing level', async () => {
     const level = await draftLevelsRepository.create({
       name: 'Level 01',
+      order: 1,
     });
 
     const module = await draftModulesRepository.create({
@@ -78,6 +84,7 @@ describe('UpdateModule', () => {
       description: 'Module description',
       is_exercise: false,
       level_id: level.id,
+      order: 1,
     });
 
     await expect(
@@ -87,6 +94,7 @@ describe('UpdateModule', () => {
         description: 'New module description',
         is_exercise: false,
         level_id: 'non existing level id',
+        order: 1,
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

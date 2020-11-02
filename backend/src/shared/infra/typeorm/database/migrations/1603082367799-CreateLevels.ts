@@ -13,6 +13,10 @@ export default class CreateLevels1603082367799 implements MigrationInterface {
             isUnique: true,
           },
           {
+            name: 'order',
+            type: 'smallint',
+          },
+          {
             name: 'name',
             type: 'varchar(255)',
             isUnique: true,

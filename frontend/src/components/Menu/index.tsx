@@ -50,10 +50,7 @@ const Menu: React.FC = () => {
 
           <OptionsContainer>
             <button type="button" onClick={toggleModalInfo}>
-              <strong>CAMPANHA</strong>
-            </button>
-            <button type="button" onClick={toggleModalInfo}>
-              <strong>TREINO</strong>
+              <strong>GAME</strong>
             </button>
             <button type="button" onClick={() => history.push('modules')}>
               <strong>MÓDULOS</strong>

@@ -30,6 +30,7 @@ describe('UpdateModuleImage', () => {
   it('should be able to update the module with an image', async () => {
     const level = await draftLevelsRepository.create({
       name: 'Level 01',
+      order: 1,
     });
 
     const module = await draftModulesRepository.create({
@@ -37,6 +38,7 @@ describe('UpdateModuleImage', () => {
       description: 'Module description',
       is_exercise: false,
       level_id: level.id,
+      order: 1,
     });
 
     await updateModuleImage.execute({

@@ -23,7 +23,12 @@ class UpdateConquestService {
     private cacheProvider: ICacheProvider,
   ) {}
 
-  public async execute({ id, name, description }: IRequest): Promise<Conquest> {
+  public async execute({
+    id,
+    name,
+    order,
+    description,
+  }: IRequest): Promise<Conquest> {
     const conquest = await this.conquestsRepository.findById(id);
 
     if (!conquest) {
@@ -38,7 +43,18 @@ class UpdateConquestService {
       throw new AppError('Conquest name already in use.');
     }
 
+    const conquests = await this.conquestsRepository.findAllConquests();
+
+    const checkConquestOrder = conquests.find(
+      findConquest => findConquest.order === order && findConquest.id !== id,
+    );
+
+    if (checkConquestOrder) {
+      throw new AppError('Another conquest has the same order number.');
+    }
+
     conquest.name = name;
+    conquest.order = order;
     conquest.description = description;
 
     this.cacheProvider.invalidatePrefix('conquests-list');

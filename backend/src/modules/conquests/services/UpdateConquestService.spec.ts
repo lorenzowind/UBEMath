@@ -28,12 +28,14 @@ describe('UpdateConquest', () => {
     const conquest = await draftConquestsRepository.create({
       name: 'Conquest name',
       description: 'Conquest description',
+      order: 1,
     });
 
     const updatedConquest = await updateConquest.execute({
       id: conquest.id,
       name: 'New conquest name',
       description: 'New conquest description',
+      order: 1,
     });
 
     expect(updatedConquest.name).toBe('New conquest name');
@@ -44,11 +46,13 @@ describe('UpdateConquest', () => {
     const conquest = await draftConquestsRepository.create({
       name: 'Conquest name',
       description: 'Conquest description',
+      order: 1,
     });
 
     await draftConquestsRepository.create({
       name: 'Conquest name II',
       description: 'Conquest description',
+      order: 2,
     });
 
     await expect(
@@ -56,6 +60,7 @@ describe('UpdateConquest', () => {
         id: conquest.id,
         name: 'Conquest name II',
         description: 'New conquest description',
+        order: 1,
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -66,6 +71,30 @@ describe('UpdateConquest', () => {
         id: 'non existing conquest id',
         name: 'New conquest name',
         description: 'New conquest description',
+        order: 1,
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('should not be able to update the conquest with same order number of another', async () => {
+    await draftConquestsRepository.create({
+      name: 'Conquest name',
+      description: 'Conquest description',
+      order: 1,
+    });
+
+    const conquest = await draftConquestsRepository.create({
+      name: 'Conquest name II',
+      description: 'Conquest description',
+      order: 2,
+    });
+
+    await expect(
+      updateConquest.execute({
+        id: conquest.id,
+        name: 'New conquest name',
+        description: 'New conquest description',
+        order: 1,
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
