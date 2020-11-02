@@ -10,7 +10,7 @@ import subModulesRouter from '@modules/sub-modules/infra/http/routes/sub-modules
 import questionsRouter from '@modules/questions/infra/http/routes/questions.routes';
 import alternativesRouter from '@modules/alternatives/infra/http/routes/alternatives.routes';
 
-// import conquestsRouter from '@modules/conquests/infra/http/routes/conquests.routes';
+import conquestsRouter from '@modules/conquests/infra/http/routes/conquests.routes';
 
 const routes = Router();
 
@@ -24,6 +24,6 @@ routes.use('/sub-modules', subModulesRouter);
 routes.use('/questions', questionsRouter);
 routes.use('/alternatives', alternativesRouter);
 
-// routes.use('/conquests', conquestsRouter);
+routes.use('/conquests', conquestsRouter);
 
 export default routes;

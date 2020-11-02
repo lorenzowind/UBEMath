@@ -24,8 +24,8 @@ import QuestionsRepository from '@modules/questions/infra/typeorm/repositories/Q
 import IAlternativesRepository from '@modules/alternatives/repositories/IAlternativesRepository';
 import AlternativesRepository from '@modules/alternatives/infra/typeorm/repositories/AlternativesRepository';
 
-// import IConquestsRepository from '@modules/conquests/repositories/IConquestsRepository';
-// import ConquestsRepository from '@modules/conquests/infra/typeorm/repositories/ConquestsRepository';
+import IConquestsRepository from '@modules/conquests/repositories/IConquestsRepository';
+import ConquestsRepository from '@modules/conquests/infra/typeorm/repositories/ConquestsRepository';
 
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
@@ -62,7 +62,7 @@ container.registerSingleton<IAlternativesRepository>(
   AlternativesRepository,
 );
 
-// container.registerSingleton<IConquestsRepository>(
-//   'ConquestsRepository',
-//   ConquestsRepository,
-// );
+container.registerSingleton<IConquestsRepository>(
+  'ConquestsRepository',
+  ConquestsRepository,
+);
