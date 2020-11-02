@@ -36,9 +36,6 @@ import UserConquestsRepository from '@modules/user-conquests/infra/typeorm/repos
 import IUserProgressRepository from '@modules/user-progress/repositories/IUserProgressRepository';
 import UserProgressRepository from '@modules/user-progress/infra/typeorm/repositories/UserProgressRepository';
 
-import IGameSavesRepository from '@modules/game-saves/repositories/IGameSavesRepository';
-import GameSavesRepository from '@modules/game-saves/infra/typeorm/repositories/GameSavesRepository';
-
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
   UsersRepository,
@@ -92,9 +89,4 @@ container.registerSingleton<IUserConquestsRepository>(
 container.registerSingleton<IUserProgressRepository>(
   'UserProgressRepository',
   UserProgressRepository,
-);
-
-container.registerSingleton<IGameSavesRepository>(
-  'GameSavesRepository',
-  GameSavesRepository,
 );

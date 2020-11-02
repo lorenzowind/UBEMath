@@ -16,8 +16,6 @@ import userAnswersRouter from '@modules/user-answers/infra/http/routes/user-answ
 import userConquestsRouter from '@modules/user-conquests/infra/http/routes/user-conquests.routes';
 import userProgressRouter from '@modules/user-progress/infra/http/routes/user-progress.routes';
 
-import gameSavesRouter from '@modules/game-saves/infra/http/routes/game-saves.routes';
-
 const routes = Router();
 
 routes.use('/users', usersRouter);
@@ -35,7 +33,5 @@ routes.use('/conquests', conquestsRouter);
 routes.use('/user-answers', userAnswersRouter);
 routes.use('/user-conquests', userConquestsRouter);
 routes.use('/user-progress', userProgressRouter);
-
-routes.use('/game-saves', gameSavesRouter);
 
 export default routes;
