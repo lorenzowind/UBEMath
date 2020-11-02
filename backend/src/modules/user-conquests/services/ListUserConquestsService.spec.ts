@@ -48,8 +48,8 @@ describe('ListUserConquests', () => {
       conquest_id: secondConquest.id,
     });
 
-    const conquests = await listUserConquests.execute(user.id);
+    const userConquests = await listUserConquests.execute(user.id);
 
-    expect(conquests).toEqual([firstUserConquest, secondUserConquest]);
+    expect(userConquests).toEqual([firstUserConquest, secondUserConquest]);
   });
 });

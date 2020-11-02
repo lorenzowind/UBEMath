@@ -1,49 +1,41 @@
 import AppError from '@shared/errors/AppError';
 
-import DraftCacheProvider from '@shared/container/providers/CacheProvider/drafts/DraftCacheProvider';
-
 import DraftUsersRepository from '@modules/users/repositories/drafts/DraftUsersRepository';
 import DraftLevelsRepository from '@modules/levels/repositories/drafts/DraftLevelsRepository';
 import DraftModulesRepository from '@modules/modules/repositories/drafts/DraftModulesRepository';
-import DraftUserProgressRepository from '@modules/user-progress/repositories/drafts/DraftUserProgressRepository';
-import DraftSubModulesRepository from '../repositories/drafts/DraftSubModulesRepository';
+import DraftSubModulesRepository from '@modules/sub-modules/repositories/drafts/DraftSubModulesRepository';
+import DraftUserProgressRepository from '../repositories/drafts/DraftUserProgressRepository';
 
-import DeleteSubModuleService from './DeleteSubModuleService';
-
-let draftCacheProvider: DraftCacheProvider;
+import DeleteUserProgressService from './DeleteUserProgressService';
 
 let draftUsersRepository: DraftUsersRepository;
 let draftLevelsRepository: DraftLevelsRepository;
 let draftModulesRepository: DraftModulesRepository;
-let draftUserProgressRepository: DraftUserProgressRepository;
 let draftSubModulesRepository: DraftSubModulesRepository;
+let draftUserProgressRepository: DraftUserProgressRepository;
 
-let deleteSubModule: DeleteSubModuleService;
+let deleteUserProgress: DeleteUserProgressService;
 
-describe('DeleteSubModule', () => {
+describe('DeleteUserProgress', () => {
   beforeEach(() => {
     draftUsersRepository = new DraftUsersRepository();
     draftLevelsRepository = new DraftLevelsRepository();
     draftModulesRepository = new DraftModulesRepository();
-    draftUserProgressRepository = new DraftUserProgressRepository();
     draftSubModulesRepository = new DraftSubModulesRepository();
+    draftUserProgressRepository = new DraftUserProgressRepository();
 
-    draftCacheProvider = new DraftCacheProvider();
-
-    deleteSubModule = new DeleteSubModuleService(
+    deleteUserProgress = new DeleteUserProgressService(
       draftUserProgressRepository,
-      draftSubModulesRepository,
-      draftCacheProvider,
     );
   });
 
-  it('should not be able to delete a non existing sub-module', async () => {
+  it('should not be able to delete a non existing user progress', async () => {
     await expect(
-      deleteSubModule.execute('Non existing sub-module id'),
+      deleteUserProgress.execute('Non existing user progress id'),
     ).rejects.toBeInstanceOf(AppError);
   });
 
-  it('should be able to delete a sub-module', async () => {
+  it('should be able to delete an user progress', async () => {
     const user = await draftUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
@@ -68,22 +60,15 @@ describe('DeleteSubModule', () => {
       content_url: 'Sub-module content URL',
     });
 
-    await draftUserProgressRepository.create({
+    const userProgress = await draftUserProgressRepository.create({
       user_id: user.id,
       sub_module_id: subModule.id,
     });
 
-    await deleteSubModule.execute(subModule.id);
+    await deleteUserProgress.execute(userProgress.id);
 
-    expect(await draftSubModulesRepository.findById(subModule.id)).toBe(
+    expect(await draftUserProgressRepository.findById(userProgress.id)).toBe(
       undefined,
     );
-
-    expect(
-      await draftUserProgressRepository.findByUserAndSubModuleId(
-        user.id,
-        subModule.id,
-      ),
-    ).toBe(undefined);
   });
 });

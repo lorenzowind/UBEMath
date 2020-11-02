@@ -4,11 +4,15 @@ import AppError from '@shared/errors/AppError';
 
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 
+import IUserProgressRepository from '@modules/user-progress/repositories/IUserProgressRepository';
 import ISubModulesRepository from '../repositories/ISubModulesRepository';
 
 @injectable()
 class DeleteSubModuleService {
   constructor(
+    @inject('UserProgressRepository')
+    private userProgressRepository: IUserProgressRepository,
+
     @inject('SubModulesRepository')
     private subModulesRepository: ISubModulesRepository,
 
@@ -22,6 +26,8 @@ class DeleteSubModuleService {
     if (!subModule) {
       throw new AppError('Sub-module not found.');
     }
+
+    await this.userProgressRepository.removeAllBySubModuleId(subModule.id);
 
     this.cacheProvider.invalidatePrefix(
       `sub-modules-list:${subModule.module_id}`,
