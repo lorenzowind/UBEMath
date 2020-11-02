@@ -27,6 +27,18 @@ import AlternativesRepository from '@modules/alternatives/infra/typeorm/reposito
 import IConquestsRepository from '@modules/conquests/repositories/IConquestsRepository';
 import ConquestsRepository from '@modules/conquests/infra/typeorm/repositories/ConquestsRepository';
 
+import IUserAnswersRepository from '@modules/user-answers/repositories/IUserAnswersRepository';
+import UserAnswersRepository from '@modules/user-answers/infra/typeorm/repositories/UserAnswersRepository';
+
+import IUserConquestsRepository from '@modules/user-conquests/repositories/IUserConquestsRepository';
+import UserConquestsRepository from '@modules/user-conquests/infra/typeorm/repositories/UserConquestsRepository';
+
+import IUserProgressRepository from '@modules/user-progress/repositories/IUserProgressRepository';
+import UserProgressRepository from '@modules/user-progress/infra/typeorm/repositories/UserProgressRepository';
+
+import IGameSavesRepository from '@modules/game-saves/repositories/IGameSavesRepository';
+import GameSavesRepository from '@modules/game-saves/infra/typeorm/repositories/GameSavesRepository';
+
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
   UsersRepository,
@@ -65,4 +77,24 @@ container.registerSingleton<IAlternativesRepository>(
 container.registerSingleton<IConquestsRepository>(
   'ConquestsRepository',
   ConquestsRepository,
+);
+
+container.registerSingleton<IUserAnswersRepository>(
+  'UserAnswersRepository',
+  UserAnswersRepository,
+);
+
+container.registerSingleton<IUserConquestsRepository>(
+  'UserConquestsRepository',
+  UserConquestsRepository,
+);
+
+container.registerSingleton<IUserProgressRepository>(
+  'UserProgressRepository',
+  UserProgressRepository,
+);
+
+container.registerSingleton<IGameSavesRepository>(
+  'GameSavesRepository',
+  GameSavesRepository,
 );
