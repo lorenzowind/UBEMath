@@ -4,11 +4,15 @@ import AppError from '@shared/errors/AppError';
 
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 
+import IUserConquestsRepository from '@modules/user-conquests/repositories/IUserConquestsRepository';
 import IConquestsRepository from '../repositories/IConquestsRepository';
 
 @injectable()
 class DeleteConquestService {
   constructor(
+    @inject('UserConquestsRepository')
+    private userConquestsRepository: IUserConquestsRepository,
+
     @inject('ConquestsRepository')
     private conquestsRepository: IConquestsRepository,
 
@@ -22,6 +26,8 @@ class DeleteConquestService {
     if (!conquest) {
       throw new AppError('Conquest not found.');
     }
+
+    await this.userConquestsRepository.removeAllByConquestId(conquest.id);
 
     this.cacheProvider.invalidatePrefix('conquests-list');
 
