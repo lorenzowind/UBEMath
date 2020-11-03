@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useState } from 'react';
 import { FiMail, FiLock } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
@@ -21,6 +21,7 @@ import {
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import Loading from '../../components/Loading';
 
 import logoImg from '../../assets/logo.svg';
 
@@ -33,12 +34,16 @@ const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
 
+  const [loading, setLoading] = useState(false);
+
   const { signIn } = useAuth();
   const { addToast } = useToast();
 
   const handleSubmit = useCallback(
     async (data: SignInFormData) => {
       try {
+        setLoading(true);
+
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
@@ -72,62 +77,68 @@ const SignIn: React.FC = () => {
           title: 'Erro na autenticação',
           description: 'Ocorreu um erro ao fazer login, cheque as credenciais.',
         });
+      } finally {
+        setLoading(false);
       }
     },
     [addToast, history, signIn],
   );
 
   return (
-    <Container>
-      <Background>
-        <MainContainer>
-          <LeftContent>
-            <section>
-              <h1>Login</h1>
-              <Form ref={formRef} onSubmit={handleSubmit}>
-                <InputsContainer>
-                  <fieldset>
-                    <legend>E-mail</legend>
-                    <Input name="email" icon={FiMail} />
+    <>
+      {loading && <Loading zIndex={1} />}
 
-                    <legend>Senha</legend>
-                    <Input name="password" icon={FiLock} type="password" />
+      <Container>
+        <Background>
+          <MainContainer>
+            <LeftContent>
+              <section>
+                <h1>Login</h1>
+                <Form ref={formRef} onSubmit={handleSubmit}>
+                  <InputsContainer>
+                    <fieldset>
+                      <legend>E-mail</legend>
+                      <Input name="email" icon={FiMail} />
 
-                    <article>
-                      <Link to="/forgot-password">
-                        <b>Esqueci minha senha</b>
-                      </Link>
-                    </article>
-                  </fieldset>
-                </InputsContainer>
+                      <legend>Senha</legend>
+                      <Input name="password" icon={FiLock} type="password" />
 
-                <nav>
-                  <Button
-                    type="submit"
-                    textColor="#2b1c81"
-                    borderColor="#2b1c81"
-                    backgroundColor="#fff"
-                  >
-                    ENTRAR
-                  </Button>
+                      <article>
+                        <Link to="/forgot-password">
+                          <b>Esqueci minha senha</b>
+                        </Link>
+                      </article>
+                    </fieldset>
+                  </InputsContainer>
 
-                  <strong>
-                    {'Não possui conta? '}
-                    <b>
-                      <Link to="/signup">Crie agora!</Link>
-                    </b>
-                  </strong>
-                </nav>
-              </Form>
-            </section>
-          </LeftContent>
+                  <nav>
+                    <Button
+                      type="submit"
+                      textColor="#2b1c81"
+                      borderColor="#2b1c81"
+                      backgroundColor="#fff"
+                    >
+                      ENTRAR
+                    </Button>
 
-          <RightContent>
-            <img src={logoImg} alt="Logo" />
-          </RightContent>
-        </MainContainer>
-      </Background>
-    </Container>
+                    <strong>
+                      {'Não possui conta? '}
+                      <b>
+                        <Link to="/signup">Crie agora!</Link>
+                      </b>
+                    </strong>
+                  </nav>
+                </Form>
+              </section>
+            </LeftContent>
+
+            <RightContent>
+              <img src={logoImg} alt="Logo" />
+            </RightContent>
+          </MainContainer>
+        </Background>
+      </Container>
+    </>
   );
 };
 

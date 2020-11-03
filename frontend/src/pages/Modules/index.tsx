@@ -19,7 +19,7 @@ import Menu from '../../components/Menu';
 import Header from '../../components/Header';
 import Loading from '../../components/Loading';
 
-import pyramidImg from '../../assets/pyramid.png';
+import defaultImg from '../../assets/default_module.png';
 import api from '../../services/api';
 
 const Modules: React.FC = () => {
@@ -104,7 +104,9 @@ const Modules: React.FC = () => {
               <ModulesBar>
                 {sortedLevels.map(level => (
                   <button type="button" key={level.id}>
-                    <strong>{level.name}</strong>
+                    <a href={`#${level.name}`}>
+                      <strong>{level.name}</strong>
+                    </a>
                   </button>
                 ))}
               </ModulesBar>
@@ -112,7 +114,7 @@ const Modules: React.FC = () => {
               <nav>
                 {sortedLevels.map(level => (
                   <ModuleSection key={level.id}>
-                    <strong>{level.name}</strong>
+                    <strong id={level.name}>{level.name}</strong>
 
                     {handleSortModules(
                       modules.filter(module => module.level_id === level.id),
@@ -130,7 +132,14 @@ const Modules: React.FC = () => {
                         </strong>
                         <section>
                           <ImageContainer>
-                            <img src={pyramidImg} alt="Pyramid" />
+                            {filteredModule.image_url ? (
+                              <img
+                                src={filteredModule.image_url}
+                                alt="Module "
+                              />
+                            ) : (
+                              <img src={defaultImg} alt="Default" />
+                            )}
                           </ImageContainer>
                           <div>
                             <strong>{filteredModule.name}</strong>

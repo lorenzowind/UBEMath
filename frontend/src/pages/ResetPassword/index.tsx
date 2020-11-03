@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useState } from 'react';
 import { FiLock } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
@@ -22,6 +22,7 @@ import {
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import Loading from '../../components/Loading';
 
 import logoImg from '../../assets/logo.svg';
 
@@ -35,11 +36,15 @@ const ResetPassword: React.FC = () => {
   const history = useHistory();
   const location = useLocation();
 
+  const [loading, setLoading] = useState(false);
+
   const { addToast } = useToast();
 
   const handleSubmit = useCallback(
     async (data: ResetPasswordFormData) => {
       try {
+        setLoading(true);
+
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
@@ -82,53 +87,59 @@ const ResetPassword: React.FC = () => {
           title: 'Erro ao resetar senha',
           description: 'Ocorreu um erro ao resetar sua senha, tente novamente.',
         });
+      } finally {
+        setLoading(false);
       }
     },
     [addToast, history, location.search],
   );
 
   return (
-    <Container>
-      <Background>
-        <MainContainer>
-          <LeftContent>
-            <img src={logoImg} alt="Logo" />
-          </LeftContent>
+    <>
+      {loading && <Loading zIndex={1} />}
 
-          <RightContent>
-            <section>
-              <h1>Resetar senha</h1>
-              <Form ref={formRef} onSubmit={handleSubmit}>
-                <InputsContainer>
-                  <fieldset>
-                    <legend>Nova senha</legend>
-                    <Input name="password" icon={FiLock} type="password" />
+      <Container>
+        <Background>
+          <MainContainer>
+            <LeftContent>
+              <img src={logoImg} alt="Logo" />
+            </LeftContent>
 
-                    <legend>Confirmação da senha</legend>
-                    <Input
-                      name="password_confirmation"
-                      icon={FiLock}
-                      type="password"
-                    />
-                  </fieldset>
-                </InputsContainer>
+            <RightContent>
+              <section>
+                <h1>Resetar senha</h1>
+                <Form ref={formRef} onSubmit={handleSubmit}>
+                  <InputsContainer>
+                    <fieldset>
+                      <legend>Nova senha</legend>
+                      <Input name="password" icon={FiLock} type="password" />
 
-                <nav>
-                  <Button
-                    type="submit"
-                    textColor="#2b1c81"
-                    borderColor="#2b1c81"
-                    backgroundColor="#fff"
-                  >
-                    ALTERAR SENHA
-                  </Button>
-                </nav>
-              </Form>
-            </section>
-          </RightContent>
-        </MainContainer>
-      </Background>
-    </Container>
+                      <legend>Confirmação da senha</legend>
+                      <Input
+                        name="password_confirmation"
+                        icon={FiLock}
+                        type="password"
+                      />
+                    </fieldset>
+                  </InputsContainer>
+
+                  <nav>
+                    <Button
+                      type="submit"
+                      textColor="#2b1c81"
+                      borderColor="#2b1c81"
+                      backgroundColor="#fff"
+                    >
+                      ALTERAR SENHA
+                    </Button>
+                  </nav>
+                </Form>
+              </section>
+            </RightContent>
+          </MainContainer>
+        </Background>
+      </Container>
+    </>
   );
 };
 

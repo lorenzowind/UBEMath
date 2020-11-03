@@ -54,8 +54,7 @@ export const Content = styled.div`
   flex-direction: column;
 
   width: 70%;
-  padding-top: 140px;
-  margin: 0px 30px 60px 100px;
+  padding-top: 120px;
   height: 100%;
 
   animation: ${appearWithFade} 0.5s;
@@ -65,15 +64,49 @@ export const Content = styled.div`
       display: none;
     }
   }
+
+  nav {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    overflow-y: auto;
+    height: 100%;
+    width: 100%;
+    margin: 0px 30px 60px 100px;
+
+    ::-webkit-scrollbar {
+      width: 18px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: ${shade(0.2, '#2b1c81')};
+      border-radius: 13px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #1cd8d2;
+      border-radius: 13px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #55e2c1;
+    }
+
+    section {
+      & + section {
+        margin-top: 20px;
+      }
+    }
+  }
 `;
 
 export const ContainerTopButtons = styled.div`
-  margin-bottom: 40px;
-
-  width: 60vw;
+  margin: 0px 30px 40px 100px;
+  width: 100%;
   height: 60px;
-  border-radius: 6px;
-  background-color: #2b1c81;
+  background: #2b1c81;
+  border-radius: 13px;
 
   display: flex;
   flex-direction: row;
@@ -99,11 +132,9 @@ export const ContainerTopButtons = styled.div`
 
 export const ConquestContainer = styled.div`
   width: 60vw;
-  height: 12vh;
+  height: 14vh;
   border-radius: 6px;
   background-color: #55e2c1;
-
-  margin-bottom: 12px;
 
   display: flex;
   flex-direction: row;
@@ -115,13 +146,15 @@ export const ImageContainer = styled.div`
   height: 10vh;
   border-radius: 6px;
   border: solid 3px #2b1c81;
-  background-color: #ffffff;
-  margin: 10px;
+  background-color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 30px;
 
   img {
-    object-fit: cover;
+    object-fit: contain;
+    width: 90%;
+    height: 90%;
   }
 `;

@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useState } from 'react';
 import { FiMail } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
@@ -22,6 +22,7 @@ import {
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import Loading from '../../components/Loading';
 
 import logoImg from '../../assets/logo.svg';
 
@@ -32,11 +33,15 @@ interface ForgotPasswordFormData {
 const ForgotPassword: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
+  const [loading, setLoading] = useState(false);
+
   const { addToast } = useToast();
 
   const handleSubmit = useCallback(
     async (data: ForgotPasswordFormData) => {
       try {
+        setLoading(true);
+
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
@@ -74,48 +79,54 @@ const ForgotPassword: React.FC = () => {
           description:
             'Ocorreu um erro ao tentar realizar a recuperação de senha, tente novamente.',
         });
+      } finally {
+        setLoading(false);
       }
     },
     [addToast],
   );
 
   return (
-    <Container>
-      <Background>
-        <MainContainer>
-          <LeftContent>
-            <section>
-              <h1>Recuperar senha</h1>
-              <Form ref={formRef} onSubmit={handleSubmit}>
-                <InputsContainer>
-                  <fieldset>
-                    <legend>E-mail</legend>
-                    <Input name="email" icon={FiMail} />
-                  </fieldset>
-                </InputsContainer>
+    <>
+      {loading && <Loading zIndex={1} />}
 
-                <nav>
-                  <Button
-                    type="submit"
-                    textColor="#2b1c81"
-                    borderColor="#2b1c81"
-                    backgroundColor="#fff"
-                  >
-                    RECUPERAR
-                  </Button>
+      <Container>
+        <Background>
+          <MainContainer>
+            <LeftContent>
+              <section>
+                <h1>Recuperar senha</h1>
+                <Form ref={formRef} onSubmit={handleSubmit}>
+                  <InputsContainer>
+                    <fieldset>
+                      <legend>E-mail</legend>
+                      <Input name="email" icon={FiMail} />
+                    </fieldset>
+                  </InputsContainer>
 
-                  <Link to="/signin">Voltar ao login</Link>
-                </nav>
-              </Form>
-            </section>
-          </LeftContent>
+                  <nav>
+                    <Button
+                      type="submit"
+                      textColor="#2b1c81"
+                      borderColor="#2b1c81"
+                      backgroundColor="#fff"
+                    >
+                      RECUPERAR
+                    </Button>
 
-          <RightContent>
-            <img src={logoImg} alt="Logo" />
-          </RightContent>
-        </MainContainer>
-      </Background>
-    </Container>
+                    <Link to="/signin">Voltar ao login</Link>
+                  </nav>
+                </Form>
+              </section>
+            </LeftContent>
+
+            <RightContent>
+              <img src={logoImg} alt="Logo" />
+            </RightContent>
+          </MainContainer>
+        </Background>
+      </Container>
+    </>
   );
 };
 

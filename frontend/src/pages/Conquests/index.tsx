@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   Container,
@@ -12,44 +12,49 @@ import {
 
 import Menu from '../../components/Menu';
 import Header from '../../components/Header';
+import Loading from '../../components/Loading';
 
-import pyramidImg from '../../assets/pyramid.png';
+import defaultImg from '../../assets/default_conquest.png';
 
 const Conquests: React.FC = () => {
+  const [loading, setLoading] = useState(false);
+
   return (
-    <Container>
-      <Background>
-        <MainContainer>
-          <Header />
-          <Menu />
-          <Content>
-            <ContainerTopButtons>
-              <button type="button">
-                <strong>Todas</strong>
-              </button>
-              <button type="button">
-                <strong>Bloqueadas</strong>
-              </button>
-              <button type="button">
-                <strong>Completadas</strong>
-              </button>
-            </ContainerTopButtons>
+    <>
+      {loading && <Loading zIndex={1} />}
 
-            <ConquestContainer>
-              <ImageContainer>
-                <img src={pyramidImg} alt="Pyramid" />
-              </ImageContainer>
-            </ConquestContainer>
+      <Container>
+        <Background>
+          <MainContainer>
+            <Header />
+            <Menu />
+            <Content>
+              <ContainerTopButtons>
+                <button type="button">
+                  <strong>Todas</strong>
+                </button>
+                <button type="button">
+                  <strong>Bloqueadas</strong>
+                </button>
+                <button type="button">
+                  <strong>Completadas</strong>
+                </button>
+              </ContainerTopButtons>
 
-            <ConquestContainer>
-              <ImageContainer>
-                <img src={pyramidImg} alt="Pyramid" />
-              </ImageContainer>
-            </ConquestContainer>
-          </Content>
-        </MainContainer>
-      </Background>
-    </Container>
+              <nav>
+                <section>
+                  <ConquestContainer>
+                    <ImageContainer>
+                      <img src={defaultImg} alt="Default" />
+                    </ImageContainer>
+                  </ConquestContainer>
+                </section>
+              </nav>
+            </Content>
+          </MainContainer>
+        </Background>
+      </Container>
+    </>
   );
 };
 

@@ -58,8 +58,7 @@ export const Content = styled.div`
   flex-direction: column;
 
   width: 70%;
-  padding-top: 140px;
-  margin: 0px 30px 60px 100px;
+  padding-top: 120px;
   height: 100%;
 
   animation: ${appearWithFade} 0.5s;
@@ -72,6 +71,7 @@ export const Content = styled.div`
     overflow-y: auto;
     height: 100%;
     width: 100%;
+    margin: 0px 30px 60px 100px;
 
     ::-webkit-scrollbar {
       width: 18px;
@@ -103,7 +103,7 @@ export const ModulesBar = styled.div`
   white-space: nowrap;
   display: inline-block;
 
-  margin-bottom: 40px;
+  margin: 0px 30px 40px 100px;
   width: 100%;
   height: 60px;
   background: #2b1c81;
@@ -141,6 +141,15 @@ export const ModulesBar = styled.div`
 
     &:hover {
       background: ${shade(0.2, '#2b1c81')};
+    }
+
+    a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      width: 100%;
+      height: 100%;
     }
 
     strong {
@@ -213,7 +222,7 @@ export const ImageContainer = styled.div`
   height: 10vh;
   border-radius: 6px;
   border: solid 3px #2b1c81;
-  background-color: #ffffff;
+  background-color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -222,6 +231,8 @@ export const ImageContainer = styled.div`
   margin: 0 30px;
 
   img {
-    object-fit: cover;
+    object-fit: contain;
+    width: 90%;
+    height: 90%;
   }
 `;
