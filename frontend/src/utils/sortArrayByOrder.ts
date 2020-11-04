@@ -1,18 +1,4 @@
-export interface Level {
-  id: string;
-  name: string;
-  order: number;
-}
-
-export interface Module {
-  id: string;
-  level_id: string;
-  order: number;
-  name: string;
-  description: string;
-  is_exercise: boolean;
-  image_url: string;
-}
+import { Level, Module } from '../pages/Modules';
 
 export default function sortArrayByOrder(
   array: Level[] | Module[],

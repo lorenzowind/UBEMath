@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useToast } from '../../hooks/toast';
 
-import sortArrayByOrder, { Level, Module } from '../../utils/sortArrayByOrder';
+import sortArrayByOrder from '../../utils/sortArrayByOrder';
 
 import {
   Container,
@@ -21,6 +21,22 @@ import Loading from '../../components/Loading';
 
 import defaultImg from '../../assets/default_module.png';
 import api from '../../services/api';
+
+export interface Level {
+  id: string;
+  name: string;
+  order: number;
+}
+
+export interface Module {
+  id: string;
+  level_id: string;
+  order: number;
+  name: string;
+  description: string;
+  is_exercise: boolean;
+  image_url: string;
+}
 
 const Modules: React.FC = () => {
   const [levels, setLevels] = useState<Level[]>([]);
@@ -45,7 +61,7 @@ const Modules: React.FC = () => {
       } catch (err) {
         addToast({
           type: 'error',
-          title: 'Erro ao buscar os níveis',
+          title: 'Erro ao buscar os níveis/módulos',
         });
       } finally {
         setLoading(false);
