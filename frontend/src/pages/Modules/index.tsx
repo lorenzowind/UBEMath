@@ -12,6 +12,7 @@ import {
   ModulesBar,
   ModuleSection,
   ModuleCard,
+  ProgressContainer,
   ImageContainer,
 } from './styles';
 
@@ -21,6 +22,7 @@ import Loading from '../../components/Loading';
 
 import defaultImg from '../../assets/default_module.png';
 import api from '../../services/api';
+import ProgressBar from '../../components/ProgressBar';
 
 export interface Level {
   id: string;
@@ -158,6 +160,10 @@ const Modules: React.FC = () => {
                               <h1>{filteredModule.description}</h1>
                             </div>
                           </section>
+
+                          <ProgressContainer>
+                            <ProgressBar percent={0} color="#fff" />
+                          </ProgressContainer>
                         </ModuleCard>
                       ))}
                   </ModuleSection>

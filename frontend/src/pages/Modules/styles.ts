@@ -177,7 +177,7 @@ export const ModuleCard = styled.div<ModuleCardProps>`
   margin-top: 20px;
   border-radius: 13px;
   background-color: ${props => props.color};
-  padding: 50px 60px 50px 180px;
+  padding: 50px 60px 110px 180px;
   transition: background-color 0.2s;
 
   > strong {
@@ -215,6 +215,13 @@ export const ModuleCard = styled.div<ModuleCardProps>`
       background-color: ${shade(0.2, props.color)};
     `}
   }
+`;
+
+export const ProgressContainer = styled.div`
+  position: absolute;
+  left: 0;
+  margin: 50px 0 0 30px;
+  width: 90%;
 `;
 
 export const ImageContainer = styled.div`
