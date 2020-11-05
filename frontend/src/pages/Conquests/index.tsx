@@ -33,6 +33,8 @@ const Conquests: React.FC = () => {
 
   const [loading, setLoading] = useState(false);
 
+  const [option, setOption] = useState<'all' | 'blocked' | 'completed'>('all');
+
   const { addToast } = useToast();
 
   useEffect(() => {
@@ -66,14 +68,14 @@ const Conquests: React.FC = () => {
             <Header />
             <Menu />
             <Content>
-              <ContainerTopButtons>
-                <button type="button">
+              <ContainerTopButtons option={option}>
+                <button type="button" onClick={() => setOption('all')}>
                   <strong>Todas</strong>
                 </button>
-                <button type="button">
+                <button type="button" onClick={() => setOption('blocked')}>
                   <strong>Bloqueadas</strong>
                 </button>
-                <button type="button">
+                <button type="button" onClick={() => setOption('completed')}>
                   <strong>Completadas</strong>
                 </button>
               </ContainerTopButtons>
@@ -81,7 +83,7 @@ const Conquests: React.FC = () => {
               <nav>
                 {conquests.map(conquest => (
                   <section key={conquest.id}>
-                    <ConquestContainer>
+                    <ConquestContainer color="#55e2c1">
                       <ImageContainer>
                         {conquest.image_url ? (
                           <img src={conquest.image_url} alt="Conquest" />
@@ -89,6 +91,10 @@ const Conquests: React.FC = () => {
                           <img src={defaultImg} alt="Default" />
                         )}
                       </ImageContainer>
+                      <div>
+                        <strong>{conquest.name}</strong>
+                        <h1>{conquest.description}</h1>
+                      </div>
                     </ConquestContainer>
                   </section>
                 ))}

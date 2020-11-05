@@ -1,7 +1,15 @@
 import { shade } from 'polished';
-import styled, { keyframes } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 import backgroundImg from '../../assets/background.png';
+
+interface ContainerTopButtonsProps {
+  option: 'all' | 'blocked' | 'completed';
+}
+
+interface ConquestContainerProps {
+  color: string;
+}
 
 const appearWithFade = keyframes`
   from {
@@ -101,7 +109,7 @@ export const Content = styled.div`
   }
 `;
 
-export const ContainerTopButtons = styled.div`
+export const ContainerTopButtons = styled.div<ContainerTopButtonsProps>`
   margin: 0px 30px 40px 100px;
   width: 100%;
   height: 60px;
@@ -126,19 +134,66 @@ export const ContainerTopButtons = styled.div`
       color: #fff;
       font-size: 24px;
       font-weight: 700;
+      transition: color 0.2s;
     }
+
+
+    ${props =>
+      props.option === 'all' &&
+      css`
+        &:first-child {
+          strong {
+            color: ${shade(0.3, '#fff')};
+          }
+        }
+      `}
+
+      ${props =>
+        props.option === 'blocked' &&
+        css`
+          &:nth-child(2) {
+            strong {
+              color: ${shade(0.3, '#fff')};
+            }
+          }
+        `}
+
+      ${props =>
+        props.option === 'completed' &&
+        css`
+          &:last-child {
+            strong {
+              color: ${shade(0.3, '#fff')};
+            }
+          }
+        `}
   }
 `;
 
-export const ConquestContainer = styled.div`
+export const ConquestContainer = styled.div<ConquestContainerProps>`
   width: 60vw;
   height: 14vh;
   border-radius: 6px;
-  background-color: #55e2c1;
+  background-color: ${props => props.color};
 
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  > div {
+    strong {
+      color: #fff;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin-top: 15px;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 500;
+    }
+  }
 `;
 
 export const ImageContainer = styled.div`
