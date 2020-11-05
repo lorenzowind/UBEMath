@@ -11,6 +11,7 @@ const userConquestsController = new UserConquestsController();
 
 userConquestsRouter.post(
   '/',
+  ensureAuthenticated,
   celebrate({
     [Segments.BODY]: {
       conquest_id: Joi.string().uuid().required(),

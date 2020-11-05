@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { useToast } from '../../hooks/toast';
 
@@ -46,31 +46,6 @@ const Modules: React.FC = () => {
 
   const { addToast } = useToast();
 
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        setLoading(true);
-
-        await api.get<Level[]>('levels/all').then(response => {
-          setLevels(response.data);
-        });
-
-        await api.get<Module[]>('modules/all').then(response => {
-          setModules(response.data);
-        });
-      } catch (err) {
-        addToast({
-          type: 'error',
-          title: 'Erro ao buscar os níveis/módulos',
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadData();
-  }, [addToast]);
-
   const handleSortModules = useCallback((array: Module[]): Module[] => {
     function isModuleType(paramArray: any): paramArray is Module[] {
       return 'level_id' in paramArray[0];
@@ -103,9 +78,30 @@ const Modules: React.FC = () => {
     return [];
   }, []);
 
-  const sortedLevels = useMemo(() => {
-    return handleSortLevels(levels);
-  }, [handleSortLevels, levels]);
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setLoading(true);
+
+        await api.get<Level[]>('levels/all').then(response => {
+          setLevels(handleSortLevels(response.data));
+        });
+
+        await api.get<Module[]>('modules/all').then(response => {
+          setModules(handleSortModules(response.data));
+        });
+      } catch (err) {
+        addToast({
+          type: 'error',
+          title: 'Erro ao buscar os níveis/módulos',
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, [addToast, handleSortLevels, handleSortModules]);
 
   return (
     <>
@@ -118,7 +114,7 @@ const Modules: React.FC = () => {
             <Menu />
             <Content>
               <ModulesBar>
-                {sortedLevels.map(level => (
+                {levels.map(level => (
                   <button type="button" key={level.id}>
                     <a href={`#${level.name}`}>
                       <strong>{level.name}</strong>
@@ -128,42 +124,42 @@ const Modules: React.FC = () => {
               </ModulesBar>
 
               <nav>
-                {sortedLevels.map(level => (
+                {levels.map(level => (
                   <ModuleSection key={level.id}>
                     <strong id={level.name}>{level.name}</strong>
 
-                    {handleSortModules(
-                      modules.filter(module => module.level_id === level.id),
-                    ).map((filteredModule: Module) => (
-                      <ModuleCard
-                        key={filteredModule.id}
-                        color={
-                          filteredModule.is_exercise ? '#1cd8d2' : '#55e2c1'
-                        }
-                      >
-                        <strong>
-                          {filteredModule.is_exercise
-                            ? 'EXERCÍCIOS'
-                            : 'CONTEÚDO'}
-                        </strong>
-                        <section>
-                          <ImageContainer>
-                            {filteredModule.image_url ? (
-                              <img
-                                src={filteredModule.image_url}
-                                alt="Module "
-                              />
-                            ) : (
-                              <img src={defaultImg} alt="Default" />
-                            )}
-                          </ImageContainer>
-                          <div>
-                            <strong>{filteredModule.name}</strong>
-                            <h1>{filteredModule.description}</h1>
-                          </div>
-                        </section>
-                      </ModuleCard>
-                    ))}
+                    {modules
+                      .filter(module => module.level_id === level.id)
+                      .map((filteredModule: Module) => (
+                        <ModuleCard
+                          key={filteredModule.id}
+                          color={
+                            filteredModule.is_exercise ? '#1cd8d2' : '#55e2c1'
+                          }
+                        >
+                          <strong>
+                            {filteredModule.is_exercise
+                              ? 'EXERCÍCIOS'
+                              : 'CONTEÚDO'}
+                          </strong>
+                          <section>
+                            <ImageContainer>
+                              {filteredModule.image_url ? (
+                                <img
+                                  src={filteredModule.image_url}
+                                  alt="Module "
+                                />
+                              ) : (
+                                <img src={defaultImg} alt="Default" />
+                              )}
+                            </ImageContainer>
+                            <div>
+                              <strong>{filteredModule.name}</strong>
+                              <h1>{filteredModule.description}</h1>
+                            </div>
+                          </section>
+                        </ModuleCard>
+                      ))}
                   </ModuleSection>
                 ))}
               </nav>

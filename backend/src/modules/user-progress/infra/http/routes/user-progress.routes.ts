@@ -11,6 +11,7 @@ const userProgressController = new UserProgressController();
 
 userProgressRouter.post(
   '/',
+  ensureAuthenticated,
   celebrate({
     [Segments.BODY]: {
       sub_module_id: Joi.string().uuid().required(),

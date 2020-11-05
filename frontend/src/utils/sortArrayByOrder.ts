@@ -1,8 +1,9 @@
+import { Conquest } from '../pages/Conquests';
 import { Level, Module } from '../pages/Modules';
 
 export default function sortArrayByOrder(
-  array: Level[] | Module[],
-): Level[] | Module[] {
+  array: Level[] | Module[] | Conquest[],
+): Level[] | Module[] | Conquest[] {
   const auxArray = array;
   for (let i = 0; i < auxArray.length; i += 1) {
     for (let j = 0; j < auxArray.length; j += 1) {

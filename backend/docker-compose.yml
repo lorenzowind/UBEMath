@@ -32,10 +32,6 @@ services:
   ubemath_mongodb:
     image: mongo
     container_name: ubemath_mongodb
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
-      MONGO_INITDB_DATABASE: ubemath
     ports:
       - 27017:27017
 

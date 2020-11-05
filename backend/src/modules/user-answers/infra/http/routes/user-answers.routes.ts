@@ -11,6 +11,7 @@ const userAnswersController = new UserAnswersController();
 
 userAnswersRouter.post(
   '/',
+  ensureAuthenticated,
   celebrate({
     [Segments.BODY]: {
       question_id: Joi.string().uuid().required(),

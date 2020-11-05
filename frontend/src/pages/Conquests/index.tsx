@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import api from '../../services/api';
+
+import sortArrayByOrder from '../../utils/sortArrayByOrder';
 
 import { useToast } from '../../hooks/toast';
 
@@ -28,8 +30,17 @@ export interface Conquest {
   image_url: string;
 }
 
+export interface CompletedConquest {
+  id: string;
+  user_id: string;
+  conquest_id: string;
+}
+
 const Conquests: React.FC = () => {
   const [conquests, setConquests] = useState<Conquest[]>([]);
+  const [completedConquests, setCompletedConquests] = useState<
+    CompletedConquest[]
+  >([]);
 
   const [loading, setLoading] = useState(false);
 
@@ -37,13 +48,32 @@ const Conquests: React.FC = () => {
 
   const { addToast } = useToast();
 
+  const handleSortConquests = useCallback((array: Conquest[]): Conquest[] => {
+    function isLevelType(paramArray: any): paramArray is Conquest[] {
+      return !('level_id' in paramArray[0]) && 'description' in paramArray[0];
+    }
+
+    if (array.length > 1) {
+      const auxArray = sortArrayByOrder(array);
+
+      if (isLevelType(auxArray)) {
+        return auxArray;
+      }
+    }
+    return [];
+  }, []);
+
   useEffect(() => {
     const loadData = async () => {
       try {
         setLoading(true);
 
         await api.get<Conquest[]>('conquests/all').then(response => {
-          setConquests(response.data);
+          setConquests(handleSortConquests(response.data));
+        });
+
+        await api.get<CompletedConquest[]>('user-conquests').then(response => {
+          setCompletedConquests(response.data);
         });
       } catch (err) {
         addToast({
@@ -56,7 +86,29 @@ const Conquests: React.FC = () => {
     };
 
     loadData();
-  }, [addToast]);
+  }, [addToast, handleSortConquests]);
+
+  const filteredConquests = useMemo(() => {
+    return conquests.reduce((newArray: Conquest[], conquest) => {
+      const isCompleted = completedConquests.find(
+        completedConquest => completedConquest.conquest_id === conquest.id,
+      );
+
+      if (option === 'completed') {
+        if (isCompleted) {
+          newArray.push(conquest);
+        }
+      } else if (option === 'blocked') {
+        if (!isCompleted) {
+          newArray.push(conquest);
+        }
+      } else if (option === 'all') {
+        newArray.push(conquest);
+      }
+
+      return newArray;
+    }, []);
+  }, [completedConquests, conquests, option]);
 
   return (
     <>
@@ -81,19 +133,32 @@ const Conquests: React.FC = () => {
               </ContainerTopButtons>
 
               <nav>
-                {conquests.map(conquest => (
-                  <section key={conquest.id}>
-                    <ConquestContainer color="#55e2c1">
+                {filteredConquests.map(filteredConquest => (
+                  <section key={filteredConquest.id}>
+                    <ConquestContainer
+                      color={
+                        completedConquests.find(
+                          completedConquest =>
+                            completedConquest.conquest_id ===
+                            filteredConquest.id,
+                        )
+                          ? '#55e2c1'
+                          : '#1cd8d2'
+                      }
+                    >
                       <ImageContainer>
-                        {conquest.image_url ? (
-                          <img src={conquest.image_url} alt="Conquest" />
+                        {filteredConquest.image_url ? (
+                          <img
+                            src={filteredConquest.image_url}
+                            alt="Conquest"
+                          />
                         ) : (
                           <img src={defaultImg} alt="Default" />
                         )}
                       </ImageContainer>
                       <div>
-                        <strong>{conquest.name}</strong>
-                        <h1>{conquest.description}</h1>
+                        <strong>{filteredConquest.name}</strong>
+                        <h1>{filteredConquest.description}</h1>
                       </div>
                     </ConquestContainer>
                   </section>

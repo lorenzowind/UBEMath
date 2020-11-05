@@ -180,6 +180,8 @@ export const ConquestContainer = styled.div<ConquestContainerProps>`
   flex-direction: row;
   align-items: center;
 
+  animation: ${appearWithFade} 0.5s;
+
   > div {
     strong {
       color: #fff;
