@@ -2,7 +2,7 @@ import { v4 } from 'uuid';
 
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 
-import ICreateUserDTO from '@modules/users/dtos/ICreateOrUpdateUserDTO';
+import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 

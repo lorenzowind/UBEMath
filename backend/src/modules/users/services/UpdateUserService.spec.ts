@@ -32,7 +32,8 @@ describe('UpdateUser', () => {
       id: user.id,
       name: 'John Doe II',
       email: 'johndoeII@example.com',
-      password: '123456',
+      old_password: '123456',
+      new_password: '123123',
     });
 
     expect(updatedUser.name).toBe('John Doe II');
@@ -45,8 +46,8 @@ describe('UpdateUser', () => {
         id: 'non existing user',
         name: 'John Doe',
         email: 'johndoe@example.com',
-
-        password: '123456',
+        old_password: '123456',
+        new_password: '123123',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -69,8 +70,8 @@ describe('UpdateUser', () => {
         id: user.id,
         name: user.name,
         email: 'johndoe@example.com',
-
-        password: '123456',
+        old_password: '123456',
+        new_password: '123456',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -86,7 +87,8 @@ describe('UpdateUser', () => {
       id: user.id,
       name: user.name,
       email: user.email,
-      password: '123123',
+      old_password: '123456',
+      new_password: '123123',
     });
 
     expect(updatedUser.password).toBe('123123');

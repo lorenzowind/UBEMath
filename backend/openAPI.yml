@@ -408,7 +408,10 @@ paths:
                     type: string
                     format: email
                     example: "newuser@email.com"
-                  password:
+                  old_password:
+                    type: string
+                    example: "old user password"
+                  new_password:
                     type: string
                     example: "new user password"
       responses:

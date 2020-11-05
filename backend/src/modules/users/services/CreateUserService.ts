@@ -7,7 +7,7 @@ import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 import IUsersRepository from '../repositories/IUsersRepository';
 
 import User from '../infra/typeorm/entities/User';
-import ICreateUserDTO from '../dtos/ICreateOrUpdateUserDTO';
+import ICreateUserDTO from '../dtos/ICreateUserDTO';
 
 @injectable()
 class CreateUserService {

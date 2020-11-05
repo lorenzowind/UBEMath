@@ -6,16 +6,19 @@ interface ContainerProps {
   isFocused: boolean;
   isFilled: boolean;
   isErrored: boolean;
+  backgroundColor?: string;
+  borderFocusedColor?: string;
+  iconColor?: string;
 }
 
 export const Container = styled.div<ContainerProps>`
-  background: #9feee6;
+  background: ${props => props.backgroundColor || '#9feee6'};
   border-radius: 10px;
   padding: 12px 16px;
   width: 100%;
 
   border: 2px solid #2b1c81;
-  color: #fff;
+  color: ${props => props.iconColor || '#fff'};
 
   display: flex;
   align-items: center;
@@ -34,7 +37,7 @@ export const Container = styled.div<ContainerProps>`
     props.isFocused &&
     css`
       color: #2b1c81;
-      border-color: #fff;
+      border-color: ${props.borderFocusedColor || '#fff'};
     `}
 
   ${props =>

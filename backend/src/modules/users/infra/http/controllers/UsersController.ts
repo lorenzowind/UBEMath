@@ -23,7 +23,7 @@ export default class UsersController {
 
   public async update(request: Request, response: Response): Promise<Response> {
     const { id } = request.user;
-    const { name, email, password } = request.body;
+    const { name, email, old_password, new_password } = request.body;
 
     const updateUser = container.resolve(UpdateUserService);
 
@@ -31,7 +31,8 @@ export default class UsersController {
       id,
       name,
       email,
-      password,
+      old_password,
+      new_password,
     });
 
     return response.json(classToClass(user));

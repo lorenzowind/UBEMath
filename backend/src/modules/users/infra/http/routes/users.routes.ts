@@ -35,7 +35,8 @@ usersRouter.put(
     [Segments.BODY]: {
       name: Joi.string().required(),
       email: Joi.string().email().required(),
-      password: Joi.string().min(6),
+      old_password: Joi.string().min(6).allow(''),
+      new_password: Joi.string().min(6).allow(''),
     },
   }),
   usersController.update,

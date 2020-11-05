@@ -15,12 +15,18 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   containerStyle?: object;
   icon: React.ComponentType<IconBaseProps>;
+  backgroundColor?: string;
+  borderFocusedColor?: string;
+  iconColor?: string;
 }
 
 const Input: React.FC<InputProps> = ({
   name,
   containerStyle = {},
   icon: Icon,
+  backgroundColor,
+  borderFocusedColor,
+  iconColor,
   ...rest
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -54,6 +60,9 @@ const Input: React.FC<InputProps> = ({
       isErrored={!!error}
       isFilled={isFilled}
       isFocused={isFocused}
+      backgroundColor={backgroundColor}
+      borderFocusedColor={borderFocusedColor}
+      iconColor={iconColor}
     >
       {Icon && <Icon size={20} />}
       <input
