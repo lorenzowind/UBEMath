@@ -11,6 +11,7 @@ import ResetPassword from '../pages/ResetPassword';
 
 import Dashboard from '../pages/Dashboard';
 import Modules from '../pages/Modules';
+import SubModules from '../pages/SubModules';
 import Profile from '../pages/Profile';
 import Conquests from '../pages/Conquests';
 
@@ -24,6 +25,7 @@ const Routes: React.FC = () => (
 
     <Route path="/dashboard" component={Dashboard} isPrivate />
     <Route path="/modules" component={Modules} isPrivate />
+    <Route path="/sub-modules" component={SubModules} isPrivate />
     <Route path="/profile" component={Profile} isPrivate />
     <Route path="/conquests" component={Conquests} isPrivate />
   </Switch>

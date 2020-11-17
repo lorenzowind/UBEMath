@@ -18,7 +18,9 @@ class SubModulesRepository implements ISubModulesRepository {
     module_id: string,
   ): Promise<SubModule[]> {
     const findSubModules = await this.ormRepository.find({
-      where: module_id,
+      where: {
+        module_id,
+      },
     });
 
     return findSubModules;

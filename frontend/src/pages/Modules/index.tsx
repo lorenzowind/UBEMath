@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
+import { useHistory } from 'react-router-dom';
 import { useToast } from '../../hooks/toast';
+import { useModule } from '../../hooks/module';
 
 import sortArrayByOrder from '../../utils/sortArrayByOrder';
 
@@ -40,14 +42,6 @@ export interface Module {
   image_url: string;
 }
 
-export interface SubModule {
-  id: string;
-  module_id: string;
-  name: string;
-  order: number;
-  content_url: string;
-}
-
 export interface CompletedSubModule {
   id: string;
   user_id: string;
@@ -69,6 +63,9 @@ const Modules: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   const { addToast } = useToast();
+  const { setSelectedModuleId } = useModule();
+
+  const history = useHistory();
 
   const handleSortModules = useCallback((array: Module[]): Module[] => {
     function isModuleType(paramArray: any): paramArray is Module[] {
@@ -183,6 +180,10 @@ const Modules: React.FC = () => {
                           color={
                             filteredModule.is_exercise ? '#1cd8d2' : '#55e2c1'
                           }
+                          onClick={() => {
+                            setSelectedModuleId(filteredModule.id);
+                            history.push('sub-modules');
+                          }}
                         >
                           <strong>
                             {filteredModule.is_exercise
