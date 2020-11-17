@@ -4,7 +4,7 @@ import DraftModulesRepository from '@modules/modules/repositories/drafts/DraftMo
 import DraftSubModulesRepository from '@modules/sub-modules/repositories/drafts/DraftSubModulesRepository';
 import DraftUserProgressRepository from '../repositories/drafts/DraftUserProgressRepository';
 
-import ListUserProgressService from './ListUserProgressService';
+import ListCustomUserProgressService from './ListCustomUserProgressService';
 
 let draftUsersRepository: DraftUsersRepository;
 let draftLevelsRepository: DraftLevelsRepository;
@@ -12,7 +12,7 @@ let draftModulesRepository: DraftModulesRepository;
 let draftSubModulesRepository: DraftSubModulesRepository;
 let draftUserProgressRepository: DraftUserProgressRepository;
 
-let listUserProgress: ListUserProgressService;
+let listCustomUserProgress: ListCustomUserProgressService;
 
 describe('ListUserProgress', () => {
   beforeEach(() => {
@@ -22,7 +22,7 @@ describe('ListUserProgress', () => {
     draftSubModulesRepository = new DraftSubModulesRepository();
     draftUserProgressRepository = new DraftUserProgressRepository();
 
-    listUserProgress = new ListUserProgressService(
+    listCustomUserProgress = new ListCustomUserProgressService(
       draftModulesRepository,
       draftSubModulesRepository,
       draftUserProgressRepository,
@@ -63,18 +63,25 @@ describe('ListUserProgress', () => {
       content_url: 'Sub-module content URL',
     });
 
-    const firstUserProgress = await draftUserProgressRepository.create({
+    await draftUserProgressRepository.create({
       user_id: user.id,
       sub_module_id: firstSubModule.id,
     });
 
-    const secondUserProgress = await draftUserProgressRepository.create({
+    await draftUserProgressRepository.create({
       user_id: user.id,
       sub_module_id: secondSubModule.id,
     });
 
-    const userProgress = await listUserProgress.execute(user.id, module.id);
+    const userProgress = await listCustomUserProgress.execute(user.id);
 
-    expect(userProgress).toEqual([firstUserProgress, secondUserProgress]);
+    expect(userProgress).toEqual([
+      {
+        user_id: user.id,
+        module_id: module.id,
+        completed_sub_modules_quantity: 2,
+        sub_modules_quantity: 2,
+      },
+    ]);
   });
 });

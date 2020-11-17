@@ -26,6 +26,17 @@ userProgressRouter.delete(
   userProgressController.delete,
 );
 
-userProgressRouter.get('/', ensureAuthenticated, userProgressController.show);
+userProgressRouter.get(
+  '/:module_id',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.PARAMS]: {
+      module_id: Joi.string().uuid().required(),
+    },
+  }),
+  userProgressController.show,
+);
+
+userProgressRouter.get('/', ensureAuthenticated, userProgressController.custom);
 
 export default userProgressRouter;

@@ -40,9 +40,31 @@ export interface Module {
   image_url: string;
 }
 
+export interface SubModule {
+  id: string;
+  module_id: string;
+  name: string;
+  order: number;
+  content_url: string;
+}
+
+export interface CompletedSubModule {
+  id: string;
+  user_id: string;
+  sub_module_id: string;
+}
+
+export interface ModuleProgress {
+  user_id: string;
+  module_id: string;
+  completed_sub_modules_quantity: number;
+  sub_modules_quantity: number;
+}
+
 const Modules: React.FC = () => {
   const [levels, setLevels] = useState<Level[]>([]);
   const [modules, setModules] = useState<Module[]>([]);
+  const [moduleProgress, setModuleProgress] = useState<ModuleProgress[]>([]);
 
   const [loading, setLoading] = useState(false);
 
@@ -80,6 +102,25 @@ const Modules: React.FC = () => {
     return [];
   }, []);
 
+  const calculateModuleProgress = useCallback(
+    (filteredModuleId: string) => {
+      const auxModuleProgress = moduleProgress.find(
+        module => module.module_id === filteredModuleId,
+      );
+
+      if (auxModuleProgress) {
+        const factor =
+          auxModuleProgress.completed_sub_modules_quantity /
+          auxModuleProgress.sub_modules_quantity;
+
+        return factor * 100;
+      }
+
+      return 0;
+    },
+    [moduleProgress],
+  );
+
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -91,6 +132,10 @@ const Modules: React.FC = () => {
 
         await api.get<Module[]>('modules/all').then(response => {
           setModules(handleSortModules(response.data));
+        });
+
+        await api.get<ModuleProgress[]>('user-progress').then(response => {
+          setModuleProgress(response.data);
         });
       } catch (err) {
         addToast({
@@ -162,7 +207,12 @@ const Modules: React.FC = () => {
                           </section>
 
                           <ProgressContainer>
-                            <ProgressBar percent={0} color="#fff" />
+                            <ProgressBar
+                              percent={calculateModuleProgress(
+                                filteredModule.id,
+                              )}
+                              color="#fff"
+                            />
                           </ProgressContainer>
                         </ModuleCard>
                       ))}
