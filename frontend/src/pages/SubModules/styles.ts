@@ -7,12 +7,16 @@ interface CompletedCircleProps {
   isFilled: boolean;
 }
 
-const appearFromTop = keyframes`
+interface SubModuleProps {
+  isSelected: boolean;
+}
+
+const appearWithFade = keyframes`
   from {
-    transform: translateY(-100px);
+    opacity: 0;
   }
   to {
-    transform: translateY(0);
+    opacity: 1;
   }
 `;
 
@@ -61,7 +65,7 @@ export const Content = styled.div`
   padding-top: 120px;
   height: 100%;
 
-  animation: ${appearFromTop} 0.5s;
+  animation: ${appearWithFade} 0.5s;
 
   > strong {
     font-size: 2vw;
@@ -128,42 +132,43 @@ export const LeftContainer = styled.div`
 
   nav {
     margin: 20px 0 0 20px;
+  }
+`;
 
-    div {
-      display: flex;
-      align-items: center;
-      flex-direction: row;
-      position: relative;
-      width: 100%;
+export const SubModule = styled.div<SubModuleProps>`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  position: relative;
+  width: 100%;
 
-      & + div {
-        padding-top: 20px;
-      }
+  & + div {
+    padding-top: 20px;
+  }
 
-      div {
-        width: 25px;
-        height: 25px;
-      }
+  div {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+  }
 
-      strong {
-        cursor: pointer;
-        margin-left: 20px;
-        font-size: 18px;
-        font-weight: 700;
-        color: #55e2c1;
-        transition: color 0.2s;
+  button {
+    background: none;
+    border: 0;
+    margin-left: 40px;
+    font-size: 24px;
+    font-weight: 700;
+    color: ${props => (props.isSelected ? shade(0.2, '#55e2c1') : '#55e2c1')};
+    transition: color 0.2s;
 
-        &:hover {
-          color: ${shade(0.2, '#55e2c1')};
-        }
-      }
+    &:hover {
+      color: ${shade(0.2, '#55e2c1')};
     }
   }
 `;
 
 export const CompletedCircle = styled.div<CompletedCircleProps>`
   cursor: pointer;
-  position: absolute;
   border-radius: 50%;
   border: solid 3px #2b1c81;
 
@@ -181,6 +186,7 @@ export const CompletedCircle = styled.div<CompletedCircleProps>`
 export const RightContainer = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-direction: column;
   width: 80%;
   border-radius: 13px;

@@ -15,6 +15,7 @@ import {
   MainContainer,
   Content,
   LeftContainer,
+  SubModule,
   CompletedCircle,
   RightContainer,
 } from './styles';
@@ -38,6 +39,9 @@ const Dashboard: React.FC = () => {
   const history = useHistory();
 
   const [subModules, setSubModules] = useState<SubModule[]>([]);
+  const [selectedSubModule, setSelectedSubModule] = useState<SubModule>(
+    {} as SubModule,
+  );
 
   const [loading, setLoading] = useState(false);
 
@@ -80,12 +84,18 @@ const Dashboard: React.FC = () => {
       }
     };
 
-    if (selectedModuleId) {
+    if (!selectedModuleId) {
       history.push('modules');
     } else {
       loadData();
     }
   }, [addToast, handleSortSubModules, history, selectedModuleId]);
+
+  useEffect(() => {
+    if (subModules.length) {
+      setSelectedSubModule(subModules[0]);
+    }
+  }, [subModules]);
 
   return (
     <>
@@ -98,34 +108,32 @@ const Dashboard: React.FC = () => {
             <Menu />
             <Content>
               <LeftContainer>
-                <button type="button">
+                <button type="button" onClick={() => history.goBack()}>
                   <FiArrowLeft />
                   <strong>Voltar</strong>
                 </button>
 
                 <nav>
-                  {/* {subModules.map(subModule => (
-                    <div key={subModule.id}>
-                      <CompletedCircle />
-                      <strong>{subModule.name}</strong>
-                    </div>
-                  ))} */}
-                  <div>
-                    <CompletedCircle isFilled={false} />
-                    <strong>Sub-module 1</strong>
-                  </div>
-                  <div>
-                    <CompletedCircle isFilled />
-                    <strong>Sub-module 2</strong>
-                  </div>
-                  <div>
-                    <CompletedCircle isFilled={false} />
-                    <strong>Sub-module 3</strong>
-                  </div>
+                  {subModules.map(subModule => (
+                    <SubModule
+                      key={subModule.id}
+                      isSelected={subModule.id === selectedSubModule.id}
+                    >
+                      <CompletedCircle isFilled />
+                      <button
+                        type="button"
+                        onClick={() => setSelectedSubModule(subModule)}
+                      >
+                        {subModule.name}
+                      </button>
+                    </SubModule>
+                  ))}
                 </nav>
               </LeftContainer>
 
-              <RightContainer />
+              <RightContainer>
+                {/* <PDF url={selectedSubModule.content_url} /> */}
+              </RightContainer>
             </Content>
           </MainContainer>
         </Background>
