@@ -5,15 +5,19 @@ import AppError from '@shared/errors/AppError';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 
 import IModulesRepository from '@modules/modules/repositories/IModulesRepository';
+import IMaterialsRepository from '@modules/materials/repositories/IMaterialsRepository';
 import ISubModulesRepository from '../repositories/ISubModulesRepository';
 
-import SubModule from '../infra/typeorm/entities/SubModule';
+import ISubModuleResponseDTO from '../dtos/ISubModuleResponseDTO';
 
 @injectable()
 class ListFilteredSubModulesService {
   constructor(
     @inject('ModulesRepository')
     private modulesRepository: IModulesRepository,
+
+    @inject('MaterialsRepository')
+    private materialsRepository: IMaterialsRepository,
 
     @inject('SubModulesRepository')
     private subModulesRepository: ISubModulesRepository,
@@ -25,29 +29,43 @@ class ListFilteredSubModulesService {
   public async execute(
     user_id: string,
     module_id: string,
-  ): Promise<SubModule[]> {
+  ): Promise<ISubModuleResponseDTO[]> {
     const checkModuleExists = await this.modulesRepository.findById(module_id);
 
     if (!checkModuleExists) {
       throw new AppError('Module not found.');
     }
 
-    let subModules = await this.cacheProvider.recover<SubModule[]>(
-      `sub-modules-list:${module_id}:${user_id}`,
-    );
+    let auxSubModules = await this.cacheProvider.recover<
+      ISubModuleResponseDTO[]
+    >(`sub-modules-list:${module_id}:${user_id}`);
 
-    if (!subModules) {
-      subModules = await this.subModulesRepository.findAllFilteredSubModules(
+    if (!auxSubModules) {
+      const subModules = await this.subModulesRepository.findAllFilteredSubModules(
         module_id,
       );
 
+      auxSubModules = [];
+
+      for (let i = 0; i < subModules.length; i += 1) {
+        // eslint-disable-next-line no-await-in-loop
+        const materials = await this.materialsRepository.findAllMaterialsBySubModuleId(
+          subModules[i].id,
+        );
+
+        auxSubModules[i] = {
+          ...subModules[i],
+          content: materials,
+        };
+      }
+
       await this.cacheProvider.save(
         `sub-modules-list:${module_id}:${user_id}`,
-        subModules,
+        auxSubModules,
       );
     }
 
-    return subModules;
+    return auxSubModules;
   }
 }
 

@@ -57,7 +57,6 @@ describe('CreateUserAnswer', () => {
       module_id: module.id,
       name: 'Sub-module description',
       order: 1,
-      content_url: 'Sub-module content URL',
     });
 
     const question = await draftQuestionsRepository.create({
@@ -115,7 +114,6 @@ describe('CreateUserAnswer', () => {
       module_id: module.id,
       name: 'Sub-module description',
       order: 1,
-      content_url: 'Sub-module content URL',
     });
 
     const question = await draftQuestionsRepository.create({

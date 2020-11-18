@@ -8,7 +8,7 @@ import ListFilteredSubModulesService from '@modules/sub-modules/services/ListFil
 
 export default class SubModulesController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { module_id, name, order, content_url } = request.body;
+    const { module_id, name, order, content } = request.body;
 
     const createSubModule = container.resolve(CreateSubModuleService);
 
@@ -16,7 +16,7 @@ export default class SubModulesController {
       module_id,
       name,
       order,
-      content_url,
+      content,
     });
 
     return response.json(subModule);
@@ -24,7 +24,7 @@ export default class SubModulesController {
 
   public async update(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
-    const { module_id, name, order, content_url } = request.body;
+    const { module_id, name, order, content } = request.body;
 
     const updateSubModule = container.resolve(UpdateSubModuleService);
 
@@ -33,7 +33,7 @@ export default class SubModulesController {
       module_id,
       name,
       order,
-      content_url,
+      content,
     });
 
     return response.json(subModule);

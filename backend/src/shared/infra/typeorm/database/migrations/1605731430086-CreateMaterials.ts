@@ -2,12 +2,15 @@ import {
   MigrationInterface,
   QueryRunner,
   Table,
+  TableColumn,
   TableForeignKey,
 } from 'typeorm';
 
 export default class CreateMaterials1605731430086
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    await queryRunner.dropColumn('sub-modules', 'content_url');
+
     await queryRunner.createTable(
       new Table({
         name: 'materials',
@@ -28,7 +31,7 @@ export default class CreateMaterials1605731430086
             type: 'smallint',
           },
           {
-            name: 'image',
+            name: 'image_url',
             type: 'varchar',
             isNullable: true,
           },
@@ -63,5 +66,14 @@ export default class CreateMaterials1605731430086
     await queryRunner.dropForeignKey('materials', 'MaterialSubModule');
 
     await queryRunner.dropTable('materials');
+
+    await queryRunner.addColumn(
+      'sub-modules',
+      new TableColumn({
+        name: 'content_url',
+        type: 'varchar',
+        isNullable: true,
+      }),
+    );
   }
 }

@@ -28,9 +28,6 @@ class SubModule {
   @Column()
   order: number;
 
-  @Column()
-  content_url: string;
-
   @CreateDateColumn()
   created_at: Date;
 

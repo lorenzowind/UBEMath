@@ -54,7 +54,6 @@ describe('CreateUserProgress', () => {
       module_id: module.id,
       name: 'Sub-module description',
       order: 1,
-      content_url: 'Sub-module content URL',
     });
 
     const userProgress = await createUserProgress.execute({
@@ -104,7 +103,6 @@ describe('CreateUserProgress', () => {
       module_id: module.id,
       name: 'Sub-module description',
       order: 1,
-      content_url: 'Sub-module content URL',
     });
 
     await createUserProgress.execute({

@@ -4,6 +4,7 @@ import DraftCacheProvider from '@shared/container/providers/CacheProvider/drafts
 
 import DraftLevelsRepository from '@modules/levels/repositories/drafts/DraftLevelsRepository';
 import DraftModulesRepository from '@modules/modules/repositories/drafts/DraftModulesRepository';
+import DraftMaterialsRepository from '@modules/materials/repositories/drafts/DraftMaterialsRepository';
 import DraftSubModulesRepository from '../repositories/drafts/DraftSubModulesRepository';
 
 import CreateSubModuleService from './CreateSubModuleService';
@@ -12,6 +13,7 @@ let draftCacheProvider: DraftCacheProvider;
 
 let draftLevelsRepository: DraftLevelsRepository;
 let draftModulesRepository: DraftModulesRepository;
+let draftMaterialsRepository: DraftMaterialsRepository;
 let draftSubModulesRepository: DraftSubModulesRepository;
 
 let createSubModule: CreateSubModuleService;
@@ -20,12 +22,14 @@ describe('CreateSubModule', () => {
   beforeEach(() => {
     draftLevelsRepository = new DraftLevelsRepository();
     draftModulesRepository = new DraftModulesRepository();
+    draftMaterialsRepository = new DraftMaterialsRepository();
     draftSubModulesRepository = new DraftSubModulesRepository();
 
     draftCacheProvider = new DraftCacheProvider();
 
     createSubModule = new CreateSubModuleService(
       draftModulesRepository,
+      draftMaterialsRepository,
       draftSubModulesRepository,
       draftCacheProvider,
     );
@@ -49,14 +53,24 @@ describe('CreateSubModule', () => {
       module_id: module.id,
       name: 'Sub-module description',
       order: 1,
-      content_url: 'Sub-module content URL',
+      content: [
+        {
+          order: 1,
+          image_url: 'Sub-module image URL',
+        },
+      ],
     });
 
     const secondSubModule = await createSubModule.execute({
       module_id: module.id,
       name: 'Sub-module II description',
       order: 2,
-      content_url: 'Sub-module II content URL',
+      content: [
+        {
+          order: 1,
+          image_url: 'Sub-module II image URL',
+        },
+      ],
     });
 
     expect(firstSubModule).toHaveProperty('id');
@@ -81,7 +95,12 @@ describe('CreateSubModule', () => {
       module_id: module.id,
       name: 'Sub-module description',
       order: 1,
-      content_url: 'Sub-module content URL',
+      content: [
+        {
+          order: 1,
+          image_url: 'Sub-module image URL',
+        },
+      ],
     });
 
     await expect(
@@ -89,7 +108,12 @@ describe('CreateSubModule', () => {
         module_id: module.id,
         name: 'Sub-module II description',
         order: 1,
-        content_url: 'Sub-module II content URL',
+        content: [
+          {
+            order: 1,
+            image_url: 'Sub-module image URL',
+          },
+        ],
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -100,7 +124,12 @@ describe('CreateSubModule', () => {
         module_id: 'non existing module id',
         name: 'Sub-module description',
         order: 1,
-        content_url: 'Sub-module content URL',
+        content: [
+          {
+            order: 1,
+            image_url: 'Sub-module image URL',
+          },
+        ],
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

@@ -127,7 +127,23 @@ components:
           type: integer
         name:
           type: string
-        content_url:
+        created_at:
+          type: string
+          format: dateformat
+        updated_at:
+          type: string
+          format: dateformat
+    Material:
+      properties:
+        id:
+          type: string
+          format: uuid
+        sub_module_id:
+          type: string
+          format: uuid
+        order:
+          type: integer
+        image_url:
           type: string
         created_at:
           type: string
@@ -1019,9 +1035,17 @@ paths:
                   order:
                     type: integer
                     example: 1
-                  content_url:
-                    type: string
-                    example: "Pdf file URL"
+                  content:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        order:
+                          type: integer
+                          example: 1
+                        image_url:
+                          type: string
+                          example: "Image file URL"
       responses:
         '200':
           description: Returns a JSON containing the created sub-module.
@@ -1044,9 +1068,17 @@ paths:
                   order:
                     type: integer
                     example: 1
-                  content_url:
-                    type: string
-                    example: "Pdf file URL"
+                  content:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        order:
+                          type: integer
+                          example: 1
+                        image_url:
+                          type: string
+                          example: "Image file URL"
                   created_at:
                     type: string
                     format: dateformat
@@ -1092,9 +1124,17 @@ paths:
                   order:
                     type: integer
                     example: 1
-                  content_url:
-                    type: string
-                    example: "Pdf file URL"
+                  content:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        order:
+                          type: integer
+                          example: 1
+                        image_url:
+                          type: string
+                          example: "Image file URL"
       responses:
         '200':
           description: Returns a JSON containing the updated sub-module.
@@ -1117,9 +1157,17 @@ paths:
                   order:
                     type: integer
                     example: 1
-                  content_url:
-                    type: string
-                    example: "Pdf file URL"
+                  content:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        order:
+                          type: integer
+                          example: 1
+                        image_url:
+                          type: string
+                          example: "Image file URL"
                   created_at:
                     type: string
                     format: dateformat
@@ -1194,9 +1242,17 @@ paths:
                     order:
                       type: integer
                       example: 1
-                    content_url:
-                      type: string
-                      example: "Pdf file URL"
+                    content:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          order:
+                            type: integer
+                            example: 1
+                          image_url:
+                            type: string
+                            example: "Image file URL"
                     created_at:
                       type: string
                       format: dateformat

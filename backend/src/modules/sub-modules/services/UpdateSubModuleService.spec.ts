@@ -4,6 +4,7 @@ import DraftCacheProvider from '@shared/container/providers/CacheProvider/drafts
 
 import DraftLevelsRepository from '@modules/levels/repositories/drafts/DraftLevelsRepository';
 import DraftModulesRepository from '@modules/modules/repositories/drafts/DraftModulesRepository';
+import DraftMaterialsRepository from '@modules/materials/repositories/drafts/DraftMaterialsRepository';
 import DraftSubModulesRepository from '../repositories/drafts/DraftSubModulesRepository';
 
 import UpdateSubModuleService from './UpdateSubModuleService';
@@ -12,6 +13,7 @@ let draftCacheProvider: DraftCacheProvider;
 
 let draftLevelsRepository: DraftLevelsRepository;
 let draftModulesRepository: DraftModulesRepository;
+let draftMaterialsRepository: DraftMaterialsRepository;
 let draftSubModulesRepository: DraftSubModulesRepository;
 
 let updateSubModule: UpdateSubModuleService;
@@ -20,12 +22,14 @@ describe('UpdateSubModule', () => {
   beforeEach(() => {
     draftLevelsRepository = new DraftLevelsRepository();
     draftModulesRepository = new DraftModulesRepository();
+    draftMaterialsRepository = new DraftMaterialsRepository();
     draftSubModulesRepository = new DraftSubModulesRepository();
 
     draftCacheProvider = new DraftCacheProvider();
 
     updateSubModule = new UpdateSubModuleService(
       draftModulesRepository,
+      draftMaterialsRepository,
       draftSubModulesRepository,
       draftCacheProvider,
     );
@@ -49,14 +53,12 @@ describe('UpdateSubModule', () => {
       module_id: module.id,
       name: 'Sub-module description',
       order: 1,
-      content_url: 'Sub-module content URL',
     });
 
     await draftSubModulesRepository.create({
       module_id: module.id,
       name: 'Sub-module II description',
       order: 2,
-      content_url: 'Sub-module II content URL',
     });
 
     const updatedSubModule = await updateSubModule.execute({
@@ -64,11 +66,16 @@ describe('UpdateSubModule', () => {
       module_id: module.id,
       name: 'New Sub-module description',
       order: 1,
-      content_url: 'New Sub-module content URL',
+      content: [
+        {
+          order: 1,
+          image_url: 'Sub-module image URL',
+        },
+      ],
     });
 
     expect(updatedSubModule.name).toBe('New Sub-module description');
-    expect(updatedSubModule.content_url).toBe('New Sub-module content URL');
+    expect(updatedSubModule.content).toHaveLength(1);
   });
 
   it('should not be able to update the sub-module with the same order number of another', async () => {
@@ -89,14 +96,12 @@ describe('UpdateSubModule', () => {
       module_id: module.id,
       name: 'Sub-module description',
       order: 1,
-      content_url: 'Sub-module content URL',
     });
 
     await draftSubModulesRepository.create({
       module_id: module.id,
       name: 'Sub-module II description',
       order: 2,
-      content_url: 'Sub-module II content URL',
     });
 
     await expect(
@@ -105,7 +110,12 @@ describe('UpdateSubModule', () => {
         module_id: module.id,
         name: 'New Sub-module description',
         order: 2,
-        content_url: 'New Sub-module content URL',
+        content: [
+          {
+            order: 1,
+            image_url: 'New Sub-module image URL',
+          },
+        ],
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -130,7 +140,12 @@ describe('UpdateSubModule', () => {
         module_id: module.id,
         name: 'Sub-module description',
         order: 1,
-        content_url: 'Sub-module content URL',
+        content: [
+          {
+            order: 1,
+            image_url: 'Sub-module image URL',
+          },
+        ],
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -153,7 +168,6 @@ describe('UpdateSubModule', () => {
       module_id: module.id,
       name: 'Sub-module description',
       order: 1,
-      content_url: 'Sub-module content URL',
     });
 
     await expect(
@@ -162,7 +176,12 @@ describe('UpdateSubModule', () => {
         module_id: 'non existing module id',
         name: 'Sub-module description',
         order: 1,
-        content_url: 'Sub-module content URL',
+        content: [
+          {
+            order: 1,
+            image_url: 'Sub-module image URL',
+          },
+        ],
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

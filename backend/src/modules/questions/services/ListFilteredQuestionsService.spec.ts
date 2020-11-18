@@ -61,7 +61,6 @@ describe('ListFilteredQuestions', () => {
       module_id: module.id,
       name: 'Sub-module description',
       order: 1,
-      content_url: 'Sub-module content URL',
     });
 
     const firstQuestion = await draftQuestionsRepository.create({

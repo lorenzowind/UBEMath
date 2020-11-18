@@ -18,6 +18,9 @@ import ModulesRepository from '@modules/modules/infra/typeorm/repositories/Modul
 import ISubModulesRepository from '@modules/sub-modules/repositories/ISubModulesRepository';
 import SubModulesRepository from '@modules/sub-modules/infra/typeorm/repositories/SubModulesRepository';
 
+import IMaterialsRepository from '@modules/materials/repositories/IMaterialsRepository';
+import MaterialsRepository from '@modules/materials/infra/typeorm/repositories/MaterialsRepository';
+
 import IQuestionsRepository from '@modules/questions/repositories/IQuestionsRepository';
 import QuestionsRepository from '@modules/questions/infra/typeorm/repositories/QuestionsRepository';
 
@@ -59,6 +62,11 @@ container.registerSingleton<IModulesRepository>(
 container.registerSingleton<ISubModulesRepository>(
   'SubModulesRepository',
   SubModulesRepository,
+);
+
+container.registerSingleton<IMaterialsRepository>(
+  'MaterialsRepository',
+  MaterialsRepository,
 );
 
 container.registerSingleton<IQuestionsRepository>(
