@@ -11,6 +11,11 @@ interface SubModuleProps {
   isSelected: boolean;
 }
 
+interface RightContainerProps {
+  isFirstPage: boolean;
+  isLastPage: boolean;
+}
+
 const appearWithFade = keyframes`
   from {
     opacity: 0;
@@ -171,6 +176,7 @@ export const CompletedCircle = styled.div<CompletedCircleProps>`
   cursor: pointer;
   border-radius: 50%;
   border: solid 3px #2b1c81;
+  transition: border 0.2s;
 
   ${props =>
     props.isFilled &&
@@ -183,13 +189,72 @@ export const CompletedCircle = styled.div<CompletedCircleProps>`
   }
 `;
 
-export const RightContainer = styled.div`
+export const RightContainer = styled.div<RightContainerProps>`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  position: relative;
   width: 80%;
   border-radius: 13px;
   border: solid 3px #2b1c81;
   margin: 0 0 40px 40px;
+
+  svg {
+    cursor: pointer;
+    transition: color 0.2s;
+
+    &:first-child {
+      position: absolute;
+      left: 0;
+      width: 60px;
+      height: 60px;
+      color: #2b1c81;
+    }
+
+    &:last-child {
+      position: absolute;
+      right: 0;
+      width: 60px;
+      height: 60px;
+      color: #2b1c81;
+    }
+
+    &:hover {
+      color: ${shade(0.2, '#2b1c81')};
+    }
+
+    ${props =>
+      props.isFirstPage &&
+      css`
+        &:first-child {
+          cursor: default;
+
+          color: ${shade(0.2, '#fff')};
+
+          &:hover {
+            color: ${shade(0.2, '#fff')};
+          }
+        }
+      `}
+
+    ${props =>
+      props.isLastPage &&
+      css`
+        &:last-child {
+          cursor: default;
+
+          color: ${shade(0.2, '#fff')};
+
+          &:hover {
+            color: ${shade(0.2, '#fff')};
+          }
+        }
+      `}
+  }
+
+  img {
+    max-height: 85%;
+    max-width: 85%;
+  }
 `;

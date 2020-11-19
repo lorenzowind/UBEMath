@@ -16,10 +16,12 @@ subModulesRouter.post(
       module_id: Joi.string().uuid().required(),
       name: Joi.string().required(),
       order: Joi.number().required(),
-      content: {
-        order: Joi.number().required(),
-        image_url: Joi.number().required(),
-      },
+      content: Joi.array().items(
+        Joi.object({
+          order: Joi.number().required(),
+          image_url: Joi.string().required(),
+        }),
+      ),
     },
   }),
   subModulesController.create,
@@ -36,10 +38,12 @@ subModulesRouter.put(
       module_id: Joi.string().uuid().required(),
       name: Joi.string().required(),
       order: Joi.number().required(),
-      content: {
-        order: Joi.number().required(),
-        image_url: Joi.number().required(),
-      },
+      content: Joi.array().items(
+        Joi.object({
+          order: Joi.number().required(),
+          image_url: Joi.string().required(),
+        }),
+      ),
     },
   }),
   subModulesController.update,

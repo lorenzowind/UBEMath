@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
-import { FiArrowLeft } from 'react-icons/fi';
+import { FiArrowLeft, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 import api from '../../services/api';
 
@@ -29,7 +29,11 @@ export interface SubModule {
   module_id: string;
   name: string;
   order: number;
-  content_url: string;
+  content: {
+    id: string;
+    order: number;
+    image_url: string;
+  }[];
 }
 
 const Dashboard: React.FC = () => {
@@ -39,16 +43,71 @@ const Dashboard: React.FC = () => {
   const history = useHistory();
 
   const [subModules, setSubModules] = useState<SubModule[]>([]);
-  const [selectedSubModule, setSelectedSubModule] = useState<SubModule>(
-    {} as SubModule,
-  );
+  const [selectedSubModule, setSelectedSubModule] = useState<
+    [SubModule, number]
+  >([{} as SubModule, -1]);
+  const [subModulesPage, setSubModulesPage] = useState<number[]>([]);
+
+  const [isFirstPage, setIsFirstPage] = useState(false);
+  const [isLastPage, setIsLastPage] = useState(false);
 
   const [loading, setLoading] = useState(false);
+
+  const checkIsFirstPage = useCallback(() => {
+    return subModulesPage[selectedSubModule[1]] === 0;
+  }, [selectedSubModule, subModulesPage]);
+
+  const handleBackPage = useCallback(() => {
+    if (!checkIsFirstPage()) {
+      setSubModulesPage(state =>
+        state.map((subModulePage, index) => {
+          if (selectedSubModule[1] === index) {
+            return subModulePage - 1;
+          }
+
+          return subModulePage;
+        }),
+      );
+
+      setIsLastPage(false);
+    } else {
+      setIsFirstPage(true);
+    }
+  }, [checkIsFirstPage, selectedSubModule]);
+
+  const checkIsLastPage = useCallback(() => {
+    if (selectedSubModule[0].content) {
+      return (
+        subModulesPage[selectedSubModule[1]] ===
+        selectedSubModule[0].content.length - 1
+      );
+    }
+
+    return false;
+  }, [selectedSubModule, subModulesPage]);
+
+  const handleNextPage = useCallback(() => {
+    if (!checkIsLastPage()) {
+      setSubModulesPage(state =>
+        state.map((subModulePage, index) => {
+          if (selectedSubModule[1] === index) {
+            return subModulePage + 1;
+          }
+
+          return subModulePage;
+        }),
+      );
+
+      setIsFirstPage(false);
+    } else {
+      setIsLastPage(true);
+    }
+  }, [checkIsLastPage, selectedSubModule]);
 
   const handleSortSubModules = useCallback(
     (array: SubModule[]): SubModule[] => {
       function isModuleType(paramArray: any): paramArray is SubModule[] {
-        return 'content_url' in paramArray[0];
+        return 'content' in paramArray[0];
       }
 
       if (array.length > 1) {
@@ -93,9 +152,22 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     if (subModules.length) {
-      setSelectedSubModule(subModules[0]);
+      setSelectedSubModule([subModules[0], 0]);
+
+      const auxSubModulesPage = [];
+
+      for (let i = 0; i < subModules.length; i += 1) {
+        auxSubModulesPage.push(0);
+      }
+
+      setSubModulesPage(auxSubModulesPage);
     }
   }, [subModules]);
+
+  useEffect(() => {
+    setIsFirstPage(checkIsFirstPage());
+    setIsLastPage(checkIsLastPage());
+  }, [checkIsFirstPage, checkIsLastPage, selectedSubModule]);
 
   return (
     <>
@@ -114,15 +186,15 @@ const Dashboard: React.FC = () => {
                 </button>
 
                 <nav>
-                  {subModules.map(subModule => (
+                  {subModules.map((subModule, index) => (
                     <SubModule
                       key={subModule.id}
-                      isSelected={subModule.id === selectedSubModule.id}
+                      isSelected={subModule.id === selectedSubModule[0].id}
                     >
                       <CompletedCircle isFilled />
                       <button
                         type="button"
-                        onClick={() => setSelectedSubModule(subModule)}
+                        onClick={() => setSelectedSubModule([subModule, index])}
                       >
                         {subModule.name}
                       </button>
@@ -131,8 +203,26 @@ const Dashboard: React.FC = () => {
                 </nav>
               </LeftContainer>
 
-              <RightContainer>
-                {/* <PDF url={selectedSubModule.content_url} /> */}
+              <RightContainer isFirstPage={isFirstPage} isLastPage={isLastPage}>
+                <FiChevronLeft onClick={handleBackPage} />
+
+                {selectedSubModule[0].content && (
+                  <img
+                    key={
+                      selectedSubModule[0].content[
+                        subModulesPage[selectedSubModule[1]]
+                      ].id
+                    }
+                    src={
+                      selectedSubModule[0].content[
+                        subModulesPage[selectedSubModule[1]]
+                      ].image_url
+                    }
+                    alt="Material"
+                  />
+                )}
+
+                <FiChevronRight onClick={handleNextPage} />
               </RightContainer>
             </Content>
           </MainContainer>
