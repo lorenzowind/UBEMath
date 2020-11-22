@@ -1,24 +1,26 @@
 import React, { createContext, useCallback, useState, useContext } from 'react';
 
+import { Module } from '../pages/Modules';
+
 interface ModuleContextData {
-  selectedModuleId: string;
-  setSelectedModuleId: (id: string) => void;
+  selectedModule: Module;
+  setSelectedModule: (module: Module) => void;
 }
 
 const ModuleContext = createContext<ModuleContextData>({} as ModuleContextData);
 
 const ModuleProvider: React.FC = ({ children }) => {
-  const [moduleId, setModuleId] = useState('');
+  const [module, setModule] = useState({} as Module);
 
-  const setSelectedModuleId = useCallback((id: string) => {
-    setModuleId(id);
+  const setSelectedModule = useCallback((moduleData: Module) => {
+    setModule(moduleData);
   }, []);
 
   return (
     <ModuleContext.Provider
       value={{
-        selectedModuleId: moduleId,
-        setSelectedModuleId,
+        selectedModule: module,
+        setSelectedModule,
       }}
     >
       {children}

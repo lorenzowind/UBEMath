@@ -55,15 +55,41 @@ export interface ModuleProgress {
   sub_modules_quantity: number;
 }
 
+interface CalculatedModuleProgress {
+  id: string;
+  percent: string;
+}
+
+interface ConcludedModule {
+  id: string;
+  is_concluded: boolean;
+}
+
+interface ConcludedController {
+  level: {
+    id: string;
+    is_concluded: boolean;
+  };
+  modules: ConcludedModule[];
+}
+
 const Modules: React.FC = () => {
   const [levels, setLevels] = useState<Level[]>([]);
   const [modules, setModules] = useState<Module[]>([]);
   const [moduleProgress, setModuleProgress] = useState<ModuleProgress[]>([]);
+  const [calculatedModulesProgress, setCalculatedModulesProgress] = useState<
+    CalculatedModuleProgress[]
+  >([]);
+  const [calculated, setCalculated] = useState(false);
+
+  const [concludedController, setConcludedController] = useState<
+    ConcludedController[]
+  >([]);
 
   const [loading, setLoading] = useState(false);
 
   const { addToast } = useToast();
-  const { setSelectedModuleId } = useModule();
+  const { setSelectedModule } = useModule();
 
   const history = useHistory();
 
@@ -100,7 +126,7 @@ const Modules: React.FC = () => {
   }, []);
 
   const calculateModuleProgress = useCallback(
-    (filteredModuleId: string) => {
+    (filteredModuleId: string, levelId: string) => {
       const auxModuleProgress = moduleProgress.find(
         module => module.module_id === filteredModuleId,
       );
@@ -110,12 +136,106 @@ const Modules: React.FC = () => {
           auxModuleProgress.completed_sub_modules_quantity /
           auxModuleProgress.sub_modules_quantity;
 
-        return factor * 100;
+        const result = factor * 100;
+
+        if (result === 100) {
+          setConcludedController(state =>
+            state.reduce(
+              (newArray: ConcludedController[], findConcludedController) => {
+                const auxConcludedController = findConcludedController;
+
+                if (auxConcludedController.level.id === levelId) {
+                  let modulesConcluded = 0;
+
+                  auxConcludedController.modules = auxConcludedController.modules.reduce(
+                    (newModulesArray: ConcludedModule[], concludedModule) => {
+                      if (
+                        concludedModule.id === filteredModuleId &&
+                        !concludedModule.is_concluded
+                      ) {
+                        modulesConcluded += 1;
+
+                        newModulesArray.push({
+                          id: concludedModule.id,
+                          is_concluded: true,
+                        });
+                      } else {
+                        if (concludedModule.is_concluded) {
+                          modulesConcluded += 1;
+                        }
+
+                        newModulesArray.push(concludedModule);
+                      }
+
+                      return newModulesArray;
+                    },
+                    [],
+                  );
+
+                  if (
+                    modulesConcluded === auxConcludedController.modules.length
+                  ) {
+                    auxConcludedController.level.is_concluded = true;
+                  }
+                }
+
+                newArray.push(auxConcludedController);
+
+                return newArray;
+              },
+              [],
+            ),
+          );
+        }
+
+        return result;
       }
 
       return 0;
     },
     [moduleProgress],
+  );
+
+  const findModuleProgress = useCallback(
+    (moduleId: string) => {
+      const moduleProgressFound = calculatedModulesProgress.find(
+        calculatedModuleProgress => calculatedModuleProgress.id === moduleId,
+      );
+
+      if (moduleProgressFound) {
+        return Number(moduleProgressFound.percent);
+      }
+
+      return 0;
+    },
+    [calculatedModulesProgress],
+  );
+
+  const checkIsAvailable = useCallback(
+    (index: number) => {
+      if (index === 0) {
+        return true;
+      }
+
+      if (concludedController.length) {
+        const modulesLength = concludedController[index].modules.length;
+
+        let modulesConcluded = 0;
+
+        for (let i = 0; i < modulesLength; i += 1) {
+          if (concludedController[index].modules[i].is_concluded) {
+            modulesConcluded += 1;
+          }
+        }
+
+        if (modulesConcluded === modulesLength) {
+          return true;
+        }
+      }
+
+      return false;
+    },
+    [concludedController],
   );
 
   useEffect(() => {
@@ -147,6 +267,65 @@ const Modules: React.FC = () => {
     loadData();
   }, [addToast, handleSortLevels, handleSortModules]);
 
+  useEffect(() => {
+    const auxConcludedController: ConcludedController[] = [];
+
+    for (let i = 0; i < modules.length; i += 1) {
+      const concludedControllerIndex = auxConcludedController.findIndex(
+        findConcludedController =>
+          findConcludedController.level.id === modules[i].level_id,
+      );
+
+      if (concludedControllerIndex !== -1) {
+        auxConcludedController[concludedControllerIndex].modules.push({
+          id: modules[i].id,
+          is_concluded: false,
+        });
+      } else {
+        auxConcludedController.push({
+          level: {
+            id: modules[i].level_id,
+            is_concluded: false,
+          },
+          modules: [
+            {
+              id: modules[i].id,
+              is_concluded: false,
+            },
+          ],
+        });
+      }
+    }
+
+    setConcludedController(auxConcludedController);
+  }, [modules]);
+
+  useEffect(() => {
+    if (!calculated && concludedController.length && moduleProgress.length) {
+      setCalculated(true);
+
+      const auxCalculatedModulesProgress: CalculatedModuleProgress[] = [];
+
+      for (let i = 0; i < modules.length; i += 1) {
+        auxCalculatedModulesProgress.push({
+          id: modules[i].id,
+          percent: calculateModuleProgress(
+            modules[i].id,
+            modules[i].level_id,
+          ).toFixed(2),
+        });
+      }
+
+      setCalculatedModulesProgress(auxCalculatedModulesProgress);
+    }
+  }, [
+    calculateModuleProgress,
+    calculated,
+    concludedController,
+    modules,
+    moduleProgress,
+  ]);
+
   return (
     <>
       {loading && <Loading zIndex={1} />}
@@ -168,7 +347,7 @@ const Modules: React.FC = () => {
               </ModulesBar>
 
               <nav>
-                {levels.map(level => (
+                {levels.map((level, index) => (
                   <ModuleSection key={level.id}>
                     <strong id={level.name}>{level.name}</strong>
 
@@ -180,9 +359,12 @@ const Modules: React.FC = () => {
                           color={
                             filteredModule.is_exercise ? '#1cd8d2' : '#55e2c1'
                           }
+                          isAvailable={checkIsAvailable(index)}
                           onClick={() => {
-                            setSelectedModuleId(filteredModule.id);
-                            history.push('sub-modules');
+                            if (checkIsAvailable(index)) {
+                              setSelectedModule(filteredModule);
+                              history.push('sub-modules');
+                            }
                           }}
                         >
                           <strong>
@@ -209,11 +391,7 @@ const Modules: React.FC = () => {
 
                           <ProgressContainer>
                             <ProgressBar
-                              percent={Number(
-                                calculateModuleProgress(
-                                  filteredModule.id,
-                                ).toFixed(2),
-                              )}
+                              percent={findModuleProgress(filteredModule.id)}
                               color="#fff"
                             />
                           </ProgressContainer>

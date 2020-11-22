@@ -5,6 +5,7 @@ import backgroundImg from '../../assets/background.png';
 
 interface CompletedCircleProps {
   isFilled: boolean;
+  isAvailable: boolean;
 }
 
 interface SubModuleProps {
@@ -174,23 +175,30 @@ export const SubModule = styled.div<SubModuleProps>`
 `;
 
 export const CompletedCircle = styled.div<CompletedCircleProps>`
-  cursor: pointer;
   border-radius: 50%;
   border: solid 3px #2b1c81;
   transition: border 0.2s;
+  opacity: 0.5;
+
+  ${props =>
+    props.isAvailable &&
+    css`
+      cursor: pointer;
+      opacity: 1;
+
+      &:hover {
+        border: solid 3px ${shade(0.2, '#2b1c81')};
+      }
+    `}
 
   ${props =>
     props.isFilled &&
     css`
       background: #2b1c81;
     `}
-
-  &:hover {
-    border: solid 3px ${shade(0.2, '#2b1c81')};
-  }
 `;
 
-export const RightContainer = styled.div<RightContainerProps>`
+export const RightContainerContent = styled.div<RightContainerProps>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -255,7 +263,20 @@ export const RightContainer = styled.div<RightContainerProps>`
   }
 
   img {
+    animation: ${appearWithFade} 0.5s;
     max-height: 85%;
     max-width: 85%;
   }
+`;
+
+export const RightContainerExercise = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  width: 80%;
+  border-radius: 13px;
+  border: solid 3px #2b1c81;
+  margin: 0 0 40px 40px;
 `;

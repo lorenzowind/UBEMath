@@ -18,7 +18,9 @@ class QuestionsRepository implements IQuestionsRepository {
     sub_module_id: string,
   ): Promise<Question[]> {
     const findQuestions = await this.ormRepository.find({
-      where: sub_module_id,
+      where: {
+        sub_module_id,
+      },
     });
 
     return findQuestions;

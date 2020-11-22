@@ -5,6 +5,7 @@ import backgroundImg from '../../assets/background.png';
 
 interface ModuleCardProps {
   color: string;
+  isAvailable: boolean;
 }
 
 const appearWithFade = keyframes`
@@ -172,13 +173,24 @@ export const ModuleSection = styled.div`
 `;
 
 export const ModuleCard = styled.div<ModuleCardProps>`
-  cursor: pointer;
   position: relative;
+  opacity: 0.5;
   margin-top: 20px;
   border-radius: 13px;
   background-color: ${props => props.color};
   padding: 50px 60px 110px 180px;
   transition: background-color 0.2s;
+
+  ${props =>
+    props.isAvailable &&
+    css`
+      cursor: pointer;
+      opacity: 1;
+
+      &:hover {
+        background-color: ${shade(0.2, props.color)};
+      }
+    `}
 
   > strong {
     position: absolute;
@@ -208,12 +220,6 @@ export const ModuleCard = styled.div<ModuleCardProps>`
         font-weight: 500;
       }
     }
-  }
-
-  &:hover {
-    ${props => css`
-      background-color: ${shade(0.2, props.color)};
-    `}
   }
 `;
 

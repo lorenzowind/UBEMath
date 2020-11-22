@@ -53,10 +53,16 @@ class ListFilteredSubModulesService {
           subModules[i].id,
         );
 
-        auxSubModules[i] = {
-          ...subModules[i],
-          content: materials,
-        };
+        if (materials.length) {
+          auxSubModules[i] = {
+            ...subModules[i],
+            content: materials,
+          };
+        } else {
+          auxSubModules[i] = {
+            ...subModules[i],
+          };
+        }
       }
 
       await this.cacheProvider.save(
