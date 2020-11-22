@@ -20,6 +20,7 @@ import {
   RightContainerContent,
   RightContainerExercise,
   AlternativeCircle,
+  AlternativeCard,
 } from './styles';
 
 import Menu from '../../components/Menu';
@@ -92,6 +93,7 @@ const Dashboard: React.FC = () => {
     {} as FormattedQuestion,
   );
   const [userAnswers, setUserAnswers] = useState<UserAnswer[]>([]);
+  const [showRightAnswer, setShowRightAnswer] = useState(false);
 
   const [isFirstPage, setIsFirstPage] = useState(false);
   const [isLastPage, setIsLastPage] = useState(false);
@@ -303,6 +305,13 @@ const Dashboard: React.FC = () => {
     [userAnswers],
   );
 
+  const checkRightAnswer = useCallback(
+    (question: Question, alternativeLetter: string) => {
+      return question.right_letter === alternativeLetter;
+    },
+    [],
+  );
+
   const handleSelectAlternative = useCallback(
     async (questionId: string, alternativeLetter: string) => {
       try {
@@ -496,6 +505,7 @@ const Dashboard: React.FC = () => {
                         type="button"
                         onClick={() => {
                           setLoaded(false);
+                          setShowRightAnswer(false);
                           setSelectedSubModule([subModule, index]);
                         }}
                       >
@@ -540,7 +550,17 @@ const Dashboard: React.FC = () => {
                     <p>{formattedQuestions.question.statement}</p>
                     <nav>
                       {formattedQuestions.alternatives.map(alternative => (
-                        <article key={alternative.id}>
+                        <AlternativeCard
+                          key={alternative.id}
+                          color={
+                            checkRightAnswer(
+                              formattedQuestions.question,
+                              alternative.letter,
+                            ) && showRightAnswer
+                              ? '#ffdd55'
+                              : '#2b1c81'
+                          }
+                        >
                           <AlternativeCircle
                             isFilled={checkUserAnswer(
                               formattedQuestions.question.id,
@@ -562,9 +582,17 @@ const Dashboard: React.FC = () => {
                           ) : (
                             <strong>{alternative.description}</strong>
                           )}
-                        </article>
+                        </AlternativeCard>
                       ))}
                     </nav>
+                    <button
+                      type="button"
+                      onClick={() => setShowRightAnswer(!showRightAnswer)}
+                    >
+                      {showRightAnswer
+                        ? 'Esconder resposta'
+                        : 'Mostrar resposta'}
+                    </button>
                   </section>
                 </RightContainerExercise>
               )}

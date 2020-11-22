@@ -12,9 +12,13 @@ interface SubModuleProps {
   isSelected: boolean;
 }
 
-interface RightContainerProps {
+interface RightContainerContentProps {
   isFirstPage: boolean;
   isLastPage: boolean;
+}
+
+interface AlternativeCardProps {
+  color: string;
 }
 
 interface AlternativeCircleProps {
@@ -202,7 +206,7 @@ export const CompletedCircle = styled.div<CompletedCircleProps>`
     `}
 `;
 
-export const RightContainerContent = styled.div<RightContainerProps>`
+export const RightContainerContent = styled.div<RightContainerContentProps>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -320,29 +324,42 @@ export const RightContainerExercise = styled.div`
 
     nav {
       margin-top: 20px;
-
-      article {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-
-        & + article {
-          margin-top: 10px;
-        }
-
-        strong {
-          text-align: justify;
-          font-size: 18px;
-          font-weight: 500;
-          color: #2b1c81;
-        }
-
-        img {
-          width: 100px;
-          height: 100px;
-        }
-      }
     }
+
+    button {
+      margin-top: 20px;
+      background: none;
+      border: 0;
+      font-size: 20px;
+      font-weight: 700;
+      color: #2b1c81;
+    }
+  }
+`;
+
+export const AlternativeCard = styled.article<AlternativeCardProps>`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  & + article {
+    margin-top: 10px;
+  }
+
+  div {
+    border: solid 3px ${props => (props.color ? props.color : '#2b1c81')};
+  }
+
+  strong {
+    text-align: justify;
+    font-size: 18px;
+    font-weight: 500;
+    color: ${props => (props.color ? props.color : '#2b1c81')};
+  }
+
+  img {
+    width: 100px;
+    height: 100px;
   }
 `;
 
@@ -351,7 +368,6 @@ export const AlternativeCircle = styled.div<AlternativeCircleProps>`
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  border: solid 3px #2b1c81;
   transition: border 0.2s;
   margin-right: 20px;
 
