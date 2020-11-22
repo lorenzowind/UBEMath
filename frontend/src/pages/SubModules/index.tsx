@@ -153,14 +153,14 @@ const Dashboard: React.FC = () => {
 
   const handleSortSubModules = useCallback(
     (array: SubModule[]): SubModule[] => {
-      function isModuleType(paramArray: any): paramArray is SubModule[] {
+      function isSubModuleType(paramArray: any): paramArray is SubModule[] {
         return 'module_id' in paramArray[0];
       }
 
-      if (array.length > 1) {
+      if (array.length >= 1) {
         const auxArray = sortArrayByOrder(array);
 
-        if (isModuleType(auxArray)) {
+        if (isSubModuleType(auxArray)) {
           return auxArray;
         }
       }
@@ -484,7 +484,10 @@ const Dashboard: React.FC = () => {
                           !selectedModule.is_exercise
                         }
                         onClick={() => {
-                          if (subModule.id === selectedSubModule[0].id) {
+                          if (
+                            subModule.id === selectedSubModule[0].id &&
+                            !selectedModule.is_exercise
+                          ) {
                             handleControlSubModule();
                           }
                         }}

@@ -1,4 +1,5 @@
 import { injectable, inject } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import AppError from '@shared/errors/AppError';
 
@@ -53,16 +54,10 @@ class ListFilteredSubModulesService {
           subModules[i].id,
         );
 
-        if (materials.length) {
-          auxSubModules[i] = {
-            ...subModules[i],
-            content: materials,
-          };
-        } else {
-          auxSubModules[i] = {
-            ...subModules[i],
-          };
-        }
+        auxSubModules[i] = {
+          ...subModules[i],
+          content: materials,
+        };
       }
 
       await this.cacheProvider.save(

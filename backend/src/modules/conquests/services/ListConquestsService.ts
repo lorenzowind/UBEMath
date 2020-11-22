@@ -1,4 +1,5 @@
 import { injectable, inject } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 
@@ -24,7 +25,10 @@ class ListConquestsService {
     if (!conquests) {
       conquests = await this.conquestsRepository.findAllConquests();
 
-      await this.cacheProvider.save(`conquests-list:${user_id}`, conquests);
+      await this.cacheProvider.save(
+        `conquests-list:${user_id}`,
+        classToClass(conquests),
+      );
     }
 
     return conquests;

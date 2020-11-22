@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
-
 import { useHistory } from 'react-router-dom';
+
+import api from '../../services/api';
+
 import { useToast } from '../../hooks/toast';
 import { useModule } from '../../hooks/module';
 
@@ -21,10 +23,9 @@ import {
 import Menu from '../../components/Menu';
 import Header from '../../components/Header';
 import Loading from '../../components/Loading';
+import ProgressBar from '../../components/ProgressBar';
 
 import defaultImg from '../../assets/default_module.png';
-import api from '../../services/api';
-import ProgressBar from '../../components/ProgressBar';
 
 export interface Level {
   id: string;
@@ -98,7 +99,7 @@ const Modules: React.FC = () => {
       return 'level_id' in paramArray[0];
     }
 
-    if (array.length > 1) {
+    if (array.length >= 1) {
       const auxArray = sortArrayByOrder(array);
 
       if (isModuleType(auxArray)) {
@@ -114,7 +115,7 @@ const Modules: React.FC = () => {
       return !('level_id' in paramArray[0]);
     }
 
-    if (array.length > 1) {
+    if (array.length >= 1) {
       const auxArray = sortArrayByOrder(array);
 
       if (isLevelType(auxArray)) {
@@ -213,7 +214,7 @@ const Modules: React.FC = () => {
 
   const checkIsAvailable = useCallback(
     (index: number) => {
-      if (index === 0) {
+      if (index === -1) {
         return true;
       }
 
@@ -359,9 +360,9 @@ const Modules: React.FC = () => {
                           color={
                             filteredModule.is_exercise ? '#1cd8d2' : '#55e2c1'
                           }
-                          isAvailable={checkIsAvailable(index)}
+                          isAvailable={checkIsAvailable(index - 1)}
                           onClick={() => {
-                            if (checkIsAvailable(index)) {
+                            if (checkIsAvailable(index - 1)) {
                               setSelectedModule(filteredModule);
                               history.push('sub-modules');
                             }

@@ -3,7 +3,7 @@ export default interface ISubModuleResponseDTO {
   module_id: string;
   name: string;
   order: number;
-  content?: {
+  content: {
     id: string;
     order: number;
     image_url: string;

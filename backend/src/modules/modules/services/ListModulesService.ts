@@ -1,4 +1,5 @@
 import { injectable, inject } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 
@@ -24,7 +25,10 @@ class ListModulesService {
     if (!modules) {
       modules = await this.modulesRepository.findAllModules();
 
-      await this.cacheProvider.save(`modules-list:${user_id}`, modules);
+      await this.cacheProvider.save(
+        `modules-list:${user_id}`,
+        classToClass(modules),
+      );
     }
 
     return modules;
