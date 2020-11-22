@@ -19,6 +19,7 @@ import Button from '../../components/Button';
 
 import logoImg from '../../assets/logo.svg';
 import illustrationImg from '../../assets/illustration.svg';
+import teamImg from '../../assets/team.jpg';
 
 const Home: React.FC = () => {
   const history = useHistory();
@@ -167,9 +168,10 @@ const Home: React.FC = () => {
           </article>
 
           <div>
-            <div>
+            <img src={teamImg} alt="Team" />
+            {/* <div>
               <strong>Foto equipe</strong>
-            </div>
+            </div> */}
 
             <section>
               <p>
@@ -204,11 +206,7 @@ const Home: React.FC = () => {
       </FourthContainer>
 
       <Footer>
-        <h1>
-          UBEMath © 2020
-          <br />
-          ubemath@gmail.com
-        </h1>
+        <h1>UBEMath © 2020</h1>
       </Footer>
     </Container>
   );

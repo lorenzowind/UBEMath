@@ -158,6 +158,7 @@ export const SubModule = styled.div<SubModuleProps>`
   }
 
   button {
+    text-align: start;
     background: none;
     border: 0;
     margin-left: 40px;

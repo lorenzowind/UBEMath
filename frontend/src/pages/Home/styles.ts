@@ -289,6 +289,12 @@ export const FourthContainerContent = styled.div`
     display: flex;
     flex-direction: row;
 
+    img {
+      height: 320px;
+      margin-right: 30px;
+      border-radius: 13px;
+    }
+
     div {
       display: flex;
       align-items: center;
@@ -340,6 +346,11 @@ export const FourthContainerContent = styled.div`
       align-items: center;
       justify-content: center;
       flex-direction: column;
+
+      img {
+        margin-right: 0;
+        margin-bottom: 30px;
+      }
 
       div {
         margin-right: 0;

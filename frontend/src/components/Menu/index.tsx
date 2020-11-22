@@ -58,9 +58,6 @@ const Menu: React.FC = () => {
             <button type="button" onClick={() => history.push('conquests')}>
               <strong>CONQUISTAS</strong>
             </button>
-            <button type="button" onClick={toggleModalInfo}>
-              <strong>CONFIGURAÇÕES</strong>
-            </button>
           </OptionsContainer>
 
           <footer>

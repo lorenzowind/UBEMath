@@ -23,6 +23,7 @@ import {
 import Menu from '../../components/Menu';
 import Header from '../../components/Header';
 import Loading from '../../components/Loading';
+import LoadingImage from '../../components/LoadingImage';
 
 export interface SubModule {
   id: string;
@@ -36,11 +37,21 @@ export interface SubModule {
   }[];
 }
 
+export interface CompletedSubModule {
+  id: string;
+  user_id: string;
+  sub_module_id: string;
+}
+
 const Dashboard: React.FC = () => {
   const { addToast } = useToast();
   const { selectedModuleId } = useModule();
 
   const history = useHistory();
+
+  const [completedSubModules, setCompletedSubModules] = useState<
+    CompletedSubModule[]
+  >([]);
 
   const [subModules, setSubModules] = useState<SubModule[]>([]);
   const [selectedSubModule, setSelectedSubModule] = useState<
@@ -52,6 +63,7 @@ const Dashboard: React.FC = () => {
   const [isLastPage, setIsLastPage] = useState(false);
 
   const [loading, setLoading] = useState(false);
+  const [loadingImage, setLoadingImage] = useState(false);
 
   const checkIsFirstPage = useCallback(() => {
     return subModulesPage[selectedSubModule[1]] === 0;
@@ -123,6 +135,61 @@ const Dashboard: React.FC = () => {
     [],
   );
 
+  const checkIsCompleted = useCallback(
+    (subModuleId: string) => {
+      return !!completedSubModules.find(
+        completedSubModule => completedSubModule.sub_module_id === subModuleId,
+      );
+    },
+    [completedSubModules],
+  );
+
+  const getIsCompleted = useCallback(
+    (subModuleId: string) => {
+      return completedSubModules.find(
+        completedSubModule => completedSubModule.sub_module_id === subModuleId,
+      );
+    },
+    [completedSubModules],
+  );
+
+  const handleCompleteSubModule = useCallback(
+    async (subModuleId: string) => {
+      try {
+        setLoading(true);
+
+        const auxCompletedSubModule = getIsCompleted(subModuleId);
+
+        if (auxCompletedSubModule) {
+          await api.delete(`user-progress/${auxCompletedSubModule.id}`);
+
+          setCompletedSubModules(state =>
+            state.filter(
+              completedSubModule =>
+                completedSubModule.sub_module_id !== subModuleId,
+            ),
+          );
+        } else {
+          const response = (
+            await api.post<CompletedSubModule>('user-progress', {
+              sub_module_id: subModuleId,
+            })
+          ).data;
+
+          setCompletedSubModules([...completedSubModules, { ...response }]);
+        }
+      } catch (err) {
+        addToast({
+          type: 'error',
+          title: 'Erro ao controlar o progresso do sub-módulo',
+        });
+      } finally {
+        setLoading(false);
+      }
+    },
+    [addToast, completedSubModules, getIsCompleted],
+  );
+
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -132,6 +199,12 @@ const Dashboard: React.FC = () => {
           .get<SubModule[]>(`sub-modules/${selectedModuleId}`)
           .then(response => {
             setSubModules(handleSortSubModules(response.data));
+          });
+
+        await api
+          .get<CompletedSubModule[]>(`user-progress/${selectedModuleId}`)
+          .then(response => {
+            setCompletedSubModules(response.data);
           });
       } catch (err) {
         addToast({
@@ -191,7 +264,10 @@ const Dashboard: React.FC = () => {
                       key={subModule.id}
                       isSelected={subModule.id === selectedSubModule[0].id}
                     >
-                      <CompletedCircle isFilled />
+                      <CompletedCircle
+                        isFilled={checkIsCompleted(subModule.id)}
+                        onClick={() => handleCompleteSubModule(subModule.id)}
+                      />
                       <button
                         type="button"
                         onClick={() => setSelectedSubModule([subModule, index])}
@@ -207,19 +283,24 @@ const Dashboard: React.FC = () => {
                 <FiChevronLeft onClick={handleBackPage} />
 
                 {selectedSubModule[0].content && (
-                  <img
-                    key={
-                      selectedSubModule[0].content[
-                        subModulesPage[selectedSubModule[1]]
-                      ].id
-                    }
-                    src={
-                      selectedSubModule[0].content[
-                        subModulesPage[selectedSubModule[1]]
-                      ].image_url
-                    }
-                    alt="Material"
-                  />
+                  <>
+                    <img
+                      key={
+                        selectedSubModule[0].content[
+                          subModulesPage[selectedSubModule[1]]
+                        ].id
+                      }
+                      src={
+                        selectedSubModule[0].content[
+                          subModulesPage[selectedSubModule[1]]
+                        ].image_url
+                      }
+                      onLoad={() => setLoadingImage(false)}
+                      alt="Material"
+                    />
+
+                    {loadingImage && <LoadingImage />}
+                  </>
                 )}
 
                 <FiChevronRight onClick={handleNextPage} />

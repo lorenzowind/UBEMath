@@ -52,8 +52,8 @@ export const Content = styled.div`
       background: none;
 
       img {
-        width: 60px;
-        height: 60px;
+        width: 100%;
+        height: 100%;
         border-radius: 50%;
         border: 2px solid #2b1c81;
 

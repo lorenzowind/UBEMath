@@ -209,8 +209,10 @@ const Modules: React.FC = () => {
 
                           <ProgressContainer>
                             <ProgressBar
-                              percent={calculateModuleProgress(
-                                filteredModule.id,
+                              percent={Number(
+                                calculateModuleProgress(
+                                  filteredModule.id,
+                                ).toFixed(2),
                               )}
                               color="#fff"
                             />
