@@ -10,6 +10,7 @@ import ForgotPassword from '../pages/ForgotPassword';
 import ResetPassword from '../pages/ResetPassword';
 
 import Dashboard from '../pages/Dashboard';
+import Game from '../pages/Game';
 import Modules from '../pages/Modules';
 import SubModules from '../pages/SubModules';
 import Profile from '../pages/Profile';
@@ -24,6 +25,7 @@ const Routes: React.FC = () => (
     <Route path="/reset-password" component={ResetPassword} />
 
     <Route path="/dashboard" component={Dashboard} isPrivate />
+    <Route path="/game" component={Game} isPrivate />
     <Route path="/modules" component={Modules} isPrivate />
     <Route path="/sub-modules" component={SubModules} isPrivate />
     <Route path="/profile" component={Profile} isPrivate />
