@@ -17,6 +17,10 @@ interface RightContainerProps {
   isLastPage: boolean;
 }
 
+interface AlternativeCircleProps {
+  isFilled: boolean;
+}
+
 const appearWithFade = keyframes`
   from {
     opacity: 0;
@@ -271,12 +275,93 @@ export const RightContainerContent = styled.div<RightContainerProps>`
 
 export const RightContainerExercise = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
   position: relative;
   width: 80%;
   border-radius: 13px;
   border: solid 3px #2b1c81;
   margin: 0 0 40px 40px;
+  padding: 40px;
+
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-height: 100%;
+    margin: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 20px;
+
+    ::-webkit-scrollbar {
+      width: 9px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: ${shade(0.2, '#2b1c81')};
+      border-radius: 13px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #1cd8d2;
+      border-radius: 13px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #55e2c1;
+    }
+
+    p {
+      text-align: justify;
+      font-size: 20px;
+      font-weight: 700;
+      color: #2b1c81;
+    }
+
+    nav {
+      margin-top: 20px;
+
+      article {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        & + article {
+          margin-top: 10px;
+        }
+
+        strong {
+          text-align: justify;
+          font-size: 18px;
+          font-weight: 500;
+          color: #2b1c81;
+        }
+
+        img {
+          width: 100px;
+          height: 100px;
+        }
+      }
+    }
+  }
+`;
+
+export const AlternativeCircle = styled.div<AlternativeCircleProps>`
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: solid 3px #2b1c81;
+  transition: border 0.2s;
+  margin-right: 20px;
+
+  ${props =>
+    props.isFilled &&
+    css`
+      background: #2b1c81;
+    `}
+
+  &:hover {
+    border: solid 3px ${shade(0.2, '#2b1c81')};
+  }
 `;

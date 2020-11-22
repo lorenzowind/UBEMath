@@ -19,6 +19,7 @@ import {
   CompletedCircle,
   RightContainerContent,
   RightContainerExercise,
+  AlternativeCircle,
 } from './styles';
 
 import Menu from '../../components/Menu';
@@ -59,6 +60,13 @@ export interface Alternative {
   image_url: string;
 }
 
+export interface UserAnswer {
+  id: string;
+  user_id: string;
+  question_id: string;
+  answer_letter: string;
+}
+
 interface FormattedQuestion {
   question: Question;
   alternatives: Alternative[];
@@ -83,12 +91,14 @@ const Dashboard: React.FC = () => {
   const [formattedQuestions, setFormattedQuestions] = useState(
     {} as FormattedQuestion,
   );
+  const [userAnswers, setUserAnswers] = useState<UserAnswer[]>([]);
 
   const [isFirstPage, setIsFirstPage] = useState(false);
   const [isLastPage, setIsLastPage] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [loadingImage, setLoadingImage] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   const checkIsFirstPage = useCallback(() => {
     return subModulesPage[selectedSubModule[1]] === 0;
@@ -178,58 +188,50 @@ const Dashboard: React.FC = () => {
     [completedSubModules],
   );
 
-  const handleControlSubModule = useCallback(
-    async (subModuleId: string) => {
-      try {
-        setLoading(true);
+  const handleControlSubModule = useCallback(async () => {
+    try {
+      setLoading(true);
 
-        const auxCompletedSubModule = getIsCompleted(subModuleId);
+      const auxCompletedSubModule = getIsCompleted(selectedSubModule[0].id);
 
-        if (auxCompletedSubModule) {
-          await api.delete(`user-progress/${auxCompletedSubModule.id}`);
+      if (auxCompletedSubModule) {
+        await api.delete(`user-progress/${auxCompletedSubModule.id}`);
 
-          setCompletedSubModules(state =>
-            state.filter(
-              completedSubModule =>
-                completedSubModule.sub_module_id !== subModuleId,
-            ),
-          );
-        } else if (checkIsLastPage()) {
-          const response = (
-            await api.post<CompletedSubModule>('user-progress', {
-              sub_module_id: subModuleId,
-            })
-          ).data;
+        setCompletedSubModules(state =>
+          state.filter(
+            completedSubModule =>
+              completedSubModule.sub_module_id !== selectedSubModule[0].id,
+          ),
+        );
+      } else if (checkIsLastPage()) {
+        const response = (
+          await api.post<CompletedSubModule>('user-progress', {
+            sub_module_id: selectedSubModule[0].id,
+          })
+        ).data;
 
-          setCompletedSubModules([...completedSubModules, { ...response }]);
-        } else if (selectedModule.is_exercise) {
-          addToast({
-            type: 'info',
-            title: 'Primeiro você deve responder a questão',
-          });
-        } else {
-          addToast({
-            type: 'info',
-            title: 'Primeiro você deve concluir o sub-módulo',
-          });
-        }
-      } catch (err) {
+        setCompletedSubModules([...completedSubModules, { ...response }]);
+      } else {
         addToast({
-          type: 'error',
-          title: 'Erro ao controlar o progresso do sub-módulo',
+          type: 'info',
+          title: 'Primeiro você deve concluir o sub-módulo',
         });
-      } finally {
-        setLoading(false);
       }
-    },
-    [
-      addToast,
-      checkIsLastPage,
-      completedSubModules,
-      getIsCompleted,
-      selectedModule.is_exercise,
-    ],
-  );
+    } catch (err) {
+      addToast({
+        type: 'error',
+        title: 'Erro ao controlar o progresso do sub-módulo',
+      });
+    } finally {
+      setLoading(false);
+    }
+  }, [
+    addToast,
+    checkIsLastPage,
+    completedSubModules,
+    getIsCompleted,
+    selectedSubModule,
+  ]);
 
   const loadSubModuleQuestions = useCallback(
     async (subModuleId: string) => {
@@ -251,6 +253,22 @@ const Dashboard: React.FC = () => {
                   alternatives: alternativesResponse.data,
                 });
               }
+
+              // eslint-disable-next-line no-await-in-loop
+              const userAnswersResponse = await api.get<UserAnswer>(
+                `user-answers/${questionsResponse.data[i].id}`,
+              );
+
+              const userAnswerFound = userAnswers.find(
+                userAnswer => userAnswer.id === userAnswersResponse.data.id,
+              );
+
+              if (!userAnswerFound) {
+                setUserAnswers([
+                  ...userAnswers,
+                  { ...userAnswersResponse.data },
+                ]);
+              }
             }
           });
       } catch (err) {
@@ -262,7 +280,115 @@ const Dashboard: React.FC = () => {
         setLoading(false);
       }
     },
-    [addToast],
+    [addToast, userAnswers],
+  );
+
+  const checkUserAnswer = useCallback(
+    (questionId: string, alternativeLetter: string) => {
+      return !!userAnswers.find(
+        userAnswer =>
+          userAnswer.question_id === questionId &&
+          userAnswer.answer_letter === alternativeLetter,
+      );
+    },
+    [userAnswers],
+  );
+
+  const getUserAnswer = useCallback(
+    (questionId: string) => {
+      return userAnswers.find(
+        userAnswer => userAnswer.question_id === questionId,
+      );
+    },
+    [userAnswers],
+  );
+
+  const handleSelectAlternative = useCallback(
+    async (questionId: string, alternativeLetter: string) => {
+      try {
+        setLoading(true);
+
+        const userAnswerFound = getUserAnswer(questionId);
+
+        const auxCompletedSubModule = getIsCompleted(selectedSubModule[0].id);
+
+        if (
+          userAnswerFound &&
+          userAnswerFound.answer_letter === alternativeLetter
+        ) {
+          await api.delete(`user-answers/${userAnswerFound.id}`);
+
+          setUserAnswers(state =>
+            state.filter(userAnswer => userAnswer.id !== userAnswerFound.id),
+          );
+
+          if (auxCompletedSubModule) {
+            await api.delete(`user-progress/${auxCompletedSubModule.id}`);
+
+            setCompletedSubModules(state =>
+              state.filter(
+                completedSubModule =>
+                  completedSubModule.sub_module_id !== selectedSubModule[0].id,
+              ),
+            );
+          }
+        } else if (userAnswerFound) {
+          await api.put(`user-answers/${userAnswerFound.id}`, {
+            answer_letter: alternativeLetter,
+          });
+
+          setUserAnswers(state =>
+            state.reduce((newArray: UserAnswer[], userAnswer) => {
+              if (userAnswer.id === userAnswerFound.id) {
+                newArray.push({
+                  ...userAnswer,
+                  answer_letter: alternativeLetter,
+                });
+              } else {
+                newArray.push(userAnswer);
+              }
+              return newArray;
+            }, []),
+          );
+        } else {
+          const userAnswerResponse = await api.post<UserAnswer>(
+            'user-answers',
+            {
+              question_id: questionId,
+              answer_letter: alternativeLetter,
+            },
+          );
+
+          setUserAnswers([...userAnswers, { ...userAnswerResponse.data }]);
+
+          const completedSubModuleResponse = (
+            await api.post<CompletedSubModule>('user-progress', {
+              sub_module_id: selectedSubModule[0].id,
+            })
+          ).data;
+
+          setCompletedSubModules([
+            ...completedSubModules,
+            { ...completedSubModuleResponse },
+          ]);
+        }
+      } catch (err) {
+        addToast({
+          type: 'error',
+          title: 'Erro ao selecionar alternativa',
+        });
+      } finally {
+        setLoading(false);
+      }
+    },
+    [
+      addToast,
+      completedSubModules,
+      getIsCompleted,
+      getUserAnswer,
+      selectedSubModule,
+      userAnswers,
+    ],
   );
 
   useEffect(() => {
@@ -313,7 +439,8 @@ const Dashboard: React.FC = () => {
   }, [subModules]);
 
   useEffect(() => {
-    if (selectedModule.is_exercise && selectedSubModule[0].id) {
+    if (selectedModule.is_exercise && selectedSubModule[0].id && !loaded) {
+      setLoaded(true);
       loadSubModuleQuestions(selectedSubModule[0].id);
     } else {
       setIsFirstPage(checkIsFirstPage());
@@ -323,6 +450,7 @@ const Dashboard: React.FC = () => {
     checkIsFirstPage,
     checkIsLastPage,
     loadSubModuleQuestions,
+    loaded,
     selectedModule.is_exercise,
     selectedSubModule,
   ]);
@@ -351,16 +479,22 @@ const Dashboard: React.FC = () => {
                     >
                       <CompletedCircle
                         isFilled={checkIsCompleted(subModule.id)}
-                        isAvailable={subModule.id === selectedSubModule[0].id}
+                        isAvailable={
+                          subModule.id === selectedSubModule[0].id &&
+                          !selectedModule.is_exercise
+                        }
                         onClick={() => {
                           if (subModule.id === selectedSubModule[0].id) {
-                            handleControlSubModule(subModule.id);
+                            handleControlSubModule();
                           }
                         }}
                       />
                       <button
                         type="button"
-                        onClick={() => setSelectedSubModule([subModule, index])}
+                        onClick={() => {
+                          setLoaded(false);
+                          setSelectedSubModule([subModule, index]);
+                        }}
                       >
                         {subModule.name}
                       </button>
@@ -399,13 +533,36 @@ const Dashboard: React.FC = () => {
 
               {formattedQuestions.alternatives && (
                 <RightContainerExercise>
-                  <p>{formattedQuestions.question.statement}</p>
-                  {formattedQuestions.alternatives.map(alternative => (
-                    <nav key={alternative.id}>
-                      <div />
-                      <strong>{alternative.description}</strong>
+                  <section>
+                    <p>{formattedQuestions.question.statement}</p>
+                    <nav>
+                      {formattedQuestions.alternatives.map(alternative => (
+                        <article key={alternative.id}>
+                          <AlternativeCircle
+                            isFilled={checkUserAnswer(
+                              formattedQuestions.question.id,
+                              alternative.letter,
+                            )}
+                            onClick={() =>
+                              handleSelectAlternative(
+                                formattedQuestions.question.id,
+                                alternative.letter,
+                              )
+                            }
+                          />
+
+                          {alternative.image_url ? (
+                            <img
+                              src={alternative.image_url}
+                              alt="Alternative"
+                            />
+                          ) : (
+                            <strong>{alternative.description}</strong>
+                          )}
+                        </article>
+                      ))}
                     </nav>
-                  ))}
+                  </section>
                 </RightContainerExercise>
               )}
             </Content>
