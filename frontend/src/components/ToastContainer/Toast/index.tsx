@@ -3,6 +3,7 @@ import {
   FiAlertCircle,
   FiCheckCircle,
   FiInfo,
+  FiStar,
   FiXCircle,
 } from 'react-icons/fi';
 
@@ -19,6 +20,7 @@ const icons = {
   info: <FiInfo size={24} />,
   error: <FiAlertCircle size={24} />,
   success: <FiCheckCircle size={24} />,
+  conquest: <FiStar size={24} />,
 };
 
 const Toast: React.FC<ToastProps> = ({ message, style }) => {

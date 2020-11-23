@@ -60,7 +60,11 @@ const Dashboard: React.FC = () => {
   }, [addToast]);
 
   const conquestProgress = useMemo(() => {
-    return (completedConquests.length / conquests.length) * 100;
+    if (conquests.length !== 0) {
+      return (completedConquests.length / conquests.length) * 100;
+    }
+
+    return 0;
   }, [completedConquests.length, conquests.length]);
 
   const formattedModulesProgress = useMemo(() => {
