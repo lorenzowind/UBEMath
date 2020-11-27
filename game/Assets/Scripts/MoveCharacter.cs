@@ -68,7 +68,7 @@ public class MoveCharacter : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.CompareTag("Death"))
+        if (collider.gameObject.CompareTag("Damage"))
         {
             StartCoroutine(KnockBack(1f, 50, characterDirection));
             DamageColor();

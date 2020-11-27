@@ -516,7 +516,7 @@ const Dashboard: React.FC = () => {
                 </nav>
               </LeftContainer>
 
-              {selectedSubModule[0].content && (
+              {selectedSubModule[0].content?.length && (
                 <RightContainerContent
                   isFirstPage={isFirstPage}
                   isLastPage={isLastPage}
