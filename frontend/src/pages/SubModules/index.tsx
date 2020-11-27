@@ -87,7 +87,6 @@ const Dashboard: React.FC = () => {
   const [selectedSubModule, setSelectedSubModule] = useState<
     [SubModule, number]
   >([{} as SubModule, -1]);
-  const [isExercise, setIsExercise] = useState(false);
   const [subModulesPage, setSubModulesPage] = useState<number[]>([]);
 
   const [formattedQuestions, setFormattedQuestions] = useState(
@@ -451,7 +450,6 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     if (selectedModule.is_exercise && selectedSubModule[0].id && !loaded) {
       setLoaded(true);
-      setIsExercise(true);
       loadSubModuleQuestions(selectedSubModule[0].id);
     } else {
       setIsFirstPage(checkIsFirstPage());
@@ -518,7 +516,7 @@ const Dashboard: React.FC = () => {
                 </nav>
               </LeftContainer>
 
-              {!isExercise ? (
+              {selectedSubModule[0].content.length > 1 ? (
                 <RightContainerContent
                   isFirstPage={isFirstPage}
                   isLastPage={isLastPage}
