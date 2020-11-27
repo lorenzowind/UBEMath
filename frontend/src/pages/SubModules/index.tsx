@@ -87,6 +87,7 @@ const Dashboard: React.FC = () => {
   const [selectedSubModule, setSelectedSubModule] = useState<
     [SubModule, number]
   >([{} as SubModule, -1]);
+  const [isExercise, setIsExercise] = useState(false);
   const [subModulesPage, setSubModulesPage] = useState<number[]>([]);
 
   const [formattedQuestions, setFormattedQuestions] = useState(
@@ -450,6 +451,7 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     if (selectedModule.is_exercise && selectedSubModule[0].id && !loaded) {
       setLoaded(true);
+      setIsExercise(true);
       loadSubModuleQuestions(selectedSubModule[0].id);
     } else {
       setIsFirstPage(checkIsFirstPage());
@@ -516,7 +518,7 @@ const Dashboard: React.FC = () => {
                 </nav>
               </LeftContainer>
 
-              {selectedSubModule[0] !== ({} as SubModule) && (
+              {!isExercise ? (
                 <RightContainerContent
                   isFirstPage={isFirstPage}
                   isLastPage={isLastPage}
@@ -542,59 +544,59 @@ const Dashboard: React.FC = () => {
 
                   <FiChevronRight onClick={handleNextPage} />
                 </RightContainerContent>
-              )}
-
-              {formattedQuestions.alternatives && (
-                <RightContainerExercise>
-                  <section>
-                    <p>{formattedQuestions.question.statement}</p>
-                    <nav>
-                      {formattedQuestions.alternatives.map(alternative => (
-                        <AlternativeCard
-                          key={alternative.id}
-                          color={
-                            checkRightAnswer(
-                              formattedQuestions.question,
-                              alternative.letter,
-                            ) && showRightAnswer
-                              ? '#ffdd55'
-                              : '#2b1c81'
-                          }
-                        >
-                          <AlternativeCircle
-                            isFilled={checkUserAnswer(
-                              formattedQuestions.question.id,
-                              alternative.letter,
-                            )}
-                            onClick={() =>
-                              handleSelectAlternative(
+              ) : (
+                formattedQuestions.alternatives && (
+                  <RightContainerExercise>
+                    <section>
+                      <p>{formattedQuestions.question.statement}</p>
+                      <nav>
+                        {formattedQuestions.alternatives.map(alternative => (
+                          <AlternativeCard
+                            key={alternative.id}
+                            color={
+                              checkRightAnswer(
+                                formattedQuestions.question,
+                                alternative.letter,
+                              ) && showRightAnswer
+                                ? '#ffdd55'
+                                : '#2b1c81'
+                            }
+                          >
+                            <AlternativeCircle
+                              isFilled={checkUserAnswer(
                                 formattedQuestions.question.id,
                                 alternative.letter,
-                              )
-                            }
-                          />
-
-                          {alternative.image_url ? (
-                            <img
-                              src={alternative.image_url}
-                              alt="Alternative"
+                              )}
+                              onClick={() =>
+                                handleSelectAlternative(
+                                  formattedQuestions.question.id,
+                                  alternative.letter,
+                                )
+                              }
                             />
-                          ) : (
-                            <strong>{alternative.description}</strong>
-                          )}
-                        </AlternativeCard>
-                      ))}
-                    </nav>
-                    <button
-                      type="button"
-                      onClick={() => setShowRightAnswer(!showRightAnswer)}
-                    >
-                      {showRightAnswer
-                        ? 'Esconder resposta'
-                        : 'Mostrar resposta'}
-                    </button>
-                  </section>
-                </RightContainerExercise>
+
+                            {alternative.image_url ? (
+                              <img
+                                src={alternative.image_url}
+                                alt="Alternative"
+                              />
+                            ) : (
+                              <strong>{alternative.description}</strong>
+                            )}
+                          </AlternativeCard>
+                        ))}
+                      </nav>
+                      <button
+                        type="button"
+                        onClick={() => setShowRightAnswer(!showRightAnswer)}
+                      >
+                        {showRightAnswer
+                          ? 'Esconder resposta'
+                          : 'Mostrar resposta'}
+                      </button>
+                    </section>
+                  </RightContainerExercise>
+                )
               )}
             </Content>
           </MainContainer>
