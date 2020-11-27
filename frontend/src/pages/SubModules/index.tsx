@@ -516,33 +516,36 @@ const Dashboard: React.FC = () => {
                 </nav>
               </LeftContainer>
 
-              {selectedSubModule[0].content.length !== 0 ? (
+              {selectedSubModule[0].content && (
                 <RightContainerContent
                   isFirstPage={isFirstPage}
                   isLastPage={isLastPage}
                 >
                   <FiChevronLeft onClick={handleBackPage} />
 
-                  <img
-                    key={
-                      selectedSubModule[0].content[
-                        subModulesPage[selectedSubModule[1]]
-                      ].id
-                    }
-                    src={
-                      selectedSubModule[0].content[
-                        subModulesPage[selectedSubModule[1]]
-                      ].image_url
-                    }
-                    onLoad={() => setLoadingImage(false)}
-                    alt="Material"
-                  />
+                  {subModulesPage[selectedSubModule[1]] <
+                    selectedSubModule[0].content.length && (
+                    <img
+                      key={
+                        selectedSubModule[0].content[
+                          subModulesPage[selectedSubModule[1]]
+                        ].id
+                      }
+                      src={
+                        selectedSubModule[0].content[
+                          subModulesPage[selectedSubModule[1]]
+                        ].image_url
+                      }
+                      onLoad={() => setLoadingImage(false)}
+                      alt="Material"
+                    />
+                  )}
 
                   {loadingImage && <LoadingImage />}
 
                   <FiChevronRight onClick={handleNextPage} />
                 </RightContainerContent>
-              ) : null}
+              )}
 
               {formattedQuestions.alternatives && (
                 <RightContainerExercise>
