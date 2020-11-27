@@ -33,7 +33,7 @@ export interface SubModule {
   module_id: string;
   name: string;
   order: number;
-  content?: {
+  content: {
     id: string;
     order: number;
     image_url: string;
@@ -516,7 +516,7 @@ const Dashboard: React.FC = () => {
                 </nav>
               </LeftContainer>
 
-              {selectedSubModule[0].content?.length && (
+              {selectedSubModule[0].content !== [] && (
                 <RightContainerContent
                   isFirstPage={isFirstPage}
                   isLastPage={isLastPage}
