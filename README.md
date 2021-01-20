@@ -17,7 +17,7 @@
     <a href="https://app.swaggerhub.com/apis/lorenzowind/UBEMath/1.0.0"><strong>Explore the API Spec »</strong></a>
     <br />
     <br />
-    <a href="https://ubemath-test.netlify.app/">View Demo</a>
+    <a href="https://ubemath.netlify.app/">View Demo</a>
     ·
     <a href="https://github.com/lorenzowind/UBEMath/issues/new">Report Bug</a>
     ·
@@ -61,8 +61,6 @@ Lorenzo Windmoller Martins - [LinkedIn](https://www.linkedin.com/in/lorenzo-wind
 Samuel Albuquerque de Paiva - samycaaa@gmail.com
 
 Vinícius Andrade Perrone - [LinkedIn](https://www.linkedin.com/in/vin%C3%ADcius-perrone-2484001b1/) - perronevinicius2018@gmail.com
-
-Project Link: [https://github.com/lorenzowind/UBEMath](https://github.com/lorenzowind/UBEMath)
 
 ## Acknowledgements
 * [README Template by othneildrew](https://github.com/othneildrew/Best-README-Template)
